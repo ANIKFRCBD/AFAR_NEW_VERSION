@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Css -->
+    <link rel="stylesheet" href="../static/css/index.css">
+    <title>FRC Asset Register</title>
+    <style>
+        /* Table styling */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #dddddd;
+            justify-content: center;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            justify-content: center;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .left {
+          display: flex;
+          flex-direction: row; /* Arrange items in a row */
+        }
+      
+        .left > div {
+          margin-right: 10px; /* Add spacing between buttons */
+          margin-top: 10px;
+        }
+    </style>
+  </head>
+  <body>
+    {% include 'header.html' %}
+    <div class='left'>
+      <div>
+        <a href="{% url 'dashboard' %}">
+            <button type="button" class="btn btn-primary btn-block">Dashboard</button>
+        </a>
+      </div>
+    </div>
+    <br><br><br>
+
+    <div class="col-md-9">
+        <!-- Filter dropdown -->
+        <select id="filterDropdown">
+            <option value="">Select Financial Year</option>
+            {% for value in unique_values %}
+                <option value="{{ value }}">{{ value }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Display count -->
+        <p>Number of entries: <span id="rowCount"></span></p>
+        
+        <!-- Display rows -->
+        <!-- Above or below your existing code, add input fields for Fair value and Value in use -->
+<!-- Above or below your existing code, add input fields for Fair value and Value in use -->
+<div class="col-md-9">
+    <table>
+        <thead>
+            <th>Financial Year</th>
+            <th>Purchase Date</th>
+            <th>Economic Code</th>
+            <th>Category</th>
+            <th>Name of Item</th>
+            <th>Brand Name</th>
+            <th>Book Value</th>
+            <th>Fair value less cost to sale</th>
+            <th>Value in use</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            {% for value in table %}
+                <tr>
+                    <td>{{ value.Financial_Year }}</td>
+                    <td>{{ value.Purchase_date }}</td>
+                    <td>{{ value.Economic_Code }}</td>
+                    <td>{{ value.Category }}</td>
+                    <td>{{ value.Name_of_Item }}</td>
+                    <td>{{ value.Brand_Name }}</td>
+                    <td>{{ value.Book_Value }}</td>
+                    <td><form method="post">
+                        {% csrf_token %}
+                        {{form.Value_in_use}}
+                        <input type="number">
+                        <input type="submit" Value="Submit" >
+                    </form>
+                    </td>
+                    <td><form method="post">
+                        {% csrf_token %}
+                        {{ form.Fair_value_less_cost_to_sale }}
+                        <input type="number">                        
+                        <input type="submit" value="Submit">
+                    </form>
+                
+                </td> 
+                
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+    <!-- Additional scripts and Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Your custom scripts -->
+    <script src="../static/js/script.js"></script>
+
+    <!-- Script for downloading CSV -->
+    <script>
+        function download_csv_frc_asset() {
+            document.getElementById("download_csv_frc_asset").action = "{% url 'download_csv_frc_asset' %}";
+            document.getElementById("download_csv_frc_asset").submit();
+        }
+    </script>
+
+    <!-- Script for deleting rows -->
+    <script>
+        function delete_rows_asset_register() {
+            // Confirm with the user before deletion (optional)
+            var confirmDelete = confirm("Are you sure you want to delete the excel file?");
+            if (!confirmDelete) {
+                return;
+            }
+
+            // Set the form action and submit the form
+            document.getElementById('delete_rows_asset_register').action = "{% url 'delete_rows_asset_register' %}";
+            document.getElementById('delete_rows_asset_register').submit();
+        }
+    </script>
+
+    <!-- Script for filtering and updating row count -->
+    <script>
+        $(document).ready(function(){
+            function updateRowCount() {
+                var selectedValue = $("#filterDropdown").val();
+                var rowCount = $("#rowsContainer table tbody tr").filter(function() {
+                    var rowValue = $(this).find("td:first").text();
+                    return rowValue === selectedValue || selectedValue === "";
+                }).length;
+                $("#rowCount").text(rowCount);
+            }
+
+            $("#filterDropdown").on("change", function() {
+                $("#rowsContainer table tbody tr").hide();
+                var selectedValue = $(this).val();
+
+                $("#rowsContainer table tbody tr").filter(function() {
+                    var rowValue = $(this).find("td:first").text();
+                    return rowValue === selectedValue || selectedValue === "";
+                }).show();
+
+                updateRowCount();
+            });
+
+            updateRowCount();
+        });
+    </script>
+  </body>
+</html>

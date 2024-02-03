@@ -1,0 +1,3 @@
+Financial Year,Purchase date,Sl,Bill no,Economic Code,Category,Pre/Post/New,Name of Item,Units,Price,Sold (unit),Cost of Assets Sold,Current Balance,Asset Code,Expected life,Depreciation Method,Location,Current Depreciation,Accumulated depriciation,Current Condition
+2023-2024,2024-06-12,1,1,4112314,Furniture,Post,Chair,5,5.0,2,2.0,3.0,asset_code,5,SLM,HQ,1.0,1.0,sold
+2023-2024,2024-01-16,2,2,4112202,Computer and Computer Equiments,Post,Chair,4,4.0,3,3.0,1.0,asset_code,5,SLM,HQ,0.8,0.8,sold

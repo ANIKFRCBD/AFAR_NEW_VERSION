@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <title>Dash Board</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #dddddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .left {
+            display: flex;
+            flex-direction: row;
+            margin-top: 10px;
+        }
+
+        .left > div {
+            margin-right: 10px;
+        }
+        .header{
+            text-align: center;
+            font-size: medium;
+            text-decoration: double;
+            margin-top: 0cm ;
+        }
+        .table_summary{
+            padding: .5cm;
+            padding-left: 1cm;
+            padding-right: .5cm;
+            margin-right: 7cm;
+            margin-left: 5cm;
+            text-align: center;
+            font-style: inherit;
+            row-gap: 1cm;
+            text-decoration: solid;
+        }
+        .org_name{
+            text-align: center;
+            align-content: center;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class='left'>
+        <div>
+            <a href="{% url 'dashboard' %}">
+                <button type="button" class="btn btn-primary btn-block">Dashboard</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'frc_asset_register' %}">
+                <button type="button" class="btn btn-primary btn-block">Asset Register</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'frc_asset_schedule' %}">
+                <button type="button" class="btn btn-primary btn-block">Asset Schedule</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'frc_dep' %}">
+                <button type="button" class="btn btn-primary btn-block">Depreciation</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'frc_data_entry' %}">
+                <button type="button" class="btn btn-primary btn-block">Data Entry</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'frc_system' %}">
+                <button type="button" class="btn btn-primary btn-block">File Upload</button>
+            </a>
+        </div>
+        
+
+    </div>
+    <br><br><br>
+    <div class = "org_name"><h1 style="width: .5 cm; font-weight: 800 ;"> Financial Reporting Council</h1>
+    <p><p>Parjatan Bhaban (8th floor), Plot: E-5 C/1<br>
+
+        West Agargaon, Sher-e-Bangla Nagar Administrative Area<br>
+        
+        Dhaka-1207, Bangladesh<br>
+        
+        Email: ed.ss@frc.gov.bd<br>
+        
+        Office: +88 02 41024674<br>
+        
+        Website: frc.gov.bd</p></p>
+    </div>
+    <br>
+    <div class="header"> <p style="font-size: .5cm;"><b>Summary of Assets (latest)</b></p>
+    </div>
+    <div class="table_summary">
+        {% if table %}
+            <table>
+                {{ table|safe }}
+            </table>
+        {% else %}
+            <p>No data available.</p>
+        {% endif %}
+    </div>
+    <br>
+    <div class="header"> <p style="font-size: .5cm;"><b>Year-wise distribution</b></p></div>
+    <div class="table_summary">
+        {% if yearly %}
+            <table>
+                {{ yearly|safe }}
+            </table>
+        {% else %}
+            <p>No data available.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

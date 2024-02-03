@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/genSchedule.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <title>Depreciation Schedule</title>
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        th, td {
+          border: 1px solid black;
+          padding: 8px;
+        }
+      </style>
+      
+</head>
+<body>
+  {% include 'header.html' %}
+    <div class="right">
+      <nav aria-label="Page navigation example">
+      </nav>
+      <select id="filterDropdown">
+        <option value="">Select Financial Year</option>
+        {% for value in unique_rows_filter %}
+            <option>{{ value }}</option>
+        {% endfor %}
+    </select>
+        <table style="border-collapse: collapse;" id="dataTable">
+          <thead>
+            <tr>
+              {% for header in data.0 %}
+                <th>{{ header }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for sublist in data|slice:"1:" %}
+              <tr>
+                {% for value in sublist %}
+                  <td>{{ value }}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>        
+    </div>
+    <form method="post" action="" id="download_csv_dep">
+      {% csrf_token %}
+      <button type="button"  onclick="download_csv_dep()" class="btn btn-primary ml-2">Download CSV</button>
+    </form>
+  </div>
+</div>
+    
+
+
+      <!--custom js-->
+      <script src="../static/js/script.js"></script>
+      <!--Bootstrap-->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+      <script>
+        function download_csv_dep() {
+            document.getElementById("download_csv_dep").action = "{% url 'download_csv_dep' %}";
+            document.getElementById("download_csv_dep").submit();
+        }
+      </script>
+      <script>
+      // Add event listener to the dropdown for filtering
+      document.getElementById('filterDropdown').addEventListener('change', function() {
+          var selectedValue = this.value;
+          var table = document.getElementById('dataTable');
+          var rows = table.getElementsByTagName('tr');
+          
+          for (var i = 1; i < rows.length; i++) {
+              var currentRow = rows[i];
+              var cells = currentRow.getElementsByTagName('td');
+              var cellValue = cells[0].innerText || cells[0].textContent; // Assuming first column is used for filtering
+              
+              if (selectedValue === 'All' || cellValue === selectedValue) {
+                  currentRow.style.display = '';
+              } else {
+                  currentRow.style.display = 'none';
+              }
+          }
+      });
+    </script>
+</body>
+</html>

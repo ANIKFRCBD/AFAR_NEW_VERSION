@@ -1,0 +1,9 @@
+body {
+    overflow: hidden;
+}
+
+.right {
+    overflow-x: scroll;
+    scrollbar-width: 50px;
+    height: 80%;
+}

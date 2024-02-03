@@ -1,0 +1,2 @@
+financial_year,purchase_date,serial_no,bill_no,economic_code,category,name_of_item,costs_of_asset_sold,current_balance,asset_code_generated,asset_code,expected_life,depriciation_method,location,current_depreciation,accumulated_depreciation,current_condition
+2017-2018,2023-04-19,111,1,12312,Office equipment,Director Table ,232,12,SPA-HQ-FU-2018,SPA-HQ-FU-201-001,2312,213,HQ,3243,213,Sold

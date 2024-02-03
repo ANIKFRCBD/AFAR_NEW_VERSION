@@ -1,0 +1,200 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.projectnamecontainer{
+    max-height:0vh;
+    max-width: 100vw;
+    transition: background-color; 
+}
+.Projectname{
+    text-align: center;
+    background-color: beige;
+    padding: 1vh;
+}
+.namebox{
+    word-spacing: normal;
+    border: 3px;
+    border-color: black;
+       }
+.ownershipclaim{
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12px;
+    background-color: rgb(221, 245, 220)53, 153, 30);
+    bottom: 0;
+    right: 0;
+    margin-top: 13vh;
+}
+
+.namebox:hover{
+    background-color: white;
+    border: 1vh
+}
+.nameboxtext{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 36px;
+    text-align: center;
+    text-transform: capitalize ;
+}
+
+/*main body design*/
+.main_body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.right { 
+    flex-basis: 95%;
+}
+
+.left {
+    flex-basis: 5%;
+}
+
+.main_body .left .btn_group div {
+    display: flex;
+    flex-direction: column;
+}
+
+.main_body .left .btn {
+    margin: 5px; 
+}
+
+/*navbar css*/
+/* The sidebar menu */
+.sidebar {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: rgb(12, 12, 97); /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+  }
+  
+  /* The sidebar links */
+  .sidebar a {
+   color: white;
+   text-decoration: none;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  /* .sidebar a:hover {
+    color: #f1f1f1;
+  }
+   */
+  /* Position and style the close button (top right corner) */
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  /* The button used to open the sidebar */
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: rgb(12, 12, 97);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+  }
+  
+  .openbtn:hover {
+    background-color: #444;
+  }
+
+/*designing the search bar*/
+.pageNav_searchbar {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+}
+
+.search-container input[type=text] {
+  padding: 10px;
+  border: none;
+  font-size: 17px;
+  width: 70%;
+  background-color: #f1f1f1;
+}
+
+.search-container button {
+  background-color: rgb(12, 12, 97);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+
+/*form design*/
+.form form {
+  display: flex;
+  flex-direction: column;
+  float: auto;
+  width: 80% !important;
+  margin: auto;
+}
+
+.form label {
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.form input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #0077cc;
+}
+
+.form button[type="submit"] {
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form button[type="submit"]:hover {
+  background-color: #005fa3;
+}
+  
+  /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+  #main {
+    transition: margin-left .5s; /* If you want a transition effect */
+    padding: 20px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+  }

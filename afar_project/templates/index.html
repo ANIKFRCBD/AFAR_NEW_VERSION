@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/genSchedule.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <title>Asset Register</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th, td {
+        border: 1px solid black;
+        padding: 8px;
+      }
+    </style>
+    
+    
+  
+</head>
+<body>
+  {% include 'header.html' %}
+    <div class="right">
+      <h1 style="text-align: center;margin-bottom: 15px;margin-top: 5px;">Asset Register</h1>
+      <nav aria-label="Page navigation example">
+        <div class="pageNav_searchbar">
+          <!-- <div class="pageNav">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
+              >Previous</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </div> -->
+      <!-- <div class="searchBox">
+        <div class="search-container">
+          <form action="/search">
+            <input type="text" placeholder="Search...">
+            <button type="submit"><i class="fa fa-search">Find</i></button>
+          </form>
+        </div>
+      </div> -->
+      </div>
+      </nav>
+      <select id="filterDropdown">
+        <option value="">Select Financial Year</option>
+        {% for value in unique_rows_filter %}
+            <option>{{ value }}</option>
+        {% endfor %}
+    </select>
+      <table id="dataTable">
+        <thead>
+          <tr>
+            {% for cell in page_header %}
+              <th>{{ cell }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in result_rows %}
+            <tr>
+              {% for cell in row %}
+                <td>{{ cell }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <form method="post" action="" id="download_csv">
+      {% csrf_token %}
+      <input type="submit" class="btn btn-danger ml-2" value="Delete Data" />
+      <button type="button"  onclick="download_csv()" class="btn btn-primary ml-2">Download CSV</button>
+    </form>
+    <!-- <h1>Excel File Contents</h1>
+    <div>
+         Render the HTML table generated from the Excel file
+        {{ excel_html|safe }}
+    </div> -->
+  </div>
+</div>
+      <!--custom js-->
+      <script src="../static/js/script.js"></script>
+      <!--Bootstrap-->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+      <script>
+        function download_csv() {
+            document.getElementById("download_csv").action = "{% url 'download_csv' %}";
+            document.getElementById("download_csv").submit();
+        }
+      </script>
+
+<script>
+  // Add event listener to the dropdown for filtering
+  document.getElementById('filterDropdown').addEventListener('change', function() {
+      var selectedValue = this.value;
+      var table = document.getElementById('dataTable');
+      var rows = table.getElementsByTagName('tr');
+      
+      for (var i = 1; i < rows.length; i++) {
+          var currentRow = rows[i];
+          var cells = currentRow.getElementsByTagName('td');
+          var cellValue = cells[0].innerText || cells[0].textContent; // Assuming first column is used for filtering
+          
+          if (selectedValue === 'All' || cellValue === selectedValue) {
+              currentRow.style.display = '';
+          } else {
+              currentRow.style.display = 'none';
+          }
+      }
+  });
+</script>
+      
+</body>
+</html>

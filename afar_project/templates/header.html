@@ -1,0 +1,79 @@
+<!--header name-->
+<div class="projectnamecontainer">
+    <div class="Projectname">
+      <div class="namebox">
+        <div class="nameboxtext">
+          <p>
+            <span style="color: green"> A </span>
+            <span style="color: black"> - </span>
+            <span style="color: darkblue">FAR</span>
+          </p>
+        </div>
+      </div>
+      </div class ="ownershipclaimcontainer">
+    </div>
+    <p class="ownershipclaim">
+      All rights reserved by Financial Reporting Council Bangladesh
+    </p>
+  </div>
+
+  <div class="main_body">
+    <div class="left">
+      <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+          >&times;</a
+        >
+        <div class="btn_group">
+          <div>
+            <a href="{% url 'asset_register' %}">
+              <button type="submit" class="btn btn-primary btn-block">Asset Register</button>
+            </a>
+          </div>
+          <div>
+            <a href="{% url 'asset_schedule' %}">
+              <button type="submit" class="btn btn-primary btn-block">Asset Schedule</button>
+            </a>
+          </div>
+          <div>
+            <a href="{% url 'depriciation' %}">
+              <button type="submit" class="btn btn-primary btn-block">Show Depreciation Table</button>
+            </a>
+          </div>
+          <div>
+            <a href="{% url 'current_asset_info' %}">
+              <button type="submit" class="btn btn-primary btn-block">Current Asset Info</button>
+            </a>
+          </div>
+          <div>
+            <a href="{% url 'asset_info' %}">
+              <button type="submit" class="btn btn-primary btn-block">Input Asset Info</button>
+            </a>
+          </div>
+          <div>
+            <a href="{% url 'data_entry' %}">
+              <button type="submit" class="btn btn-primary btn-block">Data Entry</button>
+            </a>
+          </div>
+          <div>
+            <a href="{% url 'file_upload' %}">
+              <button type="submit" class="btn btn-primary btn-block">Upload File</button>
+            </a>
+          </div>
+          <div>
+            <a href="{% url 'modify_database' %}">
+              <button type="submit" class="btn btn-primary btn-block">Modify Database</button>
+            </a>
+          </div>
+          <div>
+            <a href="{% url 'frc_system' %}">
+              <button type="submit" class="btn btn-danger btn-block">FRC System</button>
+            </a>
+          </div>
+        </div>
+        </div>
+
+      <!-- <div id="main">
+        <button class="openbtn" onclick="openNav()">&#9776;Menu</button>
+      </div> -->
+    </div>
+    <div class="right">
