@@ -56,4 +56,4 @@ urlpatterns = [
     path('frc_system/', frc_system, name='frc_system'),
     path('frc_data_entry/', frc_data_entry, name='frc_data_entry'),
     path('impariment/', impairment.imparimenttest, name='impairment'),
-    path('data-save/', impairment.impairment_data_request_and_save,name="data_save"),]
+    ]
