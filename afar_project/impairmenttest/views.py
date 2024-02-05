@@ -7,13 +7,15 @@ from .models import impairmententry_model
 
 file_path="csv_path/sample/asset_register.xlsx"
 def imparimenttest(request): 
-    search_entry(request)   
+    search=search_entry(request)
+    search=search.fillna(" ").to_html()
     table = impairment(request) 
     form=impairment_data_request_and_save(request)
     forms_entryfinder=entry_finder(request)
     context = {"table":table,
                "form":form.as_table,
-               "entry_finder":forms_entryfinder}
+               "entry_finder":forms_entryfinder,
+               "search":search}
     return render (request,"impairment.html",context)
 
 def impairment(request):
@@ -38,26 +40,25 @@ def impairment_data_request_and_save(request):
             print(form.errors)   
     return form
 
-def entry_finder(request,data):
+def entry_finder(request):
     forms1=entryfinder(request.POST)
     if request.method=="POST":
         if forms1.is_valid():
-                bill_no=forms1.cleaned_data['bill_no']
-                Category=forms1.cleaned_data['Category']
-                Financial_Year=forms1.cleaned_data['Financial_Year']
-                data=[bill_no,Category,Financial_Year]
+            forms1=forms1
         else:
             print(forms1.errors)
     
-    print (data)
     return forms1 
 
 def search_entry(request):
-    form=entry_finder(request,data)
-    print(type(form))
+    form=entry_finder(request)
+    print(form)
+    bill_no=form.cleaned_data['bill_no']
+    Category=form.cleaned_data['Category']
+    Financial_Year=form.cleaned_data['Financial_Year']
+
     file=file_path
-    data=pd.read_excel(file)    
-    d=data
-    print(d)
+    data=pd.read_excel(file)  
+    d=data.loc[(data["Bill no"] == float(bill_no)) & (data["Financial Year"] == Financial_Year) | (data["Category"] == Category)]  
     return d
 # Create your views here.
