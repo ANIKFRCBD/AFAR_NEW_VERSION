@@ -54,12 +54,26 @@
       </div>
     </div>
     <br><br><br>
+    <div class="entry_finder">
+      <h2 style="text-align: center;"> Entry Filter for Impairment Test</h2>
+      <br><br>
+      <form action="{% url 'impairment' %}" method="post">
+        {% csrf_token %}
+        {{ entry_finder }}
+        <input type="Submit" value="Submit">
+
+      </form>
+
+    </div>
+    <br><br><br>
+    <div>
+      <h3 style="text-align: center;"> Impairment entry </h3>
     <form action="{% url 'impairment' %}" method="post">
         {% csrf_token %}
         {{form}}
         <input type="Submit" value="Submit">
     </form>
-
+  </div>
 
   </body>
 </html>

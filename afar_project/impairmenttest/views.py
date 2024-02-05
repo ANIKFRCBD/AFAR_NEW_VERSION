@@ -2,14 +2,18 @@ from django.shortcuts import render
 from django.http import request,response
 from django.contrib import messages
 import pandas as pd
-from .forms import impairmententry
+from .forms import impairmententry,entryfinder
 from .models import impairmententry_model
 
-def imparimenttest(request):    
+file_path="csv_path/sample/asset_register.xlsx"
+def imparimenttest(request): 
+    search_entry(request)   
     table = impairment(request) 
     form=impairment_data_request_and_save(request)
+    forms_entryfinder=entry_finder(request)
     context = {"table":table,
-               "form":form.as_table}
+               "form":form.as_table,
+               "entry_finder":forms_entryfinder}
     return render (request,"impairment.html",context)
 
 def impairment(request):
@@ -27,7 +31,6 @@ def impairment(request):
 def impairment_data_request_and_save(request):
     saved_data=0
     form=impairmententry(request.POST)
-    print(request.POST)
     if request.method=="POST":
         if form.is_valid():
             saved_data=form.save()
@@ -35,8 +38,26 @@ def impairment_data_request_and_save(request):
             print(form.errors)   
     return form
 
-# def impairment_accounting(request):
+def entry_finder(request,data):
+    forms1=entryfinder(request.POST)
+    if request.method=="POST":
+        if forms1.is_valid():
+                bill_no=forms1.cleaned_data['bill_no']
+                Category=forms1.cleaned_data['Category']
+                Financial_Year=forms1.cleaned_data['Financial_Year']
+                data=[bill_no,Category,Financial_Year]
+        else:
+            print(forms1.errors)
+    
+    print (data)
+    return forms1 
 
-
-
+def search_entry(request):
+    form=entry_finder(request,data)
+    print(type(form))
+    file=file_path
+    data=pd.read_excel(file)    
+    d=data
+    print(d)
+    return d
 # Create your views here.
