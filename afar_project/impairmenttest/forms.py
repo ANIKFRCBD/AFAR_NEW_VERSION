@@ -11,6 +11,4 @@ class impairmententry(ModelForm):
         self.fields["Value_in_use"].required = False
         self.fields["Fair_value_less_cost_to_sale"].required = False
 class entryfinder(forms.Form):
-    Category=forms.CharField(max_length=128,required=False)
-    bill_no=forms.IntegerField(required=False)
-    Financial_Year=forms.CharField(max_length=128,required=False)
+    Asset_Code=forms.CharField(max_length=128,required=False)

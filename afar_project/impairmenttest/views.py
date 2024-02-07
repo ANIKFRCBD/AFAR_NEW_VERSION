@@ -12,10 +12,12 @@ def imparimenttest(request):
     table = impairment(request) 
     form=impairment_data_request_and_save(request)
     forms_entryfinder=entry_finder(request)
+    drop=drop_down(request)
     context = {"table":table,
                "form":form.as_table,
                "entry_finder":forms_entryfinder,
-               "search":search}
+               "search":search,
+               "drop":drop}
     return render (request,"impairment.html",context)
 
 def impairment(request):
@@ -46,19 +48,20 @@ def entry_finder(request):
         if forms1.is_valid():
             forms1=forms1
         else:
-            print(forms1.errors)
-    
+            print(forms1.errors)    
     return forms1 
 
 def search_entry(request):
     form=entry_finder(request)
-    print(form)
-    bill_no=form.cleaned_data['bill_no']
-    Category=form.cleaned_data['Category']
-    Financial_Year=form.cleaned_data['Financial_Year']
-
+    Asset_Code=form.cleaned_data['Asset_Code']
     file=file_path
-    data=pd.read_excel(file)  
-    d=data.loc[(data["Bill no"] == float(bill_no)) & (data["Financial Year"] == Financial_Year) | (data["Category"] == Category)]  
+    data=pd.read_excel(file)
+    d=data.loc[data["Asset Code"] == Asset_Code] 
     return d
 # Create your views here.
+def drop_down(request):
+    file=file_path
+    data=pd.read_excel(file)
+    Bill_no=data["Bill no"].drop_duplicates()
+    Financial_Year=data["Financial Year"].drop_duplicates()
+    return Bill_no
