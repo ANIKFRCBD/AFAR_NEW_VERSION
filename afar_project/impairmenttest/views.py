@@ -5,24 +5,25 @@ import pandas as pd
 from .forms import impairmententry,entryfinder
 from .models import impairmententry_model
 
-file_path="csv_path/sample/asset_register.xlsx"
+file_path="csv_path/sample/impairment_data.xlsx"
+
 def imparimenttest(request): 
     search=search_entry(request)
     search=search.fillna(" ").to_html()
     table = impairment(request) 
     form=impairment_data_request_and_save(request)
     forms_entryfinder=entry_finder(request)
-    drop=drop_down(request)
+    file=accounting_for_recoverable_amount(request)
     context = {"table":table,
                "form":form.as_table,
                "entry_finder":forms_entryfinder,
                "search":search,
-               "drop":drop}
+               "file":file}
     return render (request,"impairment.html",context)
 
 def impairment(request):
     #read the asset_register file
-    file_path="csv_path/sample/asset_register.xlsx"
+    file_path="csv_path/sample/impairment_data.xlsx"
     primary_df=pd.read_excel(file_path)
     impairment_part=pd.DataFrame({"Book_Value":[],"Fair_value_less_cost_to_sale": [],"Value_in_use":[]})
     primary_df=primary_df[["Financial Year","Purchase date","Bill no","Economic Code","Category","Name of Item","Brand Name"]]
@@ -53,15 +54,25 @@ def entry_finder(request):
 
 def search_entry(request):
     form=entry_finder(request)
+    print(form)
     Asset_Code=form.cleaned_data['Asset_Code']
     file=file_path
     data=pd.read_excel(file)
     d=data.loc[data["Asset Code"] == Asset_Code] 
     return d
 # Create your views here.
-def drop_down(request):
-    file=file_path
-    data=pd.read_excel(file)
-    Bill_no=data["Bill no"].drop_duplicates()
-    Financial_Year=data["Financial Year"].drop_duplicates()
-    return Bill_no
+
+def accounting_for_recoverable_amount(request):
+    form6=impairmententry(request.POST)
+    print(form6)
+    element_to_match=entry_finder(request)
+    element_to_match=element_to_match.cleaned_data["Asset_Code"]
+    file=pd.read_excel(file_path)
+    Value_in_use=form6.cleaned_data["Value_in_use"]
+    Fair_value_less_cost_to_sale=form6.cleaned_data["Fair_value_less_cost_to_sale"]
+    row_to_identify=file[file["Asset Code"]==element_to_match].index[0]
+    column_value1="Value in use"
+    column_value2="Fair less cost to sale"
+    file.align(row_to_identify, axis=1, copy=False)
+    file.at[row_to_identify,column_value1,column_value2]=[Value_in_use,Fair_value_less_cost_to_sale]
+    return file
