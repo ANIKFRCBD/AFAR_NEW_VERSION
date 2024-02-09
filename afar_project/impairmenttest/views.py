@@ -7,12 +7,13 @@ from .models import impairmententry_model
 
 file_path="csv_path/sample/impairment_data.xlsx"
 
+
 def imparimenttest(request): 
     search=search_entry(request)
     search=search.fillna(" ").to_html()
     table = impairment(request) 
-    form=impairment_data_request_and_save(request)
-    forms_entryfinder=entry_finder(request)
+    form,data=impairment_data_request_and_save(request)
+    forms_entryfinder,data=entry_finder(request)
     file=accounting_for_recoverable_amount(request)
     context = {"table":table,
                "form":form.as_table,
@@ -34,45 +35,55 @@ def impairment(request):
     return table
 
 def impairment_data_request_and_save(request):
-    saved_data=0
+    data=(0,0)
+    Value_in_use=0
+    Fair_value_less_cost_to_sale=0
     form=impairmententry(request.POST)
     if request.method=="POST":
         if form.is_valid():
-            saved_data=form.save()
+            form.save()
+            Value_in_use=form.cleaned_data["Value_in_use"]
+            Fair_value_less_cost_to_sale=form.cleaned_data["Fair_value_less_cost_to_sale"]
+            data=(Value_in_use,Fair_value_less_cost_to_sale)
         else:
             print(form.errors)   
-    return form
+    return form,data
 
 def entry_finder(request):
     forms1=entryfinder(request.POST)
     if request.method=="POST":
         if forms1.is_valid():
-            forms1=forms1
+            forms1.save()
+            data=forms1.cleaned_data["Asset_Code"]
         else:
             print(forms1.errors)    
-    return forms1 
+    return forms1,data
+
+
 
 def search_entry(request):
-    form=entry_finder(request)
-    print(form)
-    Asset_Code=form.cleaned_data['Asset_Code']
+    form,data=entry_finder(request)
+    Asset_Code=data
     file=file_path
     data=pd.read_excel(file)
     d=data.loc[data["Asset Code"] == Asset_Code] 
     return d
 # Create your views here.
-
 def accounting_for_recoverable_amount(request):
-    form6=impairmententry(request.POST)
-    print(form6)
-    element_to_match=entry_finder(request)
-    element_to_match=element_to_match.cleaned_data["Asset_Code"]
     file=pd.read_excel(file_path)
-    Value_in_use=form6.cleaned_data["Value_in_use"]
-    Fair_value_less_cost_to_sale=form6.cleaned_data["Fair_value_less_cost_to_sale"]
-    row_to_identify=file[file["Asset Code"]==element_to_match].index[0]
-    column_value1="Value in use"
-    column_value2="Fair less cost to sale"
-    file.align(row_to_identify, axis=1, copy=False)
-    file.at[row_to_identify,column_value1,column_value2]=[Value_in_use,Fair_value_less_cost_to_sale]
+    no_use,element_to_match=entry_finder(request)
+    form6,data=impairment_data_request_and_save(request)
+    print(element_to_match)    
+    if data is not None:
+        Value_in_use=data[0]
+        Fair_value_less_cost_to_sale=data[1]
+        if Value_in_use is not None:
+            file.loc[file["Asset Code"]==element_to_match,"Value in use"]=float(Value_in_use)
+            file.loc[file["Asset Code"]==element_to_match,"Fair value less cost to sale"]=float(Fair_value_less_cost_to_sale)
+            print(f"the data are {Fair_value_less_cost_to_sale},{Value_in_use}")
+    else:
+        file.loc[file["Asset Code"]==element_to_match,"Value in use"]=0
+        file.loc[file["Asset Code"]==element_to_match,"Fair value less cost to sale"]=0
+        print("no data is sent")
+    file.to_excel(file_path,index=False)
     return file

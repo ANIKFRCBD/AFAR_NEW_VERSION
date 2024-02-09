@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import impairmententry_model
+from .models import impairmententry_model,entryfinderm
 
 class impairmententry(ModelForm):
     class Meta:
@@ -10,5 +10,11 @@ class impairmententry(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["Value_in_use"].required = False
         self.fields["Fair_value_less_cost_to_sale"].required = False
-class entryfinder(forms.Form):
-    Asset_Code=forms.CharField(max_length=128,required=False)
+
+class entryfinder(ModelForm):
+    class Meta:
+        model = entryfinderm  # replace with your model
+        fields = ['Asset_Code']  # corrected typo 'fields'
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["Asset_Code"].required = False
