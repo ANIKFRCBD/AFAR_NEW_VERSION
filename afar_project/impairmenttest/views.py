@@ -35,7 +35,7 @@ def impairment(request):
     return table
 
 def impairment_data_request_and_save(request):
-    data=(0,0)
+    data=(0,0,0)
     Value_in_use=0
     Fair_value_less_cost_to_sale=0
     form=impairmententry(request.POST)
@@ -46,6 +46,7 @@ def impairment_data_request_and_save(request):
             Fair_value_less_cost_to_sale=form.cleaned_data["Fair_value_less_cost_to_sale"]
             Asset_code=form.cleaned_data["Asset_Code"]
             data=(Value_in_use,Fair_value_less_cost_to_sale,Asset_code)
+            print(data)
         else:
             print(form.errors)   
     return form,data
@@ -73,12 +74,12 @@ def search_entry(request):
 # Create your views here.
 def accounting_for_recoverable_amount(request):
     file=pd.read_excel(file_path)
-    form6,data1=impairment_data_request_and_save(request)
-    print(data1)
-    if data1 is not None:
-        Value_in_use=data1[0]
-        Fair_value_less_cost_to_sale=data1[1]
-        element_to_match=data1[2]
+    form,data=impairment_data_request_and_save(request)
+    print(data)
+    if data is not None:
+        Value_in_use=data[0]
+        Fair_value_less_cost_to_sale=data[1]
+        element_to_match=data[2]
         if Value_in_use is not None:
             print(f'the key is: {element_to_match}')
             file.loc[file["Asset Code"]==element_to_match,"Value in use"]=float(Value_in_use)
