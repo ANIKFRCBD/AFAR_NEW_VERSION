@@ -44,14 +44,16 @@ def impairment_data_request_and_save(request):
             form.save()
             Value_in_use=form.cleaned_data["Value_in_use"]
             Fair_value_less_cost_to_sale=form.cleaned_data["Fair_value_less_cost_to_sale"]
-            data=(Value_in_use,Fair_value_less_cost_to_sale)
+            Asset_code=form.cleaned_data["Asset_Code"]
+            data=(Value_in_use,Fair_value_less_cost_to_sale,Asset_code)
         else:
             print(form.errors)   
     return form,data
 
 def entry_finder(request):
+    data=0
     forms1=entryfinder(request.POST)
-    if request.method=="POST":
+    if request.method == "POST":
         if forms1.is_valid():
             forms1.save()
             data=forms1.cleaned_data["Asset_Code"]
@@ -71,13 +73,14 @@ def search_entry(request):
 # Create your views here.
 def accounting_for_recoverable_amount(request):
     file=pd.read_excel(file_path)
-    no_use,element_to_match=entry_finder(request)
-    form6,data=impairment_data_request_and_save(request)
-    print(element_to_match)    
-    if data is not None:
-        Value_in_use=data[0]
-        Fair_value_less_cost_to_sale=data[1]
+    form6,data1=impairment_data_request_and_save(request)
+    print(data1)
+    if data1 is not None:
+        Value_in_use=data1[0]
+        Fair_value_less_cost_to_sale=data1[1]
+        element_to_match=data1[2]
         if Value_in_use is not None:
+            print(f'the key is: {element_to_match}')
             file.loc[file["Asset Code"]==element_to_match,"Value in use"]=float(Value_in_use)
             file.loc[file["Asset Code"]==element_to_match,"Fair value less cost to sale"]=float(Fair_value_less_cost_to_sale)
             print(f"the data are {Fair_value_less_cost_to_sale},{Value_in_use}")
