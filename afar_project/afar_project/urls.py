@@ -20,6 +20,7 @@ from afar_project.views import asset_register,data_entry,modify_database,success
 from dashboard.views import dashboard,dashboard_summary_of_assets
 from users.views import opening,signin,signup,SignUpModel
 from impairmenttest import views as impairment
+from depreciation import views as dep
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',opening,name='opening'),
@@ -52,7 +53,7 @@ urlpatterns = [
     path('delete_rows_asset_register/', delete_rows_asset_register, name='delete_rows_asset_register'),
     path('frc_asset_register/', frc_asset_register, name='frc_asset_register'),
     path('frc_asset_schedule/', frc_asset_schedule, name='frc_asset_schedule'),
-    path('frc_dep/', frc_dep, name='frc_dep'),
+    path('frc_dep/', dep.dep, name='frc_dep'),
     path('frc_system/', frc_system, name='frc_system'),
     path('frc_data_entry/', frc_data_entry, name='frc_data_entry'),
     path('impariment/', impairment.imparimenttest, name='impairment'),

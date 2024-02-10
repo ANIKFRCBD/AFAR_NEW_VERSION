@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'dashboard',
     'users',
     'impairmenttest',
+    'depreciation',
 ]
 
 MIDDLEWARE = [
