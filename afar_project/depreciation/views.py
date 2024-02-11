@@ -10,6 +10,7 @@ def dep(request):
     # Read the existing data from the Excel file
     file_path = 'csv_path/sample/asset_registerxxx.xlsx'
     df = pd.read_excel(file_path)
+    print(df.head())
     df.fillna('', inplace=True)
     numeric_cols = df.select_dtypes(include='number').columns  # Select numeric columns
     df[numeric_cols] = df[numeric_cols].applymap(lambda x: f'{x:.2f}' if not pd.isnull(x) else '')  # Format 
@@ -77,6 +78,7 @@ def dep(request):
     # Split the HTML table into headers and rows
     header_html = excel_html.split('<tbody>')[0]  # Extract headers part
     rows_html = '<tbody>' + excel_html.split('<tbody>')[1]  # Extract rows part
+    print(df.head())
 
     # You can also save the modified DataFrame back to an Excel file
     df.to_excel('csv_path/sample/modified_asset_register.xlsx', index=False)
