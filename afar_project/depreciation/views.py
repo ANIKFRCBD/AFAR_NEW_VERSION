@@ -5,17 +5,18 @@ from afar_project.views import calculate_values,calculate_costs
 
 
 file_path='csv_path/sample/asset_register.xlsx'
+Dep_file_path='csv_path/sample/depreciation.xlsx'
+
 def dep(request):
     #call functions
     dep_sheet,colums_to_add,year_data=dep_sheet_maker(request)
-    print(type(dep_sheet))
+    data_sheet_updated=depreciation_calculation(request)
     #peocess the html
     dep_data=dep_sheet #for Depreciation calculation
-    html=dep_sheet.to_html(index=False) # for html template
-    print(type(html))
+    html=data_sheet_updated.to_html(index=False) # for html template
     header_html = html.split('<tbody>')[0]  # Extract headers part
     rows_html = '<tbody>' + html.split('<tbody>')[1]  # Extract rows part
-
+    data_sheet_updated.to_excel(Dep_file_path,index=False)
 
     return render(request, 'frc_dep.html', {'header_html': header_html, 'rows_html': rows_html})
 # Create your views here.
@@ -23,7 +24,7 @@ def dep_sheet_maker(request):
     df = pd.read_excel(file_path)
     pd.set_option('display.float_format', '{:.2f}'.format)
     # data extraction and cleaning
-    df=df[['Financial Year','Asset Code','Purchase date','Sl ','Bill no','Economic Code','Category','Name of Item','Brand Name','Model/Type','Units','Modified Number','Price','Expected life','Sold (unit)','Cost of Assets Sold','Current Balance']]
+    df=df[['Financial Year','Asset Code','Purchase date','Sl ','Bill no','Economic Code','Category','Name of Item','Brand Name','Model/Type','Units','Modified Number','Price','Expected life','Sold (unit)','FY of Items sold','Cost of Assets Sold','Current Balance']]
     df['Rate of Depreciation']=1/df['Expected life']
     df['Accumulated Depreciation']=0
     df['Accumulated Depreciation on Sold items']=0    
@@ -31,6 +32,7 @@ def dep_sheet_maker(request):
     df['Sold (unit)']=df['Sold (unit)'].fillna(0)
     df['Modified Number']=df['Modified Number'].fillna(0)
     df[['Cost of Assets Sold']]=df[['Cost of Assets Sold']].fillna(0)
+    df[['FY of Items sold']]=df[['FY of Items sold']].fillna(0)
     df['Current Balance']=df['Price']-df['Cost of Assets Sold']
     years=df['Financial Year'].drop_duplicates()
     current_year=datetime.now()
@@ -69,12 +71,18 @@ def dep_sheet_maker(request):
         columns_to_add=len(years)
         year_data=years
     #Write it to excel file
-    df.to_excel("depreciation.xlsx",index=False)
+    df.to_excel(Dep_file_path,index=False)
     
     return df,columns_to_add,year_data
 def depreciation_calculation(request):
+    data_sheet,columns_to_add,year_data=dep_sheet_maker(request)
+    list_of_year=[]
+    itertation=data_sheet.columns[-(columns_to_add):]
+    for i in itertation:
+        data_sheet[i]=data_sheet["Price"]*data_sheet["Rate of Depreciation"]
+    data_sheet['Accumulated Depreciation'] = data_sheet.iloc[:, -columns_to_add:].sum(axis=1, min_count=1)
 
-    return request
+    return data_sheet
 
 
     
