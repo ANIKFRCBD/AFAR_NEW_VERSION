@@ -77,10 +77,12 @@ def dep_sheet_maker(request):
 def depreciation_calculation(request):
     data_sheet,columns_to_add,year_data=dep_sheet_maker(request)
     list_of_year=[]
-    itertation=data_sheet.columns[-(columns_to_add):]
+    itertation=data_sheet.columns[-(columns_to_add+1):]
     for i in itertation:
         data_sheet[i]=data_sheet["Price"]*data_sheet["Rate of Depreciation"]
-    data_sheet['Accumulated Depreciation'] = data_sheet.iloc[:, -columns_to_add:].sum(axis=1, min_count=1)
+    columns_to_iter=data_sheet.columns[-len(itertation):]
+    print(columns_to_iter)
+    data_sheet['Accumulated Depreciation'] = data_sheet[columns_to_iter].sum(axis=1)
 
     return data_sheet
 
