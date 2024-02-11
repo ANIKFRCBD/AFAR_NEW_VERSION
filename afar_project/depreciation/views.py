@@ -22,8 +22,11 @@ def dep(request):
 def dep_sheet_maker(request):
     df = pd.read_excel(file_path)
     pd.set_option('display.float_format', '{:.2f}'.format)
-    df=df[['Financial Year','Asset Code','Purchase date','Sl ','Bill no','Economic Code','Category','Name of Item','Brand Name','Model/Type','Units','Modified Number','Price','Sold (unit)','Cost of Assets Sold','Current Balance']]
+    # data extraction and cleaning
+    df=df[['Financial Year','Asset Code','Purchase date','Sl ','Bill no','Economic Code','Category','Name of Item','Brand Name','Model/Type','Units','Modified Number','Price','Expected life','Sold (unit)','Cost of Assets Sold','Current Balance']]
+    df['Rate of Depreciation']=1/df['Expected life']
     df['Accumulated Depreciation']=0
+    df['Accumulated Depreciation on Sold items']=0    
     df['Units']=df['Units'].fillna(0)
     df['Sold (unit)']=df['Sold (unit)'].fillna(0)
     df['Modified Number']=df['Modified Number'].fillna(0)
@@ -69,7 +72,9 @@ def dep_sheet_maker(request):
     df.to_excel("depreciation.xlsx",index=False)
     
     return df,columns_to_add,year_data
-# def depreciation_calculation(request):
+def depreciation_calculation(request):
+
+    return request
 
 
     
