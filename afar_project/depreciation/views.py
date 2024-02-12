@@ -22,7 +22,7 @@ def dep(request):
 # Create your views here.
 def dep_sheet_maker(request):
     df = pd.read_excel(file_path)
-    pd.set_option('display.float_format', '{:.2f}'.format)
+    pd.set_option('display.float_format', '{:.1f}'.format)
     # data extraction and cleaning
     df=df[['Financial Year','Asset Code','Purchase date','Sl ','Bill no','Economic Code','Category','Name of Item','Brand Name','Model/Type','Units','Modified Number','Price','Expected life','Sold (unit)','FY of Items sold','Cost of Assets Sold','Current Balance']]
     df['Rate of Depreciation']=1/df['Expected life']
@@ -86,6 +86,8 @@ def depreciation_calculation(request):
     columns_to_iter=data_sheet.columns[-len(itertation):]
     print(columns_to_iter)
     data_sheet['Accumulated Depreciation'] = data_sheet[columns_to_iter].sum(axis=1)
+    total_colums=len(list(data_sheet.columns))
+    print(total_colums)
 
     return data_sheet
 
