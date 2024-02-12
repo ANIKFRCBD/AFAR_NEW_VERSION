@@ -30,6 +30,9 @@ def dep_sheet_maker(request):
     df['Accumulated Depreciation on Sold items']=0    
     df['Units']=df['Units'].fillna(0)
     df['Sold (unit)']=df['Sold (unit)'].fillna(0)
+    df['Model/Type']=df['Model/Type'].fillna(" ")
+    df['Brand Name']=df['Brand Name'].fillna(" ")
+    df['Economic Code']=df['Economic Code'].fillna(" ")
     df['Modified Number']=df['Modified Number'].fillna(0)
     df[['Cost of Assets Sold']]=df[['Cost of Assets Sold']].fillna(0)
     df[['FY of Items sold']]=df[['FY of Items sold']].fillna(0)
@@ -77,7 +80,7 @@ def dep_sheet_maker(request):
 def depreciation_calculation(request):
     data_sheet,columns_to_add,year_data=dep_sheet_maker(request)
     list_of_year=[]
-    itertation=data_sheet.columns[-(columns_to_add+1):]
+    itertation=data_sheet.columns[-(columns_to_add+1):] #+1 as the range didn't suffice
     for i in itertation:
         data_sheet[i]=data_sheet["Price"]*data_sheet["Rate of Depreciation"]
     columns_to_iter=data_sheet.columns[-len(itertation):]
