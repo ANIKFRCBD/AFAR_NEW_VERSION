@@ -10,6 +10,7 @@ file_path="csv_path/sample/impairment_data.xlsx"
 
 def imparimenttest(request): 
     search=search_entry(request)
+    print(search)
     search=search.fillna(" ").to_html()
     table = impairment(request) 
     form,data=impairment_data_request_and_save(request)
@@ -46,7 +47,6 @@ def impairment_data_request_and_save(request):
             Fair_value_less_cost_to_sale=form.cleaned_data["Fair_value_less_cost_to_sale"]
             Asset_code=form.cleaned_data["Asset_Code"]
             data=(Value_in_use,Fair_value_less_cost_to_sale,Asset_code)
-            print(data)
         else:
             print(form.errors)   
     return form,data
@@ -66,16 +66,15 @@ def entry_finder(request):
 
 def search_entry(request):
     form,data=entry_finder(request)
-    Asset_Code=data
+    Asset_Code=str(data)
     file=file_path
-    data=pd.read_excel(file)
-    d=data.loc[data["Asset Code"] == Asset_Code] 
+    data_sheet=pd.read_excel(file)
+    d=data_sheet.loc[data_sheet["Asset Code"] == Asset_Code]
     return d
 # Create your views here.
 def accounting_for_recoverable_amount(request):
     file=pd.read_excel(file_path)
     form,data=impairment_data_request_and_save(request)
-    print(data)
     if data is not None:
         Value_in_use=data[0]
         Fair_value_less_cost_to_sale=data[1]
