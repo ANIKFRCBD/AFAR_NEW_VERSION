@@ -1638,54 +1638,42 @@ def frc_asset_register(request):
     # Count the number of rows in the DataFrame
     len_csv_t = len(df_t)
 
-    # if(len_csv_t > 1):
-    #     df[['Cost of Assets Sold', 'Current Balance']] = df.apply(calculate_costs, axis=1)
+    if(len_csv_t > 1):
+        df["Current Balance"]=df["Price"]-df["Cost of Assets Sold"]
+        # Convert the relevant columns to strings and add a new column "Asset Code" after the 4th column
+        df.iloc[:, 17] = df.iloc[:, 17].astype(str)
+        df.iloc[:, 6] = df.iloc[:, 6].astype(str)
+        df.iloc[:, 0] = df.iloc[:, 0].astype(str)
+        df.iloc[:, 2] = df.iloc[:, 2].astype(str)
 
-    #     # Define a function to apply the logic to each row
-    #     def logic(row):
-    #         first_four_chars = str(row['Financial Year'])[:4]
-    #         return "New" if year_variable == first_four_chars else "Post"
-
-    #     # Create the "New/Post" column and apply the logic
-    #     df.insert(3, "New/Post", df.apply(lambda row: logic(row), axis=1))
-
-    #     # Convert the relevant columns to strings and add a new column "Asset Code" after the 4th column
-    #     # df.iloc[:, 16] = df.iloc[:, 16].astype(str)
-    #     # df.iloc[:, 6] = df.iloc[:, 6].astype(str)
-    #     # df.iloc[:, 0] = df.iloc[:, 0].astype(str)
-    #     # df.iloc[:, 2] = df.iloc[:, 2].astype(str)
-
-    #     df.insert(4, "Asset Code", "FRC" + "-" + df.iloc[:, 16].astype(str).iloc[0] + "-" +
-    #         df.iloc[:, 6].astype(str).str[:1] + "-" +
-    #         df.iloc[:, 1].astype(str).str.extract(r'(\d{2})(\d{2})').iloc[:, 1] + "-" +
-    #         df.iloc[:, 2].astype(str).str[:-2].apply(lambda x: x.zfill(4))
-    #     )
+        #Asset_code_generation_updated_by_anik_mallick
+        df["Asset Code"]="FRC" + "-" +  df.iloc[:, 19].astype(str).iloc[0]+"-"+df.iloc[:, 18].astype(str).iloc[0] + "-" + df.iloc[:, 6].astype(str).str[:1] + "-" +df.iloc[:, 1].astype(str).str.extract(r'(\d{2})(\d{2})').iloc[:, 1] + "-" +df.iloc[:, 2].astype(str).str[:-2].apply(lambda x: x.zfill(4))
         
-    #     df.fillna('', inplace=True)
-    #     numeric_cols = df.select_dtypes(include='number').columns  # Select numeric columns
-    #     df[numeric_cols] = df[numeric_cols].applymap(lambda x: f'{x:.2f}' if not pd.isnull(x) else '')  # Format numeric values to display 2 decimal places
+        df.fillna('', inplace=True)
+        numeric_cols = df.select_dtypes(include='number').columns  # Select numeric columns
+        df[numeric_cols] = df[numeric_cols].applymap(lambda x: f'{x:.2f}' if not pd.isnull(x) else '')  # Format numeric values to display 2 decimal places
 
-    #     # Extract unique values from the first column
-    #     unique_values = df.iloc[:, 0].unique().tolist()
+        # Extract unique values from the first column
+        unique_values = df.iloc[:, 0].unique().tolist()
 
-    #     # Convert all values in the DataFrame to strings
-    #     df = df.astype(str)
+        # Convert all values in the DataFrame to strings
+        df = df.astype(str)
 
-    #     excel_file_path = 'csv_path/sample/asset_registerxxx.xlsx'  # Change this to your desired file path
+        excel_file_path = 'csv_path/sample/asset_register.xlsx'  # Change this to your desired file path
 
-    #     # Save the DataFrame to an Excel file
-    #     df.to_excel(excel_file_path, index=False)
+        # Save the DataFrame to an Excel file
+        df.to_excel(excel_file_path, index=False)
 
-    #     # Convert DataFrame to HTML
-    #     excel_html = df.to_html(index=False)
+        # Convert DataFrame to HTML
+        excel_html = df.to_html(index=False)
 
-    #     # Split the HTML table into headers and rows
-    #     header_html = excel_html.split('<tbody>')[0]  # Extract headers part
-    #     rows_html = '<tbody>' + excel_html.split('<tbody>')[1]  # Extract rows part
+        # Split the HTML table into headers and rows
+        header_html = excel_html.split('<tbody>')[0]  # Extract headers part
+        rows_html = '<tbody>' + excel_html.split('<tbody>')[1]  # Extract rows part
 
-    #     return render(request, 'frc_asset_register.html', {'header_html': header_html, 'rows_html': rows_html, 'unique_values': unique_values})
+        return render(request, 'frc_asset_register.html', {'header_html': header_html, 'rows_html': rows_html, 'unique_values': unique_values})
 
-    excel_file_path = 'csv_path/sample/asset_registerxxx.xlsx'  # Change this to your desired file path
+    excel_file_path = 'csv_path/sample/asset_register.xlsx'  # Change this to your desired file path
 
     # Save the DataFrame to an Excel file
     df.to_excel(excel_file_path, index=False)

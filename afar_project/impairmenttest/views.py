@@ -6,6 +6,7 @@ from .forms import impairmententry,entryfinder
 from .models import impairmententry_model
 
 file_path="csv_path/sample/impairment_data.xlsx"
+file_path_register="csv_path/sample/asset_register.xlsx"
 
 
 def imparimenttest(request): 
@@ -25,15 +26,14 @@ def imparimenttest(request):
 
 def impairment(request):
     #read the asset_register file
-    file_path="csv_path/sample/impairment_data.xlsx"
+    file_path=file_path_register
     primary_df=pd.read_excel(file_path)
-    impairment_part=pd.DataFrame({"Book_Value":[],"Fair_value_less_cost_to_sale": [],"Value_in_use":[]})
-    primary_df=primary_df[["Financial Year","Purchase date","Bill no","Economic Code","Category","Name of Item","Brand Name"]]
-    primary_df.columns = ["Financial_Year","Purchase_date","Bill_no","Economic_Code","Category","Name_of_Item","Brand_Name"]
+    impairment_part=pd.DataFrame({"Book Value":[],"Fair value less cost to sale": [],"Value in use":[],"Recoverable Value":[],"Impairment":[]})
+    primary_df=primary_df[["Financial Year","Purchase date","Bill no","Economic Code","Category","Name of Item","Brand Name","Asset Code"]]
     primary_df=pd.concat([primary_df,impairment_part],join="outer")
     primary_df=primary_df.fillna(0)
     table=primary_df.to_dict(orient="records")
-    return table
+    return table,primary_df
 
 def impairment_data_request_and_save(request):
     data=(0,0,0)
@@ -66,14 +66,15 @@ def entry_finder(request):
 
 def search_entry(request):
     form,data=entry_finder(request)
-    Asset_Code=str(data)
-    file=file_path
-    data_sheet=pd.read_excel(file)
-    d=data_sheet.loc[data_sheet["Asset Code"] == Asset_Code]
+    Asset_Code=data
+    table,data_sheet=impairment(request)
+    print(data_sheet["Asset Code"])
+    d=data_sheet[data_sheet["Asset Code"] == Asset_Code]
+    print(d)
     return d
 # Create your views here.
 def accounting_for_recoverable_amount(request):
-    file=pd.read_excel(file_path)
+    not_use,file=impairment(request)
     form,data=impairment_data_request_and_save(request)
     if data is not None:
         Value_in_use=data[0]
