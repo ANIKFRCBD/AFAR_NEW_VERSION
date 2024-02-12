@@ -81,13 +81,28 @@ def depreciation_calculation(request):
     data_sheet,columns_to_add,year_data=dep_sheet_maker(request)
     list_of_year=[]
     itertation=data_sheet.columns[-(columns_to_add+1):] #+1 as the range didn't suffice
-    for i in itertation:
-        data_sheet[i]=data_sheet["Price"]*data_sheet["Rate of Depreciation"]
+
+    
+    # for i in itertation:
+    #     data_sheet[i]=data_sheet["Price"]*data_sheet["Rate of Depreciation"]
+
     columns_to_iter=data_sheet.columns[-len(itertation):]
     print(columns_to_iter)
     data_sheet['Accumulated Depreciation'] = data_sheet[columns_to_iter].sum(axis=1)
+<<<<<<< HEAD
     total_colums=len(list(data_sheet.columns))
     print(total_colums)
+=======
+    total_columns=len(list(data_sheet.columns))
+    iteration_from_last=len(itertation)
+
+    for index, row in data_sheet.iterrows():
+        for column in data_sheet.columns[total_columns-iteration_from_last:]:
+            fy_value = float(row["Financial Year"][:4])
+            column_value = float(column[:4])
+            if fy_value <= column_value:
+                data_sheet.loc[index, column] = row["Price"] * row["Rate of Depreciation"]
+>>>>>>> a697cc693fcdeef7778bf4dc259544e9a5a678c7
 
     return data_sheet
 

@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,38 +11,214 @@
     <title>Dash Board</title>
 
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
+        /* body {
+            font-family: 'lato', sans-serif;
         }
 
-        th, td {
+        .container {
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        h2 {
+            font-size: 26px;
+            margin: 20px 0;
+            text-align: center;
+
+            small {
+                font-size: 0.5em;
+            }
+        }
+
+        .responsive-table {
+            li {
+                border-radius: 3px;
+                padding: 25px 30px;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 25px;
+            }
+
+            .table-header {
+                background-color: #95A5A6;
+                font-size: 14px;
+                text-transform: uppercase;
+                letter-spacing: 0.03em;
+            }
+
+            .table-row {
+                background-color: #ffffff;
+                box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+            }
+
+            .col-1 {
+                flex-basis: 10%;
+            }
+
+            .col-2 {
+                flex-basis: 40%;
+            }
+
+            .col-3 {
+                flex-basis: 25%;
+            }
+
+            .col-4 {
+                flex-basis: 25%;
+            }
+
+            @media all and (max-width: 767px) {
+                .table-header {
+                    display: none;
+                }
+
+                .table-row {}
+
+                li {
+                    display: block;
+                }
+
+                .col {
+
+                    flex-basis: 100%;
+
+                }
+
+                .col {
+                    display: flex;
+                    padding: 10px 0;
+
+                    &:before {
+                        color: #6C7A89;
+                        padding-right: 10px;
+                        content: attr(data-label);
+                        flex-basis: 50%;
+                        text-align: right;
+                    }
+                }
+            }
+        } */
+
+        /* html,
+        body {
+            height: 100%;
+        } */
+
+        body {
+            /* margin: 0; */
+            background: linear-gradient(45deg, #49a09d, #5f2c82);
+            font-family: sans-serif;
+            font-weight: 100;
+        }
+
+        button{
+            background: linear-gradient(45deg, #49a09d, #5f2c82);
+        }
+
+        /* .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        } */
+
+        /* table {
+            width: 800px;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        } */
+
+        /* th,
+        td {
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        } */
+
+        /* th {
+            text-align: left;
+        } */
+
+        thead {
+            th {
+                background-color: #55608f;
+            }
+        }
+
+        tbody {
+            tr {
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.3);
+                }
+            }
+
+            td {
+                position: relative;
+
+                &:hover {
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        top: -9999px;
+                        bottom: -9999px;
+                        background-color: rgba(255, 255, 255, 0.2);
+                        z-index: -1;
+                    }
+                }
+            }
+        }
+
+        table {
+            border-radius: 10px;
+            border-collapse: collapse;
+            width: 100%;
+            /* width: 800px; */
+            /* border-collapse: collapse; */
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
             text-align: left;
             padding: 8px;
-            border: 1px solid #dddddd;
+            /* border: 1px solid #dddddd; */
+            /* padding: 15px; */
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
         }
 
         th {
-            background-color: #f2f2f2;
-            font-weight: bold;
+            /* background-color: #f2f2f2;
+            font-weight: bold; */
+            text-align: left;
         }
 
         .left {
+            justify-content: center;
             display: flex;
             flex-direction: row;
             margin-top: 10px;
         }
 
-        .left > div {
+        .left>div {
             margin-right: 10px;
         }
-        .header{
+
+        .header {
             text-align: center;
             font-size: medium;
             text-decoration: double;
-            margin-top: 0cm ;
+            margin-top: 0cm;
         }
-        .table_summary{
+
+        .table_summary {
             padding: .5cm;
             padding-left: 1cm;
             padding-right: .5cm;
@@ -52,85 +229,184 @@
             row-gap: 1cm;
             text-decoration: solid;
         }
-        .org_name{
+
+        .org_name {
             text-align: center;
             align-content: center;
         }
     </style>
 </head>
+
 <body>
     {% include 'header.html' %}
 
     <div class='left'>
         <div>
             <a href="{% url 'dashboard' %}">
-                <button type="button" class="btn btn-primary btn-block">Dashboard</button>
+                <button type="button" class="btn btn-success btn-block">Dashboard</button>
             </a>
         </div>
         <div>
             <a href="{% url 'frc_asset_register' %}">
-                <button type="button" class="btn btn-primary btn-block">Asset Register</button>
+                <button type="button" class="btn btn-success btn-block">Asset Register</button>
             </a>
         </div>
         <div>
             <a href="{% url 'frc_asset_schedule' %}">
-                <button type="button" class="btn btn-primary btn-block">Asset Schedule</button>
+                <button type="button" class="btn btn-success btn-block">Asset Schedule</button>
             </a>
         </div>
         <div>
             <a href="{% url 'frc_dep' %}">
-                <button type="button" class="btn btn-primary btn-block">Depreciation</button>
+                <button type="button" class="btn btn-success btn-block">Depreciation</button>
             </a>
         </div>
         <div>
             <a href="{% url 'frc_data_entry' %}">
-                <button type="button" class="btn btn-primary btn-block">Data Entry</button>
+                <button type="button" class="btn btn-success btn-block">Data Entry</button>
             </a>
         </div>
         <div>
             <a href="{% url 'frc_system' %}">
-                <button type="button" class="btn btn-primary btn-block">File Upload</button>
+                <button type="button" class="btn btn-success btn-block">File Upload</button>
             </a>
         </div>
-        
+
 
     </div>
-    <br><br><br>
-    <div class = "org_name"><h1 style="width: .5 cm; font-weight: 800 ;"> Financial Reporting Council</h1>
-    <p><p>Parjatan Bhaban (8th floor), Plot: E-5 C/1<br>
-
-        West Agargaon, Sher-e-Bangla Nagar Administrative Area<br>
-        
-        Dhaka-1207, Bangladesh<br>
-        
-        Email: ed.ss@frc.gov.bd<br>
-        
-        Office: +88 02 41024674<br>
-        
-        Website: frc.gov.bd</p></p>
-    </div>
-    <br>
-    <div class="header"> <p style="font-size: .5cm;"><b>Summary of Assets (latest)</b></p>
+    <br><br>
+    <div class="header">
+        <p style="font-size: .5cm; font-weight: 500;"><b>Summary of Assets (latest)</b></p>
     </div>
     <div class="table_summary">
         {% if table %}
-            <table>
-                {{ table|safe }}
-            </table>
+        {{ table|safe }}
         {% else %}
-            <p>No data available.</p>
+        <p>No data available.</p>
         {% endif %}
     </div>
     <br>
-    <div class="header"> <p style="font-size: .5cm;"><b>Year-wise distribution</b></p></div>
+    <div class="header">
+        <p style="font-size: .5cm;"><b>Year-wise distribution</b></p>
+    </div>
     <div class="table_summary">
         {% if yearly %}
-            <table>
-                {{ yearly|safe }}
-            </table>
+        <table>
+            {{ yearly|safe }}
+        </table>
         {% else %}
-            <p>No data available.</p>
+        <p>No data available.</p>
         {% endif %}
     </div>
+
+    <br>
+    <div class="org_name">
+        <h1 style="width: .5 cm; font-weight: 800 ;"> Financial Reporting Council</h1>
+        <p>
+        <p>Parjatan Bhaban (8th floor), Plot: E-5 C/1<br>
+
+            West Agargaon, Sher-e-Bangla Nagar Administrative Area<br>
+
+            Dhaka-1207, Bangladesh<br>
+
+            Email: ed.ss@frc.gov.bd<br>
+
+            Office: +88 02 41024674<br>
+
+            Website: frc.gov.bd</p>
+        </p>
+        
+        <p>All rights reserved by Financial Reporting Council Bangladesh</p>
+    </div>
+    <br>
+
+    <!-- <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                    <th>Column 3</th>
+                    <th>Column 4</th>
+                    <th>Column 5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                    <td>Cell 3</td>
+                    <td>Cell 4</td>
+                    <td>Cell 5</td>
+                </tr>
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                    <td>Cell 3</td>
+                    <td>Cell 4</td>
+                    <td>Cell 5</td>
+                </tr>
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                    <td>Cell 3</td>
+                    <td>Cell 4</td>
+                    <td>Cell 5</td>
+                </tr>
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                    <td>Cell 3</td>
+                    <td>Cell 4</td>
+                    <td>Cell 5</td>
+                </tr>
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                    <td>Cell 3</td>
+                    <td>Cell 4</td>
+                    <td>Cell 5</td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+
+    <!-- <div class="container">
+        <h2>Summary of Assets (latest)</h2>
+        <ul class="responsive-table">
+            <li class="table-header">
+                <div class="col col-1">Job Id</div>
+                <div class="col col-2">Customer Name</div>
+                <div class="col col-3">Amount Due</div>
+                <div class="col col-4">Payment Status</div>
+            </li>
+            <li class="table-row">
+                <div class="col col-1" data-label="Job Id">42235</div>
+                <div class="col col-2" data-label="Customer Name">John Doe</div>
+                <div class="col col-3" data-label="Amount">$350</div>
+                <div class="col col-4" data-label="Payment Status">Pending</div>
+            </li>
+            <li class="table-row">
+                <div class="col col-1" data-label="Job Id">42442</div>
+                <div class="col col-2" data-label="Customer Name">Jennifer Smith</div>
+                <div class="col col-3" data-label="Amount">$220</div>
+                <div class="col col-4" data-label="Payment Status">Pending</div>
+            </li>
+            <li class="table-row">
+                <div class="col col-1" data-label="Job Id">42257</div>
+                <div class="col col-2" data-label="Customer Name">John Smith</div>
+                <div class="col col-3" data-label="Amount">$341</div>
+                <div class="col col-4" data-label="Payment Status">Pending</div>
+            </li>
+            <li class="table-row">
+                <div class="col col-1" data-label="Job Id">42311</div>
+                <div class="col col-2" data-label="Customer Name">John Carpenter</div>
+                <div class="col col-3" data-label="Amount">$115</div>
+                <div class="col col-4" data-label="Payment Status">Pending</div>
+            </li>
+        </ul>
+    </div> -->
+
 </body>
+
 </html>
