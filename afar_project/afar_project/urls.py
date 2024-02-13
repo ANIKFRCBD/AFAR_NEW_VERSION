@@ -20,6 +20,7 @@ from afar_project.views import asset_register,data_entry,modify_database,success
 from dashboard.views import dashboard,dashboard_summary_of_assets
 from users.views import opening,signin,signup,SignUpModel
 from impairmenttest import views as impairment
+from assetregister import views as asset_register_main
 from depreciation import views as dep
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -51,7 +52,7 @@ urlpatterns = [
     path('download_csv_frc_dep/', download_csv_frc_dep, name='download_csv_frc_dep'),
     path('download_csv_frc_asset_schedule/', download_csv_frc_asset_schedule, name='download_csv_frc_asset_schedule'),
     path('delete_rows_asset_register/', delete_rows_asset_register, name='delete_rows_asset_register'),
-    path('frc_asset_register/', frc_asset_register, name='frc_asset_register'),
+    path('frc_asset_register/', asset_register_main.frc_asset_register, name='frc_asset_register'),
     path('frc_asset_schedule/', frc_asset_schedule, name='frc_asset_schedule'),
     path('frc_dep/', dep.dep, name='frc_dep'),
     path('frc_system/', frc_system, name='frc_system'),

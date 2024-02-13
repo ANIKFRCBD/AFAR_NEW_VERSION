@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users',
     'impairmenttest',
     'depreciation',
+    'assetregister'
 ]
 
 MIDDLEWARE = [
