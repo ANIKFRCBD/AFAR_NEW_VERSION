@@ -6,13 +6,14 @@ def frc_asset_register(request):
     file_path = 'csv_path/sample/asset_register.xlsx'  # Replace with the actual file path
     df_sheet = pd.read_excel(file_path)
     df=df_sheet
-    print(df.columns)
+    # Generate Asset code by rearranging the dataframe
     df=df[['Financial Year', 'Purchase date', 'Sl ', 'Bill no','Economic Code',
        'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
        'Modified Number', 'Price', 'Sold (unit)', 'FY of Items sold',
        'Cost of Assets Sold', 'Current Balance', 'Expected life',
        'Depreciation Method', 'Location']]
     df["Asset Code"]=0
+    #Rearrange the dataframe
     df=df[['Financial Year', 'Purchase date', 'Sl ', 'Bill no','Asset Code','Economic Code',
        'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
        'Modified Number', 'Price', 'Sold (unit)', 'FY of Items sold',
@@ -53,20 +54,7 @@ def frc_asset_register(request):
         # Split the HTML table into headers and rows
         header_html = excel_html.split('<tbody>')[0]  # Extract headers part
         rows_html = '<tbody>' + excel_html.split('<tbody>')[1]  # Extract rows part
+    df.to_excel(file_path,index=False)
 
-        return render(request, 'frc_asset_register.html', {'header_html': header_html, 'rows_html': rows_html, 'unique_values': unique_values})
+    return render(request, 'frc_asset_register.html', {'header_html': header_html, 'rows_html': rows_html, 'unique_values': unique_values})
 
-      # Change this to your desired file path
-
-    # Save the DataFrame to an Excel file
-    df.to_excel(file_path, index=False)
-
-    # Convert DataFrame to HTML
-    excel_html = df.to_html(index=False)
-
-    # Split the HTML table into headers and rows
-    header_html = excel_html.split('<tbody>')[0]  # Extract headers part
-    rows_html = '<tbody>' + excel_html.split('<tbody>')[1]  # Extract rows part
-        
-
-    return render(request, 'frc_asset_register.html', {'header_html': header_html, 'rows_html': rows_html})
