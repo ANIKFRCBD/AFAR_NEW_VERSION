@@ -1502,7 +1502,7 @@ def delete_rows_asset_register(request):
     if request.method == 'POST':
         # Path to your existing Excel file
         file_path = os.path.join(settings.BASE_DIR, 'csv_path/sample/asset_register.xlsx')
-        file_path_1 = os.path.join(settings.BASE_DIR, 'csv_path/sample/asset_registerxxx.xlsx')
+        file_path_1 = os.path.join(settings.BASE_DIR, 'csv_path/sample/asset_register.xlsx')
 
         if os.path.exists(file_path):
             # Read the existing Excel file
@@ -1692,7 +1692,7 @@ def frc_asset_register(request):
 
 
 def frc_asset_schedule(request):
-    file_path = 'csv_path/sample/asset_registerxxx.xlsx'
+    file_path = 'csv_path/sample/asset_register.xlsx'
 
     # Read the CSV file into a DataFrame
     df = pd.read_excel(file_path)
@@ -1706,7 +1706,7 @@ def frc_asset_schedule(request):
     if len_csv > 0:
     # Read the CSV files into dataframes, skipping the header row
         df_asset_info = pd.read_excel('csv_path/asset_info/frc_asset_info.xlsx', header=None, skiprows = 1)
-        df_asset_register = pd.read_excel('csv_path/sample/asset_registerxxx.xlsx', header=None, skiprows=1)
+        df_asset_register = pd.read_excel('csv_path/sample/asset_register.xlsx', header=None, skiprows=1)
 
         # Initialize an empty list to store the rows
         page_header = ['Economic Code','Particulars','Balance ( Pre MAB assets)','Accumulated Purchases( Post MAB)','Purchases (New)','Total','Rate ( Pre MAB Assets)','Rate ( Post MAB Assets)','Accumulated Depreciation','Depreciation ( Pre MAB)','Depreciation (Post MAB)','Depreciation ( New Purchases)','Depreciation Charges','Total Accumulated Depreciation','WDV','Status']
