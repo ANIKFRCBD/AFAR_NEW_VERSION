@@ -1574,25 +1574,27 @@ def download_csv_schedule(request):
 
 def frc_system(request):
     if request.method == 'POST':
-        # Assuming your form field name is 'excel_file'
-        uploaded_file = request.FILES['file']
-        
-        # Read the existing Excel file
-        existing_file_path = 'csv_path/sample/asset_register.xlsx'
-        existing_df = pd.read_excel(existing_file_path)
+        # Assuming your form field name is 'file'
+        uploaded_file = request.FILES.get('file')
 
-        # Read the uploaded Excel file
-        uploaded_df = pd.read_excel(uploaded_file)
+        if uploaded_file:
+            # Read the existing Excel file
+            existing_file_path = 'csv_path/sample/asset_register.xlsx'
+            existing_df = pd.read_excel(existing_file_path)
 
-        if len(existing_df['Financial Year'])>len(uploaded_df['Financial Year']):
-            file=existing_df
-        
-        else:
-            file=uploaded_df# Concatenate DataFrames
-        # Write the concatenated DataFrame to a new Excel file
-        file_path = 'csv_path/sample/asset_register.xlsx'
-        file.to_excel(file_path, index=False)
-        messages.info(request,f"your file {uploaded_file} has been uploaded")
+            # Read the uploaded Excel file
+            uploaded_df = pd.read_excel(uploaded_file)
+
+            if len(existing_df['Financial Year']) > len(uploaded_df['Financial Year']):
+                file = existing_df
+            else:
+                file = uploaded_df
+
+            # Write the concatenated DataFrame to a new Excel file
+            file_path = 'csv_path/sample/asset_register.xlsx'
+            file.to_excel(file_path, index=False)
+            return redirect('frc_asset_register')  # Redirect to appropriate view after upload
+
     return render(request, 'frc_system')  # Render the original form if no file is uploaded or GET request
 
 def extract_numeric(value):
