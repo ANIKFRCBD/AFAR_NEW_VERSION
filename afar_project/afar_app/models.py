@@ -15,7 +15,7 @@ class input_field(models.Model):
     name_of_item = models.CharField(max_length=255)
     quantity = models.CharField(max_length=255)
     price = models.DecimalField(default=0.0, max_digits=20, decimal_places=5)
-    sold_quantity = models.IntegerField()
+    Salvage_Value = models.IntegerField()
     # deprication_rate = models.DecimalField(default=0.0, max_digits=20, decimal_places=5)
     # asset_code = models.CharField(max_length=255)
     # expected_life = models.IntegerField()

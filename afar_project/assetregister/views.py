@@ -9,14 +9,14 @@ def frc_asset_register(request):
     # Generate Asset code by rearranging the dataframe
     df=df[['Financial Year', 'Purchase date', 'Sl ', 'Bill no','Economic Code',
        'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
-       'Modified Number', 'Price', 'Sold (unit)','Years used(sold items)','FY of Items sold',
+       'Modified Number', 'Price','Salvage Value', 'Sold (unit)','Years used(sold items)','FY of Items sold',
        'Cost of Assets Sold', 'Current Balance', 'Expected life',
        'Depreciation Method', 'Location']]
     df["Asset Code"]=0
     #Rearrange the dataframe
     df=df[['Financial Year', 'Purchase date', 'Sl ', 'Bill no','Asset Code','Economic Code',
        'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
-       'Modified Number', 'Price', 'Sold (unit)','Years used(sold items)', 'FY of Items sold',
+       'Modified Number', 'Price','Salvage Value', 'Sold (unit)','Years used(sold items)', 'FY of Items sold',
        'Cost of Assets Sold', 'Current Balance', 'Expected life',
        'Depreciation Method', 'Location']]
     # Get the current date

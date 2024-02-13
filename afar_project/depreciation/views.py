@@ -25,7 +25,7 @@ def dep_sheet_maker(request):
     pd.set_option('display.float_format', '{:.1f}'.format)
     # data extraction and cleaning
     df=df[['Financial Year','Asset Code','Purchase date','Sl ','Bill no','Economic Code',
-           'Category','Name of Item','Brand Name','Model/Type','Units','Modified Number','Price',
+           'Category','Name of Item','Brand Name','Model/Type','Units','Modified Number','Price','Salvage Value',
            'Expected life','Sold (unit)','Years used(sold items)','FY of Items sold',
            'Cost of Assets Sold','Current Balance']]
     df['Rate of Depreciation']=1/df['Expected life']
@@ -40,7 +40,17 @@ def dep_sheet_maker(request):
     df[['Cost of Assets Sold']]=df[['Cost of Assets Sold']].fillna(0)
     df[['FY of Items sold']]=df[['FY of Items sold']].fillna(0)
     df['Current Balance']=df['Price']-df['Cost of Assets Sold']
+
     years=df['Financial Year'].drop_duplicates()
+    if "Accumulated Depreciation Net" not in list(df.columns):
+        df["Accumulated Depreciation Net"]=0
+    else:
+        df=df
+    if "Book Value" not in list(df.columns):
+        df["Book Value"]=0
+    else:
+        df=df
+    years=df['Financial Year'].drop_duplicates()   
     current_year=datetime.now()
     # print(current_year.year)
     year={}
@@ -97,6 +107,7 @@ def depreciation_calculation(request):
     total_columns=len(list(data_sheet.columns))
     iteration_from_last=len(itertation)
     #calculation of Depreciation
+    #this needs changes
     for index, row in data_sheet.iterrows():
         year_elapsed = 1
         for column in data_sheet.columns[total_columns-iteration_from_last:]:
@@ -109,7 +120,9 @@ def depreciation_calculation(request):
     #calculation of accumulated depreciation on sold items
     data_sheet["Accumulated Depreciation on Sold items"]=data_sheet["Cost of Assets Sold"]*data_sheet["Rate of Depreciation"]*data_sheet["Years used(sold items)"]
     data_sheet["Accumulated Depreciation"]=data_sheet.iloc[:, (-iteration_from_last):].sum(axis=1)
-    data_sheet["Accumulated Depreciation"]=data_sheet["Accumulated Depreciation"]-data_sheet["Accumulated Depreciation on Sold items"]
+    data_sheet["Accumulated Depreciation Net"]=data_sheet["Accumulated Depreciation"]-data_sheet["Accumulated Depreciation on Sold items"]
+    data_sheet["Book Value"]=data_sheet["Current Balance"]-data_sheet["Accumulated Depreciation Net"]
+    data_sheet.to_excel(Dep_file_path,index=False)
     return data_sheet
 
 
