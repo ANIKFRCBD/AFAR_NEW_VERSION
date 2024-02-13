@@ -12,7 +12,6 @@ file_path_register="csv_path/sample/asset_register.xlsx"
 #Show the impairment page
 def imparimenttest(request): 
     search=search_entry(request)
-    print(search)
     search=search.fillna(" ").to_html()
     table = impairment(request) 
     form,data=impairment_data_request_and_save(request)
@@ -29,15 +28,30 @@ def impairment(request):
     #read the asset_register file
     file_path=file_path_register
     primary_df=pd.read_excel(file_path)
-    impairment_part=pd.DataFrame({"Book Value":[],"Fair value less cost to sale": [],"Value in use":[],"Recoverable Value":[],"Impairment":[]})
-    primary_df=primary_df[["Financial Year","Purchase date","Bill no","Economic Code","Category","Name of Item","Brand Name","Asset Code"]]
-    primary_df=pd.concat([primary_df,impairment_part],join="outer")
+    if "Value in use" not in primary_df:
+        impairment_part=pd.DataFrame({"Book Value":[],"Fair value less cost to sale": [],"Value in use":[],"Recoverable Value":[],"Impairment":[]})
+        primary_df=primary_df[["Financial Year","Purchase date","Bill no","Economic Code","Category","Name of Item","Brand Name","Asset Code","Accumulated Impairment"]]
+        primary_df=pd.concat([primary_df,impairment_part],join="outer")
+    else:
+        primary_df=primary_df
+    test_accumulated="Accumulated Impairment"
+    colunmn_list=list(primary_df.columns)
+    print(type(colunmn_list))
+    if  test_accumulated not in colunmn_list:
+        primary_df[test_accumulated]=0
+        print("column added")
+    else:
+        primary_df=primary_df
+        print("no new column added")
     primary_df=primary_df.fillna(0)
     table=primary_df.to_dict(orient="records")
+    primary_df.to_excel(file_path)
     return table,primary_df
 
 #get data of impairment
 def impairment_data_request_and_save(request):
+    data_sheet=pd.read_excel(file_path)
+    colunmn_list=list(data_sheet.columns)
     data=(0,0,0)
     Value_in_use=0
     Fair_value_less_cost_to_sale=0
@@ -50,6 +64,13 @@ def impairment_data_request_and_save(request):
             Asset_code=form.cleaned_data["Asset_Code"]
             Financial_year=form.cleaned_data["Financial_year"]
             data=(Value_in_use,Fair_value_less_cost_to_sale,Asset_code,Financial_year)
+            if data[3] not in colunmn_list:
+                data_sheet[data[3]]=0
+                print("column added")
+            else:
+                 data_sheet=data_sheet
+                 print("no new column added")
+            data_sheet.to_excel(file_path)
         else:
             print(form.errors)   
     return form,data
@@ -74,7 +95,6 @@ def search_entry(request):
     table,data_sheet=impairment(request)
     print(data_sheet["Asset Code"])
     d=data_sheet[data_sheet["Asset Code"] == Asset_Code]
-    print(d)
     return d
 
 # calculate the impairment
