@@ -72,6 +72,41 @@ tbody {
   }
 }
 
+.container1 {
+  /* max-height: 650px; */
+  overflow: auto;
+  overflow-x: auto;
+  overflow-y: auto;
+
+  margin-left: 20px;
+  margin-right: 20px;
+  max-width: 100%;
+  /* overflow-x: auto; */
+}
+
+.container1 {
+  /* Set other scrollbar properties */
+  scrollbar-width: thin;
+  scrollbar-color: #fff #55608f; /* thumb color track color */
+
+}
+
+.container1::-webkit-scrollbar {
+  /* Set scrollbar width and color */
+  width: 12px;
+  height: 12px;
+}
+
+.container1::-webkit-scrollbar-thumb {
+  /* Set scrollbar thumb color */
+  background-color: #55608f;
+}
+
+.container1::-webkit-scrollbar-track {
+  /* Set scrollbar track color */
+  background-color: #55608f;
+}
+
 .projectnamecontainer {
   max-height: 0vh;
   max-width: 100%;
@@ -114,7 +149,7 @@ tbody {
 /*main body design*/
 .main_body {
   height: 100%;
-  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: row;
 }
@@ -133,6 +168,7 @@ tbody {
 }
 
 .right {
+  max-width: 100%;
   flex-basis: 100%;
 }
 
