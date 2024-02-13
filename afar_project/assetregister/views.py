@@ -35,7 +35,7 @@ def frc_asset_register(request):
         df["Current Balance"]=df["Price"]-df["Cost of Assets Sold"]
 
         #Asset_code_generation_updated_by_anik_mallick
-        df["Asset Code"]="FRC" + "-" +  df.iloc[:, 20].astype(str).iloc[0]+"-"+df.iloc[:, 19].astype(str).iloc[0] + "-" + df.iloc[:, 4].astype(str).str[:1]  + "-" +df.iloc[:, 0].astype(str).str.extract(r'(\d{2})(\d{2})').iloc[:, 1] + "-" +df.iloc[:,2].astype(str).apply(lambda x: x.zfill(4))
+        df["Asset Code"]="FRC" + "-" +  df.iloc[:, 20].astype(str).iloc[0]+"-"+df.iloc[:, 19].astype(str).iloc[0] + "-" + df.iloc[:, 6].astype(str).str[:1]  + "-" +df.iloc[:, 0].astype(str).str.extract(r'(\d{2})(\d{2})').iloc[:, 1] + "-" +df.iloc[:,2].astype(str).str[:-2].apply(lambda x: x.zfill(4))
         df.fillna('', inplace=True)
         numeric_cols = df.select_dtypes(include='number').columns  # Select numeric columns
         df[numeric_cols] = df[numeric_cols].applymap(lambda x: f'{x:.2f}' if not pd.isnull(x) else '')  # Format numeric values to display 2 decimal places
