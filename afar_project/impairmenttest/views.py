@@ -10,12 +10,13 @@ file_path="csv_path/sample/impairment_data.xlsx"
 file_path_register="csv_path/sample/asset_register.xlsx"
 
 #Show the impairment page
-def imparimenttest(request): 
+def imparimenttest(request):
+    table = impairment(request)
+    form,data=impairment_data_request_and_save(request)  
     search=search_entry(request)
     search=search.fillna(" ").to_html()
-    table = impairment(request) 
-    form,data=impairment_data_request_and_save(request)
     forms_entryfinder,data=entry_finder(request)
+    no_use=impariement_year_entry(request)
     file=accounting_for_recoverable_amount(request)
     context = {"table":table,
                "form":form.as_table,
@@ -26,14 +27,7 @@ def imparimenttest(request):
 
 def impairment(request):
     #read the asset_register file
-    file_path=file_path_register
-    primary_df=pd.read_excel(file_path)
-    if "Value in use" not in primary_df:
-        impairment_part=pd.DataFrame({"Book Value":[],"Fair value less cost to sale": [],"Value in use":[],"Recoverable Value":[],"Impairment":[]})
-        primary_df=primary_df[["Financial Year","Purchase date","Bill no","Economic Code","Category","Name of Item","Brand Name","Asset Code","Accumulated Impairment"]]
-        primary_df=pd.concat([primary_df,impairment_part],join="outer")
-    else:
-        primary_df=primary_df
+    primary_df=pd.read_excel(file_path) # change it to file_path_register if it gives any error
     test_accumulated="Accumulated Impairment"
     colunmn_list=list(primary_df.columns)
     print(type(colunmn_list))
@@ -43,15 +37,21 @@ def impairment(request):
     else:
         primary_df=primary_df
         print("no new column added")
+    
+    if "Value in use" not in primary_df:
+        impairment_part=pd.DataFrame({"Book Value":[],"Fair value less cost to sale": [],"Value in use":[],"Recoverable Value":[]})
+        primary_df=primary_df[["Financial Year","Purchase date","Bill no","Economic Code","Category","Name of Item","Brand Name","Asset Code","Accumulated Impairment"]]
+        primary_df=pd.concat([primary_df,impairment_part],join="outer")
+    else:
+        primary_df=primary_df
+
     primary_df=primary_df.fillna(0)
     table=primary_df.to_dict(orient="records")
-    primary_df.to_excel(file_path)
+    primary_df.to_excel(file_path,index=False)
     return table,primary_df
 
 #get data of impairment
 def impairment_data_request_and_save(request):
-    data_sheet=pd.read_excel(file_path)
-    colunmn_list=list(data_sheet.columns)
     data=(0,0,0)
     Value_in_use=0
     Fair_value_less_cost_to_sale=0
@@ -64,16 +64,27 @@ def impairment_data_request_and_save(request):
             Asset_code=form.cleaned_data["Asset_Code"]
             Financial_year=form.cleaned_data["Financial_year"]
             data=(Value_in_use,Fair_value_less_cost_to_sale,Asset_code,Financial_year)
-            if data[3] not in colunmn_list:
-                data_sheet[data[3]]=0
-                print("column added")
-            else:
-                 data_sheet=data_sheet
-                 print("no new column added")
-            data_sheet.to_excel(file_path)
         else:
             print(form.errors)   
     return form,data
+
+def impariement_year_entry(request):
+    data_sheet=pd.read_excel(file_path)
+    colunmn_list=list(data_sheet.columns)
+    print(colunmn_list)
+    no_use,data=impairment_data_request_and_save(request)
+    print(data[3])
+    if data[3] not in colunmn_list:
+        data_sheet[data[3]]=0
+        print("column added")
+        data_sheet.to_excel(file_path,index=False)
+    else:
+         data_sheet=data_sheet
+         print("no new column added")
+    return data_sheet
+            
+
+
 
 #find the asset entry data inpu
 def entry_finder(request):
@@ -92,14 +103,14 @@ def entry_finder(request):
 def search_entry(request):
     form,data=entry_finder(request)
     Asset_Code=data
-    table,data_sheet=impairment(request)
+    data_sheet=pd.read_excel(file_path)
     print(data_sheet["Asset Code"])
     d=data_sheet[data_sheet["Asset Code"] == Asset_Code]
     return d
 
 # calculate the impairment
 def accounting_for_recoverable_amount(request):
-    not_use,file=impairment(request)
+    file=pd.read_excel(file_path)
     form,data=impairment_data_request_and_save(request)
     if data is not None:
         Value_in_use=data[0]
