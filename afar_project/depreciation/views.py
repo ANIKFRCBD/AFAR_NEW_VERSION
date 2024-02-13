@@ -80,6 +80,8 @@ def dep_sheet_maker(request):
     df.to_excel(Dep_file_path,index=False)
     
     return df,columns_to_add,year_data
+
+#Calculation of Depreciation
 def depreciation_calculation(request):
     data_sheet,columns_to_add,year_data=dep_sheet_maker(request)
     list_of_year=[]

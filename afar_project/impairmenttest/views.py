@@ -4,11 +4,12 @@ from django.contrib import messages
 import pandas as pd
 from .forms import impairmententry,entryfinder
 from .models import impairmententry_model
+from datetime import datetime
 
 file_path="csv_path/sample/impairment_data.xlsx"
 file_path_register="csv_path/sample/asset_register.xlsx"
 
-
+#Show the impairment page
 def imparimenttest(request): 
     search=search_entry(request)
     print(search)
@@ -35,6 +36,7 @@ def impairment(request):
     table=primary_df.to_dict(orient="records")
     return table,primary_df
 
+#get data of impairment
 def impairment_data_request_and_save(request):
     data=(0,0,0)
     Value_in_use=0
@@ -46,11 +48,13 @@ def impairment_data_request_and_save(request):
             Value_in_use=form.cleaned_data["Value_in_use"]
             Fair_value_less_cost_to_sale=form.cleaned_data["Fair_value_less_cost_to_sale"]
             Asset_code=form.cleaned_data["Asset_Code"]
-            data=(Value_in_use,Fair_value_less_cost_to_sale,Asset_code)
+            Financial_year=form.cleaned_data["Financial_year"]
+            data=(Value_in_use,Fair_value_less_cost_to_sale,Asset_code,Financial_year)
         else:
             print(form.errors)   
     return form,data
 
+#find the asset entry data inpu
 def entry_finder(request):
     data=0
     forms1=entryfinder(request.POST)
@@ -63,7 +67,7 @@ def entry_finder(request):
     return forms1,data
 
 
-
+#find the asset
 def search_entry(request):
     form,data=entry_finder(request)
     Asset_Code=data
@@ -72,7 +76,8 @@ def search_entry(request):
     d=data_sheet[data_sheet["Asset Code"] == Asset_Code]
     print(d)
     return d
-# Create your views here.
+
+# calculate the impairment
 def accounting_for_recoverable_amount(request):
     not_use,file=impairment(request)
     form,data=impairment_data_request_and_save(request)
