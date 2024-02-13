@@ -14,7 +14,7 @@ def imparimenttest(request):
     table = impairment(request)
     form,data=impairment_data_request_and_save(request)  
     search=search_entry(request)
-    search=search.fillna(" ").to_html()
+    search=search.fillna(" ").to_html(index=False)
     forms_entryfinder,data=entry_finder(request)
     no_use=impariement_year_entry(request)
     file=accounting_for_recoverable_amount(request)
@@ -28,7 +28,17 @@ def imparimenttest(request):
 def impairment(request):
     #read the asset_register file
     primary_df=pd.read_excel(file_path) # change it to file_path_register if it gives any error
+
+    
+    if "Value in use" not in primary_df:
+        impairment_part=pd.DataFrame({"Book Value":[],"Fair value less cost to sale": [],"Value in use":[],"Recoverable Value":[]})
+        primary_df=primary_df[["Financial Year","Purchase date","Bill no","Economic Code","Category","Name of Item","Brand Name","Asset Code"]]
+        primary_df=pd.concat([primary_df,impairment_part],join="outer")
+    else:
+        primary_df=primary_df
+    
     test_accumulated="Accumulated Impairment"
+    
     colunmn_list=list(primary_df.columns)
     print(type(colunmn_list))
     if  test_accumulated not in colunmn_list:
@@ -37,13 +47,6 @@ def impairment(request):
     else:
         primary_df=primary_df
         print("no new column added")
-    
-    if "Value in use" not in primary_df:
-        impairment_part=pd.DataFrame({"Book Value":[],"Fair value less cost to sale": [],"Value in use":[],"Recoverable Value":[]})
-        primary_df=primary_df[["Financial Year","Purchase date","Bill no","Economic Code","Category","Name of Item","Brand Name","Asset Code","Accumulated Impairment"]]
-        primary_df=pd.concat([primary_df,impairment_part],join="outer")
-    else:
-        primary_df=primary_df
 
     primary_df=primary_df.fillna(0)
     table=primary_df.to_dict(orient="records")
@@ -75,9 +78,12 @@ def impariement_year_entry(request):
     no_use,data=impairment_data_request_and_save(request)
     print(data[3])
     if data[3] not in colunmn_list:
-        data_sheet[data[3]]=0
-        print("column added")
-        data_sheet.to_excel(file_path,index=False)
+        if data[3]=="":
+            data_sheet=data_sheet
+        else:
+            data_sheet[data[3]]=0
+            print("column added")
+            data_sheet.to_excel(file_path,index=False)
     else:
          data_sheet=data_sheet
          print("no new column added")
