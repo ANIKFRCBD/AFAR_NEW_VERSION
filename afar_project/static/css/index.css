@@ -23,22 +23,24 @@ table {
   /* border-collapse: collapse; */
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: max-content;
 }
 
 th,
 td {
-  text-align: left;
+  text-align: justify;
   padding: 8px;
   /* border: 1px solid #dddddd; */
   /* padding: 15px; */
   background-color: rgba(255, 255, 255, 0.2);
   color: #fff;
+  width: auto;
 }
 
 th {
   /* background-color: #f2f2f2;
     font-weight: bold; */
-  text-align: left;
+    text-align: justify;
 }
 
 thead {

@@ -76,6 +76,10 @@
             text-align: center;
             align-content: center;
         }
+
+        /* table {
+            width: -webkit-fill-available;
+        } */
     </style>
 </head>
 
@@ -120,27 +124,33 @@
         <p class="" style="font-size: .5cm; font-weight: 500; color: #fff;"><b class="p-2 shadow"
                 style="border-radius: 5px; background-color: #55608f;">Summary of Assets (latest)</b></p>
     </div>
-    <div class="table_summary">
-        {% if table %}
-        {{ table|safe }}
-        {% else %}
-        <p>No data available.</p>
-        {% endif %}
+    <div class="d-flex" style="justify-content: center;">
+        <div class="table_summary">
+            {% if table %}
+            {{ table|safe }}
+            {% else %}
+            <p>No data available.</p>
+            {% endif %}
+        </div>
     </div>
+
     <br>
     <div class="header">
         <p class="" style="font-size: .5cm; font-weight: 500; color: #fff;"><b class="p-2 shadow"
                 style="border-radius: 5px; background-color: #55608f;">Year-wise distribution</b></p>
     </div>
-    <div class="table_summary">
-        {% if yearly %}
-        <table>
-            {{ yearly|safe }}
-        </table>
-        {% else %}
-        <p>No data available.</p>
-        {% endif %}
+    <div class="d-flex" style="justify-content: center;">
+        <div class="table_summary">
+            {% if yearly %}
+            <table>
+                {{ yearly|safe }}
+            </table>
+            {% else %}
+            <p>No data available.</p>
+            {% endif %}
+        </div>
     </div>
+
 
     <br>
     <div class="org_name mt-5 pt-4 pb-4" style="background-color: beige;">
