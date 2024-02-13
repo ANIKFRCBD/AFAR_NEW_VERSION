@@ -5,6 +5,7 @@
   font-family: Arial, sans-serif;
 }
 
+
 html,
 body {
   min-width: 100%;
@@ -73,6 +74,7 @@ tbody {
     }
   }
 }
+
 
 .container1 {
   /* max-height: 650px; */
