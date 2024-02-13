@@ -24,7 +24,10 @@ def dep_sheet_maker(request):
     df = pd.read_excel(file_path)
     pd.set_option('display.float_format', '{:.1f}'.format)
     # data extraction and cleaning
-    df=df[['Financial Year','Asset Code','Purchase date','Sl ','Bill no','Economic Code','Category','Name of Item','Brand Name','Model/Type','Units','Modified Number','Price','Expected life','Sold (unit)','Sold Unit(Modified)','FY of Items sold','Cost of Assets Sold','Current Balance']]
+    df=df[['Financial Year','Asset Code','Purchase date','Sl ','Bill no','Economic Code',
+           'Category','Name of Item','Brand Name','Model/Type','Units','Modified Number','Price',
+           'Expected life','Sold (unit)','Years used(sold items)','FY of Items sold',
+           'Cost of Assets Sold','Current Balance']]
     df['Rate of Depreciation']=1/df['Expected life']
     df['Accumulated Depreciation']=0
     df['Accumulated Depreciation on Sold items']=0    
@@ -91,7 +94,7 @@ def depreciation_calculation(request):
     data_sheet['Accumulated Depreciation'] = data_sheet[columns_to_iter].sum(axis=1)
     total_columns=len(list(data_sheet.columns))
     iteration_from_last=len(itertation)
-
+    #calculation of Depreciation
     for index, row in data_sheet.iterrows():
         year_elapsed = 1
         for column in data_sheet.columns[total_columns-iteration_from_last:]:
@@ -101,7 +104,10 @@ def depreciation_calculation(request):
                 data_sheet.loc[index, column] = row["Price"] * row["Rate of Depreciation"]
             if current_column_year >= financial_year:
                  year_elapsed = year_elapsed + 1
-
+    #calculation of accumulated depreciation on sold items
+    data_sheet["Accumulated Depreciation on Sold items"]=data_sheet["Cost of Assets Sold"]*data_sheet["Rate of Depreciation"]*data_sheet["Years used(sold items)"]
+    data_sheet["Accumulated Depreciation"]=data_sheet.iloc[:, (-iteration_from_last):].sum(axis=1)
+    data_sheet["Accumulated Depreciation"]=data_sheet["Accumulated Depreciation"]-data_sheet["Accumulated Depreciation on Sold items"]
     return data_sheet
 
 
