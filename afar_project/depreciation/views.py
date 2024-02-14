@@ -110,11 +110,15 @@ def depreciation_calculation(request):
     #this needs changes
     for index, row in data_sheet.iterrows():
         year_elapsed = 1
+        years_used = row["Years used(sold items)"]
         for column in data_sheet.columns[total_columns-iteration_from_last:]:
             financial_year = float(row["Financial Year"][:4])
             current_column_year = float(column[:4])
-            if financial_year <= current_column_year and year_elapsed <= row["Expected life"]:
-                data_sheet.loc[index, column] = row["Price"] * row["Rate of Depreciation"]
+            if financial_year <= current_column_year and year_elapsed <= row["Expected life"] and years_used > 0:
+                data_sheet.loc[index, column] = row["Cost of Assets Sold"] * row["Rate of Depreciation"]
+                years_used = years_used - 1
+            elif financial_year <= current_column_year and year_elapsed <= row["Expected life"]:
+                data_sheet.loc[index, column] = row["Current Balance"] * row["Rate of Depreciation"]
             if current_column_year >= financial_year:
                  year_elapsed = year_elapsed + 1
     #calculation of accumulated depreciation on sold items
