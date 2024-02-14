@@ -134,6 +134,8 @@ def accounting_for_recoverable_amount(request):
                         file["Accumulated Impairment"]=file[new_column]
                     else:
                         file["Accumulated Impairment"]=file.iloc[:,-new_years_added:].sum(axis=1)
+            else:
+                file=file
             file.to_excel(file_path,index=False)
                        
         else:
@@ -143,10 +145,13 @@ def accounting_for_recoverable_amount(request):
             for index,row in data_to_include.iterrows():
                      file.at[index,"Recoverable Amount"]=row["Book Value"]
             new_years_added=len(file.columns)-13
-            if new_years_added<1:
-                file["Accumulated Impairment"]=file[new_column]
+            if new_column is not "" or None:
+                 if new_years_added<1:
+                      file["Accumulated Impairment"]=file[new_column]
+                 else:
+                     file["Accumulated Impairment"]=file.iloc[:,-new_years_added:].sum(axis=1)
             else:
-                file["Accumulated Impairment"]=file.iloc[:,-new_years_added:].sum(axis=1)        
+                file=file        
             file.to_excel(file_path,index=False)
             
     else:
