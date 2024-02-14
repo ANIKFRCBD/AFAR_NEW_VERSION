@@ -55,7 +55,7 @@ def impairment(request):
 
 #get data of impairment
 def impairment_data_request_and_save(request):
-    data=(0,0,0)
+    data=(0,0,0,0)
     Value_in_use=0
     Fair_value_less_cost_to_sale=0
     form=impairmententry(request.POST)
