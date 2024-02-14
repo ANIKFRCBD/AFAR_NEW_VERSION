@@ -28,17 +28,9 @@ def imparimenttest(request):
 
 def impairment(request):
     #read the asset_register file
-    data_sheet=pd.read_excel(file_path_register) # change it to file_path_register if it gives any error
+    data_sheet=pd.read_excel(file_path) # change it to file_path_register if it gives any error
     primary_df=data_sheet
     depreciation_data_sheet=pd.read_excel(file_path_depreciation)
-    
-    if "Value in use" not in primary_df:
-        impairment_part=pd.DataFrame({"Book Value":[],"Fair value less cost to sale": [],"Value in use":[],"Recoverable Amount":[]})
-        primary_df=primary_df[["Financial Year","Purchase date","Bill no","Economic Code","Category","Name of Item","Brand Name","Asset Code"]]
-        primary_df=pd.concat([primary_df,impairment_part],join="outer")
-    else:
-        primary_df=primary_df
-    
     test_accumulated="Accumulated Impairment"
     
     colunmn_list=list(primary_df.columns)
@@ -114,7 +106,6 @@ def search_entry(request):
     Asset_Code=data
     data_sheet=pd.read_excel(file_path)
     d=data_sheet[data_sheet["Asset Code"] == Asset_Code]
-    print(d)
     return d
 
 # calculate the impairment
@@ -134,8 +125,11 @@ def accounting_for_recoverable_amount(request):
         else:
             file.loc[file["Asset Code"]==element_to_match,"Value in use"]=0
             file.loc[file["Asset Code"]==element_to_match,"Fair value less cost to sale"]=0
-            file.loc[file["Asset Code"]==element_to_match,"Recoverable Amount"]=file.loc[file["Asset Code"]==element_to_match,"Book Value"].iloc[1]
-            print(f"the data are {Fair_value_less_cost_to_sale}")
+            data_to_include=file.loc[file["Asset Code"]== element_to_match]
+            for index,row in data_to_include.iterrows():
+                     file.at[index,"Recoverable Amount"]=row["Book Value"]
+            file.to_excel(file_path,index=False)
+            
     else:
         file=file
     file.to_excel(file_path,index=False)
