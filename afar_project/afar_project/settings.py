@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'users',
     'impairmenttest',
     'depreciation',
-    'assetregister'
+    'assetregister',
+    'frc_file_upload'
 ]
 
 MIDDLEWARE = [
@@ -86,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'AFAR',
         'USER': 'postgres',
-        'PASSWORD': '123456',
+        'PASSWORD': 'frc123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
