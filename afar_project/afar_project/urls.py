@@ -16,12 +16,13 @@ Including another URLconf
 from django import views
 from django.contrib import admin
 from django.urls import path,include
-from afar_project.views import asset_register,data_entry,modify_database,success,genSchedule,depriciation,list_test,register,asset_info,current_asset_info,download_predefined_csv,file_upload,asset_schedule,data_entry_pre,file_upload_pre,download_csv,delete_extra_columns,download_csv_dep,download_csv_schedule,frc_system,frc_asset_register,frc_asset_schedule,frc_dep,frc_data_entry,download_csv_frc_asset,delete_rows_asset_register,download_csv_frc_dep,download_csv_frc_asset_schedule
+from afar_project.views import asset_register,data_entry,modify_database,success,genSchedule,depriciation,list_test,register,asset_info,current_asset_info,download_predefined_csv,file_upload,asset_schedule,data_entry_pre,file_upload_pre,download_csv,delete_extra_columns,download_csv_dep,download_csv_schedule,frc_asset_register,frc_asset_schedule,frc_dep,frc_data_entry,download_csv_frc_asset,delete_rows_asset_register,download_csv_frc_dep,download_csv_frc_asset_schedule
 from dashboard.views import dashboard,dashboard_summary_of_assets
 from users.views import opening,signin,signup,SignUpModel
 from impairmenttest import views as impairment
 from assetregister import views as asset_register_main
 from depreciation import views as dep
+from frc_file_upload import views as frc_file_upload
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',opening,name='opening'),
@@ -55,7 +56,7 @@ urlpatterns = [
     path('frc_asset_register/', asset_register_main.frc_asset_register, name='frc_asset_register'),
     path('frc_asset_schedule/', frc_asset_schedule, name='frc_asset_schedule'),
     path('frc_dep/', dep.dep, name='frc_dep'),
-    path('frc_system/', frc_system, name='frc_system'),
+    path('frc_system/', frc_file_upload.frc_system, name='frc_system'),
     path('frc_data_entry/', frc_data_entry, name='frc_data_entry'),
     path('impariment/', impairment.imparimenttest, name='impairment'),
     ]

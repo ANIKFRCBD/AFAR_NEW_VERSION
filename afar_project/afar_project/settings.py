@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'users',
     'impairmenttest',
     'depreciation',
-    'assetregister'
+    'assetregister',
+    'frc_file_upload'
 ]
 
 MIDDLEWARE = [
