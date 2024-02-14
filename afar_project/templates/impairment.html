@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Css -->
+    <link rel="stylesheet" href="../static/css/index.css">
+    <title>FRC Asset Register</title>
+    <style>
+        /* Table styling */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #dddddd;
+            justify-content: center;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            justify-content: center;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .left {
+          display: flex;
+          flex-direction: row; /* Arrange items in a row */
+        }
+      
+        .left > div {
+          margin-right: 10px; /* Add spacing between buttons */
+          margin-top: 10px;
+        }
+    </style>
+  </head>
+  <body>
+    {% include 'header.html' %}
+    <div class='left'>
+      <div>
+        <a href="{% url 'dashboard' %}">
+            <button type="button" class="btn btn-primary btn-block">Dashboard</button>
+        </a>
+      </div>
+    </div>
+    <br><br><br>
+    <div class="entry_finder">
+      <h2 style="text-align: center;"> Entry Filter for Impairment Test</h2>
+      <br><br>
+      <form action="{% url 'impairment' %}" method="post">
+        {% csrf_token %}
+        {{ entry_finder }}
+        <input type="Submit" value="Submit">
+
+      </form>
+
+    </div>
+    <br><br><br>
+    <div>
+      <h3 style="text-align: center;"> Impairment entry </h3>
+    <form action="{% url 'impairment' %}" method="post">
+        {% csrf_token %}
+        {{form}}
+        <input type="Submit" value="Submit">
+    </form>
+  </div>
+  <div>
+    <h3 style="text-align: center;"> entries </h3>
+    {{search|safe}}
+
+  </form>
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,15 @@
+Category,Code,Economic Code,Expected Life(pre),Expected Life(post),Depriciation Method
+Computer and Computer Equiments,CE,4112202,5,5,SLM
+Office equipment,OE,4112310,5,7,SLM
+Furniture,FU,4112314,5,10,SLM
+Telecommunications,TC,4112204,5,7,SLM
+Motor Vehicles,MV,4112101,5,10,SLM
+Civil Works,CW,1,5,20,SLM
+Internet and PABX System ,IP,2,5,15,SLM
+Speaker System,SP,3,5,15,SLM
+Sanitary Fittings,SA,4,5,20,SLM
+Electrical Wire and Fittings,EW,5,5,15,SLM
+Paint Works,PW,6,5,10,SLM
+Interior Fit-out Works,IN,7,5,20,SLM
+Furniture (Leasehold),FL,8,5,15,SLM
+sdas,adsf,4342,3,5,SLM

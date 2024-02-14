@@ -1,0 +1,19 @@
+if request.method == "POST":
+        asset_form_inputs_loop = []
+        for field_name, field_value in request.POST.items():
+            if field_name != 'csrfmiddlewaretoken':
+                asset_form_inputs_loop.append(field_value)
+        
+        csv_file_path = 'csv_path/asset_info/asset_info.csv'
+        
+        # Read existing CSV file into DataFrame
+        df = pd.read_csv(csv_file_path)
+        
+        # Create a new DataFrame with user input as a row
+        new_row = pd.DataFrame([asset_form_inputs_loop], columns=df.columns)
+        
+        # Concatenate the existing DataFrame with the new row
+        df = pd.concat([df, new_row], ignore_index=True)
+        
+        # Write the updated DataFrame to the CSV file
+        df.to_csv(csv_file_path, index=False)

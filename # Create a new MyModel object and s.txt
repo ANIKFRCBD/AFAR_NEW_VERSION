@@ -1,0 +1,14 @@
+# Create a new MyModel object and save it to the database
+        # input_field_model = input_field(financial_year=financial_year, purchase_date=purchase_date,serial_no=serial_no,bill_no=bill_no,economic_code=economic_code,category=category,name_of_item=name_of_item,quantity = quantity,sold_quantity = sold_quantity,deprication_rate = deprication_rate,asset_code=asset_code,expected_life = expected_life,depriciation_method=depriciation_method,location=location,current_condition=current_condition)
+
+
+
+
+
+depriciation_field_model = depriciation_field(financial_year=financial_year, purchase_date=purchase_date,serial_no=serial_no,bill_no=bill_no,economic_code=economic_code,category=category,name_of_item=name_of_item,quantity = quantity,price = price,sold_quantity = sold_quantity,costs_of_asset_sold = costs_of_asset_sold,current_balance = current_balance,year_elapsed = year_elapsed,asset_code_generated = asset_code_generated,asset_code=asset_code,expected_life = expected_life,depriciation_method=depriciation_method,deprication_rate = deprication_rate,location=location,current_condition=current_condition,accumulated_depriciation_for_sold_items = accumulated_depriciation_for_sold_items,net_accumulated_depricaition = net_accumulated_depricaition)
+
+        depriciation_field_model.save()
+
+        deprication_data = {'financial_year': [financial_year], 'purchase_date': [purchase_date], 'serial_no': [serial_no],'bill_no':[bill_no],'economic_code':[economic_code],'category':[category],'name_of_item':[name_of_item],'quantity':[quantity],'price':[price],'sold_quantity':[sold_quantity],'costs_of_asset_sold':[costs_of_asset_sold],'current_balance':[current_balance],'year_elapsed':[year_elapsed],'deprication_rate':[deprication_rate],'asset_code':[asset_code],'asset_code_generated':[asset_code_generated],'expected_life':[expected_life],'depriciation_method':[depriciation_method],'location':[location],'current_condition':[current_condition],'accumulated_depriciation_for_sold_items': [accumulated_depriciation_for_sold_items],'net_accumulated_depricaition':[net_accumulated_depricaition]}
+
+

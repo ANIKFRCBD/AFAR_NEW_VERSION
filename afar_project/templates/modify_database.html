@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Generate Schedule</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="../static/css/index.css" />
+  <style>
+    /* Your custom styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    /* ... Other styles ... */
+  </style>
+</head>
+<body>
+  {% include 'header.html' %}
+      <!-- Body Content -->
+<div class="col-md-12">
+  <!-- Display Current Columns -->
+  <div class="current-columns">
+    <h4>Current Columns:</h4>
+    <div class="d-flex flex-wrap">
+      {% for column_name in column_names %}
+        <div class="mr-3 mb-3 p-2 text-white rounded" style="background: rgb(101, 194, 116) !important;">
+          {{ column_name }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Form to Add New Column -->
+  <div class="container">
+    <div class="row"  >
+        <form method="post" action="" id="add_new_column" class="mt-4">
+            {% csrf_token %}
+            <div id="inputs"></div>
+            <button type="button" id="add" onclick="setButtonId('add_new_column')" class="btn btn-primary">Add New Column</button>
+            <br><br>
+            <input type="submit"  value="Submit" class="btn btn-success">
+        </form>
+
+        <form action="" method="post" id="download_predefined_csv" class="mt-4">
+          {% csrf_token %}
+            <!-- Download predefined CSV button -->
+            <button type="button" onclick="download_predefined_csv()" class="btn btn-primary ml-2">Download</button>
+        </form>
+
+        <form action="" method="post" id="delete_extra_columns" class="mt-4">
+          {% csrf_token %}
+            <!-- Download predefined CSV button -->
+            <button type="button" onclick="delete_extra_columns()" class="btn btn-danger ml-2">Delete Extra Columns</button>
+        </form>
+    </div>
+</div>
+
+</div>
+
+<!---->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../static/js/script.js"></script>
+    <script>
+      // Get references to the input fields and the "Add" button
+      const inputsContainer = document.getElementById('inputs');
+      const addButton = document.getElementById('add');
+      let counter = 1;
+    
+      // Add a new input field when the "Add" button is clicked
+      addButton.addEventListener('click', () => {
+        const newInput = document.createElement('div');
+        newInput.innerHTML = `
+          <label for="input${counter}">New Column name:</label>
+          <input type="text" id="input${counter}" name="input${counter}">
+        `;
+        inputsContainer.appendChild(newInput);
+        counter++;
+        //console.log(counter);
+      });
+    </script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      function download_predefined_csv() {
+          document.getElementById("download_predefined_csv").action = "{% url 'download_predefined_csv' %}";
+          document.getElementById("download_predefined_csv").submit();
+      }
+    </script>
+
+    <script>
+      function delete_extra_columns() {
+          document.getElementById("delete_extra_columns").action = "{% url 'delete_extra_columns' %}";
+          document.getElementById("delete_extra_columns").submit();
+      }
+    </script>
+
+    <script>
+      function setButtonId(buttonId) {
+          // Set the clicked button ID to the hidden input field
+          document.getElementById('clicked_button').value = buttonId;
+      }
+    </script>
+
+  </body>
+</html>

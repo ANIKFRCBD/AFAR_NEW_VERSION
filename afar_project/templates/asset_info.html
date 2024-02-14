@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!--Css-->
+  <link rel="stylesheet" href="../static/css/index.css">
+  <title>Input Asset Info </title>
+  <style>
+    .form form {
+      width: 80%;
+    }
+
+    label {
+      padding-top: 20px;
+      color: beige;
+    }
+
+    .org_name {
+      text-align: center;
+      align-content: center;
+    }
+  </style>
+</head>
+
+<body>
+  {% include 'header.html' %}
+  <div class='left'>
+    <div>
+      <a href="{% url 'dashboard' %}">
+        <button type="button" class="btn btn-secondary btn-block shadow">Dashboard</button>
+      </a>
+    </div>
+    <div>
+      <a href="{% url 'frc_asset_register' %}">
+        <button type="submit" class="btn btn-secondary btn-block shadow">Asset Register</button>
+      </a>
+    </div>
+    <div>
+      <a href="{% url 'frc_asset_schedule' %}">
+        <button type="submit" class="btn btn-secondary btn-block shadow">Asset Schedule</button>
+      </a>
+    </div>
+    <div>
+      <a href="{% url 'frc_dep' %}">
+        <button type="submit" class="btn btn-secondary btn-block shadow">Depriciation</button>
+      </a>
+    </div>
+    <div>
+      <a href="{% url 'current_asset_info' %}">
+        <button type="submit" class="btn btn-secondary btn-block shadow">Current Asset Info</button>
+      </a>
+    </div>
+    <div>
+      <a href="{% url 'asset_info' %}">
+        <button type="submit" class="btn btn-secondary btn-block shadow">Input Asset Info</button>
+      </a>
+    </div>
+    <div>
+      <a href="{% url 'frc_data_entry' %}">
+        <button type="submit" class="btn btn-secondary btn-block shadow">Data Entry</button>
+      </a>
+    </div>
+    <div>
+      <a href="{% url 'frc_system' %}">
+        <button type="button" class="btn btn-secondary btn-block shadow">File Upload</button>
+      </a>
+    </div>
+  </div>
+  <br><br>
+
+  <div class="right">
+    <div class="form">
+      <form method="post" action="">
+        {% csrf_token %}
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="category" class="form-label">Category:</label>
+            <input type="text" id="category" name="category" class="form-control" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="code" class="form-label">Code:</label>
+            <input type="text" id="code" name="code" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="economicCode" class="form-label">Economic Code:</label>
+            <input type="number" id="economicCode" name="economicCode" class="form-control" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="expectedLifePre" class="form-label">Expected Life(pre):</label>
+            <input type="number" id="expectedLifePre" name="expectedLifePre" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="expectedLifePost" class="form-label">Expected Life(post):</label>
+            <input type="number" id="expectedLifePost" name="expectedLifePost" class="form-control" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="depreciationMethod" class="form-label">Depreciation Method:</label>
+            <input type="text" id="depreciationMethod" name="depreciationMethod" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <input type="submit" value="Submit" class="btn btn-secondary shadow mt-3">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- <ul>
+            {% for item in row_data %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul> -->
+
+  <br>
+  <div class="org_name mt-5 pt-4 pb-4" style="background-color: beige;">
+    <h1 style="width: .5 cm; font-weight: 800 ; font-size: 20px;">Financial Reporting Council</h1>
+    <p>
+    <p>Parjatan Bhaban (8th floor), Plot: E-5 C/1<br>
+
+      West Agargaon, Sher-e-Bangla Nagar Administrative Area<br>
+
+      Dhaka-1207, Bangladesh<br>
+
+      Email: ed.ss@frc.gov.bd<br>
+
+      Office: +88 02 41024674<br>
+
+      Website: frc.gov.bd</p>
+    </p>
+
+    <p>All rights reserved by Financial Reporting Council Bangladesh</p>
+  </div>
+
+  <!---->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="../static/js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

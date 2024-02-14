@@ -1,0 +1,265 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <title>Dash Board</title>
+
+    <style>
+        /* button{
+            background: linear-gradient(45deg, #49a09d, #5f2c82);
+        } */
+
+        /* .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        } */
+
+        /* table {
+            width: 800px;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        } */
+
+        /* th,
+        td {
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        } */
+
+        /* th {
+            text-align: left;
+        } */
+
+        /* .left {
+            justify-content: center;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .left>div {
+            margin-left: 5px;
+            margin-right: 5px;
+        } */
+
+
+        .header {
+  text-align: center;
+  font-size: medium;
+  text-decoration: double;
+  margin-top: 0cm;
+}
+
+.table_summary {
+  padding: .5cm;
+  padding-left: 1cm;
+  padding-right: .5cm;
+  margin-right: 7cm;
+  margin-left: 5cm;
+  text-align: center;
+  font-style: inherit;
+  row-gap: 1cm;
+  text-decoration: solid;
+}
+
+.org_name {
+  text-align: center;
+  align-content: center;
+}
+
+        /* table {
+            width: -webkit-fill-available;
+        } */
+    </style>
+</head>
+
+<body>
+    {% include 'header.html' %}
+    <div class='left'>
+        <div>
+            <a href="{% url 'dashboard' %}">
+                <button type="button" class="btn btn-secondary btn-block shadow">Dashboard</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'frc_asset_register' %}">
+                <button type="button" class="btn btn-secondary btn-block shadow">Asset Register</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'frc_asset_schedule' %}">
+                <button type="button" class="btn btn-secondary btn-block shadow">Asset Schedule</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'frc_dep' %}">
+                <button type="button" class="btn btn-secondary btn-block shadow">Depreciation</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'frc_data_entry' %}">
+                <button type="button" class="btn btn-secondary btn-block shadow">Data Entry</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'frc_system' %}">
+                <button type="button" class="btn btn-secondary btn-block shadow">File Upload</button>
+            </a>
+        </div>
+
+
+    </div>
+    <br><br>
+    <div class="header">
+        <p class="" style="font-size: .5cm; font-weight: 500; color: #fff;"><b class="p-2 shadow"
+                style="border-radius: 5px; background-color: #55608f;">Summary of Assets (latest)</b></p>
+    </div>
+    <div class="d-flex" style="justify-content: center;">
+        <div class="table_summary">
+            {% if table %}
+            {{ table|safe }}
+            {% else %}
+            <p>No data available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <br>
+    <div class="header">
+        <p class="" style="font-size: .5cm; font-weight: 500; color: #fff;"><b class="p-2 shadow"
+                style="border-radius: 5px; background-color: #55608f;">Year-wise distribution</b></p>
+    </div>
+    <div class="d-flex" style="justify-content: center;">
+        <div class="table_summary">
+            {% if yearly %}
+            <table>
+                {{ yearly|safe }}
+            </table>
+            {% else %}
+            <p>No data available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <br>
+    <div class="org_name mt-5 pt-4 pb-4" style="background-color: beige;">
+        <h1 style="width: .5 cm; font-weight: 800 ; font-size: 20px;">Financial Reporting Council</h1>
+        <p>
+        <p>Parjatan Bhaban (8th floor), Plot: E-5 C/1<br>
+
+            West Agargaon, Sher-e-Bangla Nagar Administrative Area<br>
+
+            Dhaka-1207, Bangladesh<br>
+
+            Email: ed.ss@frc.gov.bd<br>
+
+            Office: +88 02 41024674<br>
+
+            Website: frc.gov.bd</p>
+        </p>
+
+        <p>All rights reserved by Financial Reporting Council Bangladesh</p>
+    </div>
+
+    <!-- <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                    <th>Column 3</th>
+                    <th>Column 4</th>
+                    <th>Column 5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                    <td>Cell 3</td>
+                    <td>Cell 4</td>
+                    <td>Cell 5</td>
+                </tr>
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                    <td>Cell 3</td>
+                    <td>Cell 4</td>
+                    <td>Cell 5</td>
+                </tr>
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                    <td>Cell 3</td>
+                    <td>Cell 4</td>
+                    <td>Cell 5</td>
+                </tr>
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                    <td>Cell 3</td>
+                    <td>Cell 4</td>
+                    <td>Cell 5</td>
+                </tr>
+                <tr>
+                    <td>Cell 1</td>
+                    <td>Cell 2</td>
+                    <td>Cell 3</td>
+                    <td>Cell 4</td>
+                    <td>Cell 5</td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+
+    <!-- <div class="container">
+        <h2>Summary of Assets (latest)</h2>
+        <ul class="responsive-table">
+            <li class="table-header">
+                <div class="col col-1">Job Id</div>
+                <div class="col col-2">Customer Name</div>
+                <div class="col col-3">Amount Due</div>
+                <div class="col col-4">Payment Status</div>
+            </li>
+            <li class="table-row">
+                <div class="col col-1" data-label="Job Id">42235</div>
+                <div class="col col-2" data-label="Customer Name">John Doe</div>
+                <div class="col col-3" data-label="Amount">$350</div>
+                <div class="col col-4" data-label="Payment Status">Pending</div>
+            </li>
+            <li class="table-row">
+                <div class="col col-1" data-label="Job Id">42442</div>
+                <div class="col col-2" data-label="Customer Name">Jennifer Smith</div>
+                <div class="col col-3" data-label="Amount">$220</div>
+                <div class="col col-4" data-label="Payment Status">Pending</div>
+            </li>
+            <li class="table-row">
+                <div class="col col-1" data-label="Job Id">42257</div>
+                <div class="col col-2" data-label="Customer Name">John Smith</div>
+                <div class="col col-3" data-label="Amount">$341</div>
+                <div class="col col-4" data-label="Payment Status">Pending</div>
+            </li>
+            <li class="table-row">
+                <div class="col col-1" data-label="Job Id">42311</div>
+                <div class="col col-2" data-label="Customer Name">John Carpenter</div>
+                <div class="col col-3" data-label="Amount">$115</div>
+                <div class="col col-4" data-label="Payment Status">Pending</div>
+            </li>
+        </ul>
+    </div> -->
+
+</body>
+
+</html>
