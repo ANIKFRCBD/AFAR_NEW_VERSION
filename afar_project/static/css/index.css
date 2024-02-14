@@ -35,13 +35,17 @@ td {
   /* padding: 15px; */
   background-color: rgba(255, 255, 255, 0.2);
   color: #fff;
-  width: auto;
+  /* width: auto; */
+  /* position: sticky;
+  top: 0; */
 }
 
 th {
   /* background-color: #f2f2f2;
     font-weight: bold; */
-    text-align: justify;
+    /* z-index: 2; */
+  text-align: justify;
+
 }
 
 thead {
@@ -80,19 +84,19 @@ tbody {
   /* max-height: 650px; */
   overflow: auto;
   overflow-x: auto;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 
   margin-left: 20px;
   margin-right: 20px;
   max-width: 100%;
+
+  max-width: calc(100% - 40px);
   /* overflow-x: auto; */
 }
 
 .container1 {
-  /* Set other scrollbar properties */
   scrollbar-width: thin;
-  scrollbar-color: #fff #55608f; /* thumb color track color */
-
+  scrollbar-color: #fff #55608f;
 }
 
 .container1::-webkit-scrollbar {
@@ -102,7 +106,16 @@ tbody {
 }
 
 .container1::-webkit-scrollbar-thumb {
-  /* Set scrollbar thumb color */
+  /* Set scrollbar thumb color */.container1 {
+  scrollbar-width: thin;
+  scrollbar-color: #fff #55608f;
+}
+
+.container1::-webkit-scrollbar {
+  /* Set scrollbar width and color */
+  width: 12px;
+  height: 12px;
+}
   background-color: #55608f;
 }
 
