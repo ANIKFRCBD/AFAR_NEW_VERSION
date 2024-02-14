@@ -1677,7 +1677,7 @@ def frc_asset_schedule(request):
     len_csv = len(df)
     len_csv = len_csv - 1
     # Initialize an empty list to store the rows
-    page_header = ['Economic Code','Particulars','Balance ( Pre MAB assets)','Accumulated Purchases( Post MAB)','Purchases (New)','Total','Rate ( Pre MAB Assets)','Rate ( Post MAB Assets)','Accumulated Depreciation','Depreciation ( Pre MAB)','Depreciation (Post MAB)','Depreciation ( New Purchases)','Depreciation Charges','Total Accumulated Depreciation','WDV','Status']
+    page_header = ['Economic Code','Particulars','Opening Balance','Purchases During the Period','Total','Sale of Assets','Rate of Depreciation','Opening Accumulated Depreciation','Depreciation Charges','Depreciation on Assets Sold','Net Accumulated Depreciation','Impairment Charges','Accumulated Impairment','WDV','Status']
     rows = []
     if len_csv > 0:
     # Read the CSV files into dataframes, skipping the header row
@@ -1685,7 +1685,7 @@ def frc_asset_schedule(request):
         df_asset_register = pd.read_excel('csv_path/sample/asset_register.xlsx', header=None, skiprows=1)
 
         # Initialize an empty list to store the rows
-        page_header = ['Economic Code','Particulars','Balance ( Pre MAB assets)','Accumulated Purchases( Post MAB)','Purchases (New)','Total','Rate ( Pre MAB Assets)','Rate ( Post MAB Assets)','Accumulated Depreciation','Depreciation ( Pre MAB)','Depreciation (Post MAB)','Depreciation ( New Purchases)','Depreciation Charges','Total Accumulated Depreciation','WDV','Status']
+        page_header = ['Economic Code','Particulars','Opening Balance','Purchases During the Period','Total','Sale of Assets','Rate of Depreciation','Opening Accumulated Depreciation','Depreciation Charges','Depreciation on Assets Sold','Net Accumulated Depreciation','Impairment Charges','Accumulated Impairment','WDV','Status']
 
         result_rows = []
         result_rows.append(page_header)
