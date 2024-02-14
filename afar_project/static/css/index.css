@@ -20,6 +20,7 @@ table {
   border-radius: 10px;
   border-collapse: collapse;
   width: 100%;
+  /* position: relative; */
   /* width: 800px; */
   /* border-collapse: collapse; */
   overflow: hidden;
@@ -51,6 +52,8 @@ th {
 thead {
   th {
     background-color: #55608f;
+    /* position: sticky;
+    top: 0; */
   }
 }
 
@@ -288,35 +291,40 @@ tbody {
 
 
 /*form design*/
-.form form {
+form{
   display: flex;
   flex-direction: column;
   float: auto;
-  width: 80% !important;
+  width: 100% !important;
   margin: auto;
 }
 
-.form label {
+form label {
   margin-bottom: 5px;
 }
 
 input[type="text"],
 input[type="email"],
+input[type="number"],
 textarea {
-  padding: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
+  margin-bottom: 20px;
 }
 
-.form input[type="text"]:focus,
+form input[type="text"]:focus,
 input[type="email"]:focus,
 textarea:focus {
   outline: none;
   border-color: #0077cc;
 }
 
-.form button[type="submit"] {
+form button[type="submit"] {
   background-color: #0077cc;
   color: #fff;
   border: none;
@@ -326,7 +334,7 @@ textarea:focus {
   cursor: pointer;
 }
 
-.form button[type="submit"]:hover {
+form button[type="submit"]:hover {
   background-color: #005fa3;
 }
 
