@@ -114,7 +114,7 @@ def depreciation_calculation(request):
         for column in data_sheet.columns[total_columns-iteration_from_last:]:
             financial_year = float(row["Financial Year"][:4])
             current_column_year = float(column[:4])
-            if financial_year <= current_column_year and year_elapsed <= row["Expected life"] and years_used > 1:
+            if financial_year <= current_column_year and year_elapsed <= row["Expected life"] and years_used > 0:
                 data_sheet.loc[index, column] = (row["Cost of Assets Sold"] + row["Current Balance"]) * row["Rate of Depreciation"]
                 years_used = years_used - 1
             elif financial_year <= current_column_year and year_elapsed <= row["Expected life"]:

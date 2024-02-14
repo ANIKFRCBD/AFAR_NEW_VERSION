@@ -17,7 +17,7 @@ def imparimenttest(request):
     search=search_entry(request)
     search=search.fillna(" ").to_html(index=False)
     forms_entryfinder,data=entry_finder(request)
-    no_use=impariement_year_entry(request)
+    # no_use=impariement_year_entry(request)
 
     context = {"table":table,
                "form":form.as_table,
@@ -28,7 +28,8 @@ def imparimenttest(request):
 
 def impairment(request):
     #read the asset_register file
-    data_sheet=pd.read_excel(file_path) # change it to file_path_register if it gives any error
+    data_sheet=pd.read_excel(file_path)# change it to file_path_register if it gives any error
+    pd.set_option('display.float_format', '{:.1f}'.format) 
     primary_df=data_sheet
     depreciation_data_sheet=pd.read_excel(file_path_depreciation)
     test_accumulated="Accumulated Impairment"
@@ -66,23 +67,23 @@ def impairment_data_request_and_save(request):
             print(form.errors)   
     return form,data
 
-def impariement_year_entry(request):
-    data_sheet=pd.read_excel(file_path)
-    colunmn_list=list(data_sheet.columns)
-    print(colunmn_list)
-    no_use,data=impairment_data_request_and_save(request)
-    print(data[3])
-    if data[3] not in colunmn_list:
-        if data[3]=="":
-            data_sheet=data_sheet
-        else:
-            data_sheet[data[3]]=0
-            print("column added")
-            data_sheet.to_excel(file_path,index=False)
-    else:
-         data_sheet=data_sheet
-         print("no new column added")
-    return data_sheet
+# def impariement_year_entry(request):
+#     data_sheet=pd.read_excel(file_path)
+#     colunmn_list=list(data_sheet.columns)
+#     print(colunmn_list)
+#     no_use,data=impairment_data_request_and_save(request)
+#     new_column=
+#     print(data[3])
+#     if data[3] not in colunmn_list:
+#         if data[3]=="":
+#             data_sheet=data_sheet
+#         else:
+#             data_sheet[data[3]]=0
+#             print("column added")
+#     else:
+#          data_sheet=data_sheet
+#          print("no new column added")
+#     return data_sheet
             
 
 
@@ -111,23 +112,41 @@ def search_entry(request):
 # calculate the impairment
 def accounting_for_recoverable_amount(request):
     file=pd.read_excel(file_path)
+    pd.set_option('display.float_format', '{:.1f}'.format)
+    colunmn_list=list(file.columns)
+    no_use,data=impairment_data_request_and_save(request)
+    new_column=data[3]   
     form,data=impairment_data_request_and_save(request)
     if data is not None:
         Value_in_use=data[0]
         Fair_value_less_cost_to_sale=data[1]
         element_to_match=data[2]
         if Value_in_use and Fair_value_less_cost_to_sale is not None:
-            print(f'the key is: {element_to_match}')
             file.loc[file["Asset Code"]==element_to_match,"Value in use"]=float(Value_in_use)
             file.loc[file["Asset Code"]==element_to_match,"Fair value less cost to sale"]=float(Fair_value_less_cost_to_sale)
             file.loc[file["Asset Code"]==element_to_match,"Recoverable Amount"]=max(float(Value_in_use),float(Fair_value_less_cost_to_sale))
-            print(f"the data are {Fair_value_less_cost_to_sale},{Value_in_use}")
+            if new_column is not "" or None:
+                if  new_column not in colunmn_list:
+                    file[new_column]=file["Recoverable Amount"]-file["Book Value"]
+                    file.loc[file[new_column]<0,new_column]=0
+                    new_years_added=len(file.columns)-13
+                    if new_years_added<1:
+                        file["Accumulated Impairment"]=file[new_column]
+                    else:
+                        file["Accumulated Impairment"]=file.iloc[:,-new_years_added:].sum(axis=1)
+            file.to_excel(file_path,index=False)
+                       
         else:
             file.loc[file["Asset Code"]==element_to_match,"Value in use"]=0
             file.loc[file["Asset Code"]==element_to_match,"Fair value less cost to sale"]=0
-            data_to_include=file.loc[file["Asset Code"]== element_to_match]
+            data_to_include=file.loc[file["Asset Code"]== element_to_match] 
             for index,row in data_to_include.iterrows():
                      file.at[index,"Recoverable Amount"]=row["Book Value"]
+            new_years_added=len(file.columns)-13
+            if new_years_added<1:
+                file["Accumulated Impairment"]=file[new_column]
+            else:
+                file["Accumulated Impairment"]=file.iloc[:,-new_years_added:].sum(axis=1)        
             file.to_excel(file_path,index=False)
             
     else:
