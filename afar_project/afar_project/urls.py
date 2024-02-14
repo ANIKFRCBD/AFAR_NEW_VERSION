@@ -23,6 +23,7 @@ from impairmenttest import views as impairment
 from assetregister import views as asset_register_main
 from depreciation import views as dep
 from frc_file_upload import views as frc_file_upload
+from salesentry import views as salesentry
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',opening,name='opening'),
@@ -60,4 +61,5 @@ urlpatterns = [
     path('frc_system/', frc_file_upload.merge_files, name='merge_files'),
     path('frc_data_entry/', frc_data_entry, name='frc_data_entry'),
     path('impariment/', impairment.imparimenttest, name='impairment'),
+    path('sales_entry/', salesentry.sales_entry_app, name='sales_entry'),
     ]

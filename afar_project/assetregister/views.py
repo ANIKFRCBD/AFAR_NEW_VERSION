@@ -9,14 +9,14 @@ def frc_asset_register(request):
     # Generate Asset code by rearranging the dataframe
     df=df[['Financial Year', 'Purchase date', 'Sl ', 'Bill no','Economic Code',
        'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
-       'Modified Number', 'Price','Salvage Value', 'Sold (unit)','Years used(sold items)','FY of Items sold',
+       'Modified Number', 'Price','Salvage Value', 'Sold (unit)','Sales proceeds','Years used(sold items)','FY of Items sold',
        'Cost of Assets Sold', 'Current Balance', 'Expected life',
        'Depreciation Method', 'Location']]
     df["Asset Code"]=0
     #Rearrange the dataframe
     df=df[['Financial Year', 'Purchase date', 'Sl ', 'Bill no','Asset Code','Economic Code',
        'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
-       'Modified Number', 'Price','Salvage Value', 'Sold (unit)','Years used(sold items)', 'FY of Items sold',
+       'Modified Number', 'Price','Salvage Value', 'Sold (unit)','Sales proceeds','Years used(sold items)', 'FY of Items sold',
        'Cost of Assets Sold', 'Current Balance', 'Expected life',
        'Depreciation Method', 'Location']]
     # Get the current date
@@ -35,7 +35,7 @@ def frc_asset_register(request):
         df["Current Balance"]=df["Price"]-df["Cost of Assets Sold"]
 
         #Asset_code_generation_updated_by_anik_mallick
-        df["Asset Code"]="FRC" + "-" +  df.iloc[:, 20].astype(str).iloc[0]+"-"+df.iloc[:, 19].astype(str).iloc[0] + "-" + df.iloc[:, 6].astype(str).str[:1]  + "-" +df.iloc[:, 0].astype(str).str.extract(r'(\d{2})(\d{2})').iloc[:, 1] + "-" +df.iloc[:,2].astype(str).str[:-2].apply(lambda x: x.zfill(4))
+        df["Asset Code"]="FRC" + "-" +  df.iloc[:, 22].astype(str).iloc[0]+"-"+df.iloc[:, 21].astype(str).iloc[0] + "-" + df.iloc[:, 6].astype(str).str[:1]  + "-" +df.iloc[:, 0].astype(str).str.extract(r'(\d{2})(\d{2})').iloc[:, 1] + "-" +df.iloc[:,2].astype(str).str[:-2].apply(lambda x: x.zfill(4))
         df.fillna('', inplace=True)
         numeric_cols = df.select_dtypes(include='number').columns  # Select numeric columns
         df[numeric_cols] = df[numeric_cols].applymap(lambda x: f'{x:.2f}' if not pd.isnull(x) else '')  # Format numeric values to display 2 decimal places

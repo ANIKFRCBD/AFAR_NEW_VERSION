@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'impairmenttest',
     'depreciation',
     'assetregister',
-    'frc_file_upload'
+    'frc_file_upload',
+    'salesentry',
 ]
 
 MIDDLEWARE = [
