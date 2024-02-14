@@ -57,6 +57,7 @@ urlpatterns = [
     path('frc_asset_schedule/', frc_asset_schedule, name='frc_asset_schedule'),
     path('frc_dep/', dep.dep, name='frc_dep'),
     path('frc_system/', frc_file_upload.frc_system, name='frc_system'),
+    path('frc_system/', frc_file_upload.merge_files, name='merge_files'),
     path('frc_data_entry/', frc_data_entry, name='frc_data_entry'),
     path('impariment/', impairment.imparimenttest, name='impairment'),
     ]

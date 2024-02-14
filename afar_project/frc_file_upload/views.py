@@ -37,3 +37,28 @@ def frc_system(request):
             return redirect('frc_asset_register')  # Redirect to appropriate view after upload
 
     return render(request, 'frc_system') 
+
+
+def merge_files(request):
+    if request.method == 'POST':
+        # Assuming your form field name is 'file_to_merge'
+        uploaded_file = request.FILES.get('file_to_merge')
+
+        if uploaded_file:
+            # Read the existing Excel file
+            existing_file_path = 'csv_path/sample/asset_register.xlsx'
+            existing_df = pd.read_excel(existing_file_path)
+
+            # Read the uploaded Excel file
+            uploaded_df = pd.read_excel(uploaded_file)
+
+            # Concatenate the uploaded DataFrame with the existing DataFrame
+            merged_df = pd.concat([existing_df, uploaded_df.iloc[1:]], ignore_index=True)
+
+            # Write the merged DataFrame to the existing Excel file
+            file_path = 'csv_path/sample/asset_register.xlsx'
+            merged_df.to_excel(file_path, index=False)
+
+            return redirect('frc_asset_register')  # Redirect to appropriate view after merge
+
+    return render(request, 'frc_system') 

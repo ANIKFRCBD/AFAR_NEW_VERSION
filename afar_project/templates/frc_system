@@ -82,6 +82,17 @@
               <button type="submit" class="btn btn-success">Upload excel File</button>
             </form>
       </div>
+
+          <!-- Second Form for Merging
+    <div class="merge-files-form">
+      <br>
+      <form id="merge_files_frc" action="{% url 'merge_files' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="file" name="file_to_merge" accept=".xlsx" />
+          <button type="submit" class="btn btn-success">Merge with Existing File</button>
+      </form>
+  </div> -->
+</div>
       
     </div>
 
@@ -93,6 +104,12 @@
       function file_upload_frc_fun() {
           document.getElementById("file_upload_frc").action = "{% url 'file_upload_pre' %}";
           document.getElementById("file_upload_frc").submit();
+      }
+    </script>
+    <script>
+      function file_upload_frc_fun() {
+          document.getElementById("merge_files_frc").action = "{% url 'merge_files' %}";
+          document.getElementById("merge_files_frc").submit();
       }
     </script>
   </body>
