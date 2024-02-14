@@ -161,15 +161,20 @@
     }
   </script>
 
-  <script>
-    function setMaxHeight() {
-      var screenWidth = window.innerWidth;
-      var maxHeight = screenWidth * 0.35;
-      document.getElementById("rowsContainer").style.maxHeight = maxHeight + "px";
+<script>
+  function setMaxHeight() {
+    var screenWidth = window.innerWidth;
+    var maxHeight;
+    if (screenWidth <= 1200) {
+      maxHeight = screenWidth * 0.9;
+    } else {
+      maxHeight = screenWidth * 0.35;
     }
-    window.onload = setMaxHeight;
-    window.onresize = setMaxHeight;
-  </script>
+    document.getElementById("rowsContainer").style.maxHeight = maxHeight + "px";
+  }
+  window.onload = setMaxHeight;
+  window.onresize = setMaxHeight;
+</script>
 
 </body>
 
