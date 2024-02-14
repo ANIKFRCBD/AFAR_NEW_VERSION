@@ -134,7 +134,9 @@ def accounting_for_recoverable_amount(request):
         else:
             file.loc[file["Asset Code"]==element_to_match,"Value in use"]=0
             file.loc[file["Asset Code"]==element_to_match,"Fair value less cost to sale"]=0
-            file.loc[file["Asset Code"]==element_to_match,"Recoverable Amount"]=file.loc[file["Asset Code"]==element_to_match,"Book Value"].iloc[0]
+            file.loc[file["Asset Code"]==element_to_match,"Recoverable Amount"]=file.loc[file["Asset Code"]==element_to_match,"Book Value"].iloc[1]
             print(f"the data are {Fair_value_less_cost_to_sale}")
+    else:
+        file=file
     file.to_excel(file_path,index=False)
     return file
