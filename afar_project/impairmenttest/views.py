@@ -8,16 +8,17 @@ from datetime import datetime
 
 file_path="csv_path/sample/impairment_data.xlsx"
 file_path_register="csv_path/sample/asset_register.xlsx"
-
+file_path_depreciation="csv_path/sample/depreciation.xlsx"
 #Show the impairment page
 def imparimenttest(request):
     table = impairment(request)
+    file=accounting_for_recoverable_amount(request)
     form,data=impairment_data_request_and_save(request)  
     search=search_entry(request)
     search=search.fillna(" ").to_html(index=False)
     forms_entryfinder,data=entry_finder(request)
     no_use=impariement_year_entry(request)
-    file=accounting_for_recoverable_amount(request)
+
     context = {"table":table,
                "form":form.as_table,
                "entry_finder":forms_entryfinder,
@@ -27,11 +28,12 @@ def imparimenttest(request):
 
 def impairment(request):
     #read the asset_register file
-    primary_df=pd.read_excel(file_path) # change it to file_path_register if it gives any error
-
+    data_sheet=pd.read_excel(file_path_register) # change it to file_path_register if it gives any error
+    primary_df=data_sheet
+    depreciation_data_sheet=pd.read_excel(file_path_depreciation)
     
     if "Value in use" not in primary_df:
-        impairment_part=pd.DataFrame({"Book Value":[],"Fair value less cost to sale": [],"Value in use":[],"Recoverable Value":[]})
+        impairment_part=pd.DataFrame({"Book Value":[],"Fair value less cost to sale": [],"Value in use":[],"Recoverable Amount":[]})
         primary_df=primary_df[["Financial Year","Purchase date","Bill no","Economic Code","Category","Name of Item","Brand Name","Asset Code"]]
         primary_df=pd.concat([primary_df,impairment_part],join="outer")
     else:
@@ -47,6 +49,7 @@ def impairment(request):
     else:
         primary_df=primary_df
         print("no new column added")
+    primary_df["Book Value"]=depreciation_data_sheet["Book Value"]
 
     primary_df=primary_df.fillna(0)
     table=primary_df.to_dict(orient="records")
@@ -55,7 +58,7 @@ def impairment(request):
 
 #get data of impairment
 def impairment_data_request_and_save(request):
-    data=(0,0,0,0)
+    data=(0,0,0,"")
     Value_in_use=0
     Fair_value_less_cost_to_sale=0
     form=impairmententry(request.POST)
@@ -110,8 +113,8 @@ def search_entry(request):
     form,data=entry_finder(request)
     Asset_Code=data
     data_sheet=pd.read_excel(file_path)
-    print(data_sheet["Asset Code"])
     d=data_sheet[data_sheet["Asset Code"] == Asset_Code]
+    print(d)
     return d
 
 # calculate the impairment
@@ -122,14 +125,18 @@ def accounting_for_recoverable_amount(request):
         Value_in_use=data[0]
         Fair_value_less_cost_to_sale=data[1]
         element_to_match=data[2]
-        if Value_in_use is not None:
+        if Value_in_use and Fair_value_less_cost_to_sale is not None:
             print(f'the key is: {element_to_match}')
             file.loc[file["Asset Code"]==element_to_match,"Value in use"]=float(Value_in_use)
             file.loc[file["Asset Code"]==element_to_match,"Fair value less cost to sale"]=float(Fair_value_less_cost_to_sale)
+            file.loc[file["Asset Code"]==element_to_match,"Recoverable Amount"]=max(float(Value_in_use),float(Fair_value_less_cost_to_sale))
             print(f"the data are {Fair_value_less_cost_to_sale},{Value_in_use}")
+        else:
+            file.loc[file["Asset Code"]==element_to_match,"Value in use"]=0
+            file.loc[file["Asset Code"]==element_to_match,"Fair value less cost to sale"]=0
+            file.loc[file["Asset Code"]==element_to_match,"Recoverable Amount"]=file.loc[file["Asset Code"]==element_to_match,"Book Value"].iloc[1]
+            print(f"the data are {Fair_value_less_cost_to_sale}")
     else:
-        file.loc[file["Asset Code"]==element_to_match,"Value in use"]=0
-        file.loc[file["Asset Code"]==element_to_match,"Fair value less cost to sale"]=0
-        print("no data is sent")
+        file=file
     file.to_excel(file_path,index=False)
     return file
