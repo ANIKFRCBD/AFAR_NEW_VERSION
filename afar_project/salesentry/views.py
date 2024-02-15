@@ -6,8 +6,8 @@ from .forms import sales_entry_form,entryfinder_sales
 from .models import sales_entry_model
 from datetime import datetime
 
-file_path_register="csv_path/sample/asset_register.xlsx"
-file_path_to_sales_register="csv_path/sample/asset_sales_register.xlsx"
+file_path_register="csv_path/excel_files/asset_register.xlsx"
+file_path_to_sales_register="csv_path/excel_files/asset_sales_register.xlsx"
 #Show the impairment page
 def sales_entry_app(request):
     sales_entry_post(request)

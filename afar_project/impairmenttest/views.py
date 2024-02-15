@@ -6,9 +6,9 @@ from .forms import impairmententry,entryfinder
 from .models import impairmententry_model
 from datetime import datetime
 
-file_path="csv_path/sample/impairment_data.xlsx"
-file_path_register="csv_path/sample/asset_register.xlsx"
-file_path_depreciation="csv_path/sample/depreciation.xlsx"
+file_path="csv_path/excel_files/impairment_data.xlsx"
+file_path_register="csv_path/excel_files/asset_register.xlsx"
+file_path_depreciation="csv_path/excel_files/depreciation.xlsx"
 #Show the impairment page
 def imparimenttest(request):
     table = impairment(request)

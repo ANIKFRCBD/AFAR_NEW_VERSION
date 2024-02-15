@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 # Create your views here.
 def frc_asset_register(request):
-    file_path = 'csv_path/sample/asset_register.xlsx'  # Replace with the actual file path
+    file_path = 'csv_path/excel_files/asset_register.xlsx'  # Replace with the actual file path
     df_sheet = pd.read_excel(file_path)
     df=df_sheet
     # Generate Asset code by rearranging the dataframe

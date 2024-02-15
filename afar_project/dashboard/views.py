@@ -12,7 +12,7 @@ def dashboard(request):
     return render(request, "Dashboard.html", context)
 
 def dashboard_summary_of_assets(request):
-    file_path ='csv_path/sample/asset_register.xlsx'
+    file_path ='csv_path/excel_files/asset_register.xlsx'
      # Replace with the actual file path
     df = pd.read_excel(file_path)
     list_primary=df[['Category','Expected life','Modified Number']]
@@ -38,7 +38,7 @@ def dashboard_summary_of_assets(request):
 
 
 def yearly_summary(request):
-    file_path ='csv_path/sample/asset_register.xlsx'
+    file_path ='csv_path/excel_files//asset_register.xlsx'
     df = pd.read_excel(file_path)
     list_primary=df['Financial Year']
     list_primary=list_primary.drop_duplicates().dropna()

@@ -20,7 +20,7 @@ def frc_system(request):
 
         if uploaded_file:
             # Read the existing Excel file
-            existing_file_path = 'csv_path/sample/asset_register.xlsx'
+            existing_file_path = 'csv_path/excel_files/asset_register.xlsx'
             existing_df = pd.read_excel(existing_file_path)
 
             # Read the uploaded Excel file
@@ -32,7 +32,7 @@ def frc_system(request):
                 file = uploaded_df
 
             # Write the concatenated DataFrame to a new Excel file
-            file_path = 'csv_path/sample/asset_register.xlsx'
+            file_path = 'csv_path/excel_files/asset_register.xlsx'
             file.to_excel(file_path, index=False)
             return redirect('frc_asset_register')  # Redirect to appropriate view after upload
 
@@ -46,7 +46,7 @@ def merge_files(request):
 
         if uploaded_file:
             # Read the existing Excel file
-            existing_file_path = 'csv_path/sample/asset_register.xlsx'
+            existing_file_path = 'csv_path/excel_files/asset_register.xlsx'
             existing_df = pd.read_excel(existing_file_path)
 
             # Read the uploaded Excel file
@@ -56,7 +56,7 @@ def merge_files(request):
             merged_df = pd.concat([existing_df, uploaded_df.iloc[1:]], ignore_index=True)
 
             # Write the merged DataFrame to the existing Excel file
-            file_path = 'csv_path/sample/asset_register.xlsx'
+            file_path = 'csv_path/excel_files/asset_register.xlsx'
             merged_df.to_excel(file_path, index=False)
 
             return redirect('frc_asset_register')  # Redirect to appropriate view after merge

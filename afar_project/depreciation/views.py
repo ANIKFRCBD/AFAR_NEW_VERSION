@@ -4,8 +4,8 @@ from datetime import datetime
 from afar_project.views import calculate_values,calculate_costs
 
 
-file_path='csv_path/sample/asset_register.xlsx'
-Dep_file_path='csv_path/sample/depreciation.xlsx'
+file_path='csv_path/excel_files/asset_register.xlsx'
+Dep_file_path='csv_path/excel_files/depreciation.xlsx'
 
 def dep(request):
     #call functions

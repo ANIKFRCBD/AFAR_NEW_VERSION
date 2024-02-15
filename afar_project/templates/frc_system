@@ -93,7 +93,6 @@
       </form>
     </div>
 
-    <!-- Second Form for Merging
     <div class="merge-files-form">
       <br>
       <form id="merge_files_frc" action="{% url 'merge_files' %}" method="post" enctype="multipart/form-data">
@@ -101,7 +100,7 @@
           <input type="file" name="file_to_merge" accept=".xlsx" />
           <button type="submit" class="btn btn-success">Merge with Existing File</button>
       </form>
-  </div> -->
+  </div>
   </div>
 
   </div>

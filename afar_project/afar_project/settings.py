@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'assetregister',
     'frc_file_upload',
     'salesentry',
+    'frc_asset_schedule'
 ]
 
 MIDDLEWARE = [
@@ -88,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'AFAR',
         'USER': 'postgres',
-        'PASSWORD': '123456',
+        'PASSWORD': 'frc123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
