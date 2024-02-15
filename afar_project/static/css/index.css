@@ -44,7 +44,7 @@ td {
 th {
   /* background-color: #f2f2f2;
     font-weight: bold; */
-    /* z-index: 2; */
+  /* z-index: 2; */
   text-align: justify;
 
 }
@@ -109,17 +109,21 @@ tbody {
 }
 
 .container1::-webkit-scrollbar-thumb {
-  /* Set scrollbar thumb color */.container1 {
-  scrollbar-width: thin;
-  scrollbar-color: #fff #55608f;
-}
-
-.container1::-webkit-scrollbar {
-  /* Set scrollbar width and color */
-  width: 12px;
-  height: 12px;
-}
   background-color: #55608f;
+
+  /* Set scrollbar thumb color */
+  .container1 {
+    scrollbar-width: thin;
+    scrollbar-color: #fff #55608f;
+  }
+
+  .container1::-webkit-scrollbar {
+    /* Set scrollbar width and color */
+    width: 12px;
+    height: 12px;
+  }
+
+  
 }
 
 .container1::-webkit-scrollbar-track {
@@ -291,7 +295,7 @@ tbody {
 
 
 /*form design*/
-form{
+form {
   display: flex;
   flex-direction: column;
   float: auto;
