@@ -12,21 +12,34 @@
   <link rel="stylesheet" href="../static/css/index.css">
   <title>FRC System</title>
   <style>
-    .form form {
-      width: 80%;
+    .header {
+      text-align: center;
+      font-size: medium;
+      text-decoration: double;
+      margin-top: 20px;
+      margin-bottom: 50px;
     }
 
-
-    .left {
-      display: flex;
-      flex-direction: row;
-      /* Arrange items in a row */
-      justify-content: center;
+    .box {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin-left: 100px;
+      margin-right: 100px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-left: 40px;
+      padding-right: 40px;
+      color: beige;
     }
 
-    .left>div {
-      margin-right: 10px;
-      /* Add spacing between buttons */
+    label {
+      padding-top: 10px;
+      color: beige;
+    }
+
+    .org_name {
+      text-align: center;
+      align-content: center;
     }
   </style>
 </head>
@@ -78,23 +91,29 @@
 
 
   </div>
-  <br><br>
+  <br>
 
   </div>
-  <br><br><br>
-  <div class="mx-5">
+  <br>
+
+  <div class="header">
+    <p class="my-2" style="font-size: .5cm; font-weight: 500; color: #fff;"><b class="p-2 shadow"
+        style="border-radius: 5px; background-color: #55608f;">File Upload</b></p>
+  </div>
+  
+  <div class="d-flex" style="justify-content: center; align-content: center;">
     <!-- Form to Add New Column -->
-    <div class="add-column-form mx-5">
+    <div class="box form">
       <br>
       <form id="file_upload_frc" action="{% url 'frc_system' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="file" accept=".xlsx" />
-        <button type="submit" class="btn btn-success">Upload excel File</button>
+        <input style="color: beige; background-color: #55608f; border-radius: 7px;" type="file" name="file" accept=".xlsx" />
+        <input type="submit" class="btn btn-secondary btn-block shadow mt-4 mb-3" value="Upload Excel File">
       </form>
     </div>
 
     <div class="merge-files-form">
-      <br>
+      <br>s
       <form id="merge_files_frc" action="{% url 'merge_files' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <input type="file" name="file_to_merge" accept=".xlsx" />
@@ -104,6 +123,27 @@
   </div>
 
   </div>
+
+  <br>
+  <div class="org_name mt-5 pt-4 pb-4" style="background-color: beige;">
+    <h1 style="width: .5 cm; font-weight: 800 ; font-size: 20px;">Financial Reporting Council</h1>
+    <p>
+    <p>Parjatan Bhaban (8th floor), Plot: E-5 C/1<br>
+
+      West Agargaon, Sher-e-Bangla Nagar Administrative Area<br>
+
+      Dhaka-1207, Bangladesh<br>
+
+      Email: ed.ss@frc.gov.bd<br>
+
+      Office: +88 02 41024674<br>
+
+      Website: frc.gov.bd</p>
+    </p>
+
+    <p>All rights reserved by Financial Reporting Council Bangladesh</p>
+  </div>
+
 
   <!---->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
