@@ -62,11 +62,11 @@ def frc_asset_schedule(request):
 
                     cost_of_asset_sold = cost_of_asset_sold + row_reg[18]
                     if(row_reg[0] != "2023-2024"):
-                        opening_balance = opening_balance + row_reg[19]
+                        opening_balance = opening_balance + row_reg[12]
                     elif(row_reg[0] == "2023-2024"):
                         purchase_during_the_period = purchase_during_the_period + row_reg[19]
 
-                    net_acc_dep = acc_dep_sold_items  + opening_acc_dep - dep_charges
+                    net_acc_dep = opening_acc_dep + dep_charges-acc_dep_sold_items
 
                     
                     
@@ -107,7 +107,7 @@ def frc_asset_schedule(request):
                 total = round(opening_balance + purchase_during_the_period,2)
                 net_balance = total - cost_of_asset_sold
                 wdv = net_balance - net_acc_dep - acc_imp
-                new_row = [row_info.iloc[2], row_info.iloc[0], round(opening_balance,2), purchase_during_the_period,total,round(cost_of_asset_sold,2),round(net_balance,2),post_rate_percentage, round(opening_acc_dep,2),round(dep_charges,2),round(acc_dep_sold_items,2),round(net_acc_dep,2),round(imp_charges,2),round(acc_imp,2),round(wdv,2)]
+                new_row = [row_info.iloc[2], row_info.iloc[0], round(opening_balance,2), purchase_during_the_period,total,round(cost_of_asset_sold,2),round(net_balance,2),post_rate_percentage, round(opening_acc_dep,2),round(dep_charges,2),round(acc_dep_sold_items,2),round(net_acc_dep,2),round(imp_charges,2),round(acc_imp,2),round(wdv,2)," "]
                 result_rows.append(new_row)
         
         # Convert the list of rows into a DataFrame
