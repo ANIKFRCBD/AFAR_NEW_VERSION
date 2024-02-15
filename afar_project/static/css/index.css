@@ -138,7 +138,7 @@ tbody {
 }
 
 .Projectname {
-  text-align: center;
+  text-align: left;
   background-color: beige;
   padding: 1vh;
 }
@@ -166,7 +166,7 @@ tbody {
 .nameboxtext {
   font-family: 'Times New Roman', Times, serif;
   font-size: 20px;
-  text-align: center;
+  text-align: left;
   text-transform: capitalize;
 }
 
