@@ -12,12 +12,27 @@
   <link rel="stylesheet" href="../static/css/index.css">
   <title>Input Asset Info </title>
   <style>
-    .form form {
-      width: 80%;
+       .header {
+      text-align: center;
+      font-size: medium;
+      text-decoration: double;
+      margin-top: 20px;
+      margin-bottom: 50px;
+    }
+    .box {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin-left: 100px;
+      margin-right: 100px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-left: 40px;
+      padding-right: 40px;
+      color: beige;
     }
 
     label {
-      padding-top: 20px;
+      padding-top: 0px;
       color: beige;
     }
 
@@ -72,10 +87,15 @@
       </a>
     </div>
   </div>
-  <br><br>
+  <br>
 
-  <div class="right mx-5">
-    <div class="form mx-5">
+  <div class="header">
+    <p class="my-2" style="font-size: .5cm; font-weight: 500; color: #fff;"><b class="p-2 shadow"
+        style="border-radius: 5px; background-color: #55608f;">Entry Filter for Impairment Test</b></p>
+  </div>
+
+  <div class="right box">
+    <div class="form">
       <form method="post" action="">
         {% csrf_token %}
 
@@ -116,8 +136,8 @@
         </div>
 
         <div class="row">
-          <div class="col-md-12 mb-3">
-            <input type="submit" value="Submit" class="btn btn-secondary shadow mt-3">
+          <div class="col-md-12 mb-3 text-center">
+            <input type="submit" value="Submit" class="btn btn-secondary px-5 shadow">
           </div>
         </div>
       </form>

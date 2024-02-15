@@ -145,7 +145,7 @@ def accounting_for_recoverable_amount(request):
             for index,row in data_to_include.iterrows():
                      file.at[index,"Recoverable Amount"]=row["Book Value"]
             new_years_added=len(file.columns)-13
-            if new_column is not "" or None:
+            if new_column is not str("") or None:
                  if new_years_added<1:
                       file["Accumulated Impairment"]=file[new_column]
                  else:

@@ -74,7 +74,7 @@ def accounting_for_recoverable_amount(request):
     pd.set_option('display.float_format', '{:.1f}'.format)
     colunmn_list=list(file.columns)
     no_use,data=sales_entry_save(request)   
-    if data[0] is not None:
+    if data[0] is not None and "":
         Sales_procced=data[0]
         Number=data[1]
         element_to_match=data[2]
@@ -88,4 +88,10 @@ def accounting_for_recoverable_amount(request):
     else:
         file=file
     file.to_excel(file_path_to_sales_register,index=False)
+    asset_register=pd.read_excel(file_path_register)
+    asset_register["Sales proceeds"]=file["Sales proceeds"]
+    asset_register["Sold (unit)"]=file["Sold (unit)"]
+    asset_register["FY of Items sold"]=file["FY of Items sold"]
+    asset_register["Years used(sold items)"]=file["Years used(sold items)"]
+    asset_register.to_excel(file_path_register,index=False)
     return file
