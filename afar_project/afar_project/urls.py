@@ -25,7 +25,7 @@ from depreciation import views as dep
 from frc_file_upload import views as frc_file_upload
 from salesentry import views as salesentry
 from frc_asset_schedule import views as frc_asset_schedule
-from frc_data_entry import views as frc_data_entry
+from dataentry import views as frc_data_entry
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',opening,name='opening'),

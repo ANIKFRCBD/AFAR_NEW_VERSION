@@ -1,11 +1,14 @@
 from django.shortcuts import render
+from django.http import request
 import pandas as pd
-
+from django.contrib.auth.models import User as users
 # Create your views here.
 def frc_data_entry(request):
     csv_file_path = 'csv_path/asset_info/asset_info.csv'
     df = pd.read_csv(csv_file_path)
-
+    user_list=users.objects.all()
+    current_user=request.user.username
+    print(current_user)
     df_csv = pd.read_csv('csv_path/asset_info/asset_info.csv')
 
     # Extract values from the first column
@@ -65,6 +68,6 @@ def frc_data_entry(request):
 
         # Save the DataFrame back to the Excel file
         df.to_excel(file_path, index=False)
+    
 
-
-    return render(request, 'frc_data_entry.html',{'dropdown_categories': dropdown_categories})
+    return render(request, 'frc_data_entry.html',{'dropdown_categories': dropdown_categories,'user':current_user})

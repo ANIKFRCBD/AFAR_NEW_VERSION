@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-
+{% load static %}
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -99,7 +99,9 @@
     <p class="my-2" style="font-size: .5cm; font-weight: 500; color: #fff;"><b class="p-2 shadow"
         style="border-radius: 5px; background-color: #55608f;">Entry Filter for Impairment Test</b></p>
   </div>
-
+  <div class="user_info">
+     <p style="color: white; text-align: center; font-size: medium;"> Logged in : {{user}} </p>
+  </div>
   <div class="">
     <!-- Form to Add New Column -->
     <div class="form box">
@@ -164,7 +166,7 @@
             </div> -->
 
           <div class="col-md-6">
-            <label for="location">Location:</label>
+            <label for="location">Location</label>
             <input type="text" id="location" name="location" class="form-control" required>
           </div>
         </div>
@@ -174,6 +176,11 @@
             <label for="current_condition">Current Condition:</label>
             <input type="text" id="current_condition" name="current_condition" class="form-control" required>
           </div>
+          <div class="col-md-6">
+            <label for="user">Entry by:</label>
+            <input type="text" id="user" name="user" class="form-control" required>
+          </div>
+        </div>
 
           {% for column_name in column_names %}
           <div class="col-md-6">
