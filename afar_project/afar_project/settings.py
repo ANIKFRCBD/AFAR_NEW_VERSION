@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'assetregister',
     'frc_file_upload',
     'salesentry',
-    'frc_asset_schedule'
+    'frc_asset_schedule',
+    'frc_data_entry',
 ]
 
 MIDDLEWARE = [
