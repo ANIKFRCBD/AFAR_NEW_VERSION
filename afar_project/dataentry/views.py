@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import request
 import pandas as pd
 from django.contrib.auth.models import User as users
+from datetime import datetime
 # Create your views here.
 def frc_data_entry(request):
     csv_file_path = 'csv_path/asset_info/asset_info.csv'
@@ -15,7 +16,7 @@ def frc_data_entry(request):
     dropdown_categories = df.iloc[:, 0].tolist()
 
     if request.method == 'POST':
-        file_path = 'csv_path/sample/asset_register.xlsx'
+        file_path = 'csv_path/excel_files/asset_register.xlsx'
         df = pd.read_excel(file_path)
 
         purchase_date = request.POST.get('purchase_date')
@@ -35,7 +36,7 @@ def frc_data_entry(request):
         name_of_item = request.POST.get('name_of_item')
         quantity = float(request.POST.get('quantity') or 0)
         price = float(request.POST.get('price'))
-        sold_quantity = float(request.POST.get('sold_quantity'))
+        sold_quantity = 0
         location = request.POST.get('location')
         current_condition = request.POST.get('current_condition')
 
