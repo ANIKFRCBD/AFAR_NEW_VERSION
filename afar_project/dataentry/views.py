@@ -36,7 +36,8 @@ def frc_data_entry(request):
         name_of_item = request.POST.get('name_of_item')
         quantity = float(request.POST.get('quantity') or 0)
         price = float(request.POST.get('price'))
-        sold_quantity = 0
+        warranty = request.POST.get('warranty')
+        sold_units=0
         location = request.POST.get('location')
         current_condition = request.POST.get('current_condition')
 
@@ -55,7 +56,8 @@ def frc_data_entry(request):
             'Name of Item': name_of_item,
             'Units': quantity,
             'Price': price,
-            'Sold (unit)': sold_quantity,
+            'warranty':warranty,
+            'Sold (unit)': sold_units,
             'Location': location,
             'Economic Code':economic_code,
             'Expected life':expected_life,
