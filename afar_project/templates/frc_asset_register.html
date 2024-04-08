@@ -91,6 +91,11 @@
       </a>
     </div>
     <div>
+      <a href="{% url 'delete' %}">
+        <button type="button" class="btn btn-secondary btn-block shadow">Delete Entry</button>
+      </a>
+    </div>
+    <div>
       <form method="post" action="" id="download_csv_frc_asset">
         {% csrf_token %}
         <input type="submit" class="btn btn-success btn-block shadow" onclick="download_csv_frc_asset()"

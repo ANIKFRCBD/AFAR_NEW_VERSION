@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'salesentry',
     'frc_asset_schedule',
     'dataentry',
+    'datadelete',
 ]
 
 MIDDLEWARE = [
