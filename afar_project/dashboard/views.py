@@ -1,7 +1,13 @@
 from django.shortcuts import render
-from django.http import request
 import pandas as pd
+from datetime import datetime
+
 import os
+import qrcode
+from django.conf import settings
+from django.http import HttpResponse
+from django.shortcuts import render
+from openpyxl import load_workbook
 
 # Create your views here.
 def dashboard(request):
@@ -9,6 +15,41 @@ def dashboard(request):
     yearly_table=yearly_summary(request)
     context = {'table': table_of_summary,
                'yearly': yearly_table}
+    
+    
+    excel_file_path_qr_generation = 'csv_path/excel_files/asset_register.xlsx'
+
+    # Delete previously generated QR codes
+    qr_code_directory = os.path.join(settings.MEDIA_ROOT, 'qrcode_saved_folder')
+    if os.path.exists(qr_code_directory):
+        for file in os.listdir(qr_code_directory):
+            os.remove(os.path.join(qr_code_directory, file))
+    else:
+        os.makedirs(qr_code_directory)
+
+    # Generate new QR codes from Excel data
+    wb = load_workbook(excel_file_path_qr_generation)
+    ws = wb.active
+    qr_codes = []
+    skip_first_row = True
+    for row in ws.iter_rows(values_only=True):
+        if skip_first_row:
+            skip_first_row = False
+            continue
+        asset_code = row[4]  # Assuming asset code is in the first column
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(asset_code)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="black", back_color="white")
+        img_path = os.path.join(qr_code_directory, f"{asset_code}.png")
+        img.save(img_path)
+        qr_codes.append(img_path)
+
     return render(request, "Dashboard.html", context)
 
 def dashboard_summary_of_assets(request):
