@@ -242,10 +242,16 @@ $(document).ready(function () {
     $("table tbody tr").click(function () {
         // Remove any previously highlighted rows
         console.log("clicked")
+        var rowData = $(this).find("td:eq(4)").map(function () {
+                return $(this).text();
+            }).get();
+        console.log(rowData)
+        var url = "/frc_asset_data?id=" + encodeURIComponent(rowData);
         $("table tbody tr").removeClass("highlight");
-
+        
         // Add highlight class to the clicked row
         $(this).addClass("highlight");
+        //window.location.href = url
     });
 });
 </script>
