@@ -36,7 +36,7 @@
     <p><strong>Location:</strong> {{ value_23 }}</p>
     <p><strong>Entry By:</strong> {{ value_24 }}</p>
     <p><strong>Asset Image:</strong></p>{% load static %} <img src="{% static 'asset_image_upload_folder/FRC-HQ-SLM-F-17-0014.jpg' %}"/>
-    <p><strong>QR Code:</strong></p>{% load static %} <img src="{% static 'qrcode_saved_folder/FRC-HQ-SLM-C-17-0010.png' %}"/>
+    <p><strong>QR Code:</strong></p>{% load static %} <img src="{% static image_path_qr  %}"/>
         <!-- Add more <p> tags for additional values -->
     {% endif %}
 </body>

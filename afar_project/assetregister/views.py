@@ -18,14 +18,14 @@ def frc_asset_register(request):
        'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
        'Modified Number', 'Price','Salvage Value', 'Sold (unit)','Sales proceeds','Years used(sold items)','FY of Items sold',
        'Cost of Assets Sold', 'Current Balance', 'Expected life',
-       'Depreciation Method', 'Location','Entry By']]
+       'Depreciation Method', 'Location']]
     df["Asset Code"]=0
     #Rearrange the dataframe
     df=df[['Financial Year', 'Purchase date', 'Sl ', 'Bill no','Asset Code','Economic Code',
        'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
        'Modified Number', 'Price','Salvage Value', 'Sold (unit)','Sales proceeds','Years used(sold items)', 'FY of Items sold',
        'Cost of Assets Sold', 'Current Balance', 'Expected life',
-       'Depreciation Method', 'Location','Entry By']]
+       'Depreciation Method', 'Location']]
     # Get the current date
     current_date = datetime.now()
 
@@ -101,7 +101,7 @@ def data_profile(request, asset_code_value):
             # Get the relative path of the image file
             relative_image_path_asset = os.path.relpath(image_path_asset, settings.MEDIA_ROOT)
             # Define the relative folder path
-            relative_folder_path = '../asset_image_upload_folder/'
+            relative_folder_path = '../static/asset_image_upload_folder'
             # Combine the folder path and the relative image path
             relative_image_with_folder = os.path.join(relative_folder_path, relative_image_path_asset)
             context['image_path_asset'] = relative_image_with_folder
@@ -116,7 +116,7 @@ def data_profile(request, asset_code_value):
             # Get the relative path of the image file
             relative_image_path_qr = os.path.relpath(image_path_qr, settings.QR_MEDIA_ROOT)
             # Define the relative folder path
-            relative_folder_path = '../qrcode_saved_folder/'
+            relative_folder_path = '../static/qrcode_saved_folder'
             # Combine the folder path and the relative image path
             relative_image_with_folder = os.path.join(relative_folder_path, relative_image_path_qr)
             context['image_path_qr'] = relative_image_with_folder
