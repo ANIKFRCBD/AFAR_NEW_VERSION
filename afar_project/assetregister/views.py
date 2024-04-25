@@ -2,6 +2,11 @@ from django.shortcuts import render
 import pandas as pd
 from datetime import datetime
 from django.shortcuts import render
+from bs4 import BeautifulSoup
+import os
+from django.conf import settings
+
+
 
 # Create your views here.
 def frc_asset_register(request):
@@ -53,10 +58,73 @@ def frc_asset_register(request):
         excel_html = df.to_html(index=False)
 
         # Split the HTML table into headers and rows
-        header_html = excel_html.split('<tbody>')[0]  # Extract headers part
-        rows_html = '<tbody>' + excel_html.split('<tbody>')[1]  # Extract rows part
+        # header_html = excel_html.split('<tbody>')[0]  # Extract headers part
+        # rows_html = '<tbody>' + excel_html.split('<tbody>')[1]  # Extract rows part
+        # Parse the HTML string to extract column headers and rows
+        soup = BeautifulSoup(excel_html, 'html.parser')
+        table = soup.find('table')
+
+        # Extract column headers
+        column_headers = [th.get_text() for th in table.find_all('th')]
+
+        # Extract rows
+        rows = []
+        for tr in table.find_all('tr')[1:]:
+            rows.append([td.get_text() for td in tr.find_all('td')])
     df.to_excel(file_path,index=False)
 
 
-    return render(request, 'frc_asset_register.html', {'header_html': header_html, 'rows_html': rows_html, 'unique_values': unique_values,})
+    # return render(request, 'frc_asset_register.html', {'excel_html':excel_html,'header_html': header_html, 'rows_html': rows_html, 'unique_values': unique_values,})
+    return render(request, 'frc_asset_register.html', {'column_headers': column_headers, 'rows': rows})
+
+def data_profile(request, asset_code_value):
+    # Load your Excel file into a DataFrame (assuming you already have this)
+    df = pd.read_excel('csv_path/excel_files/asset_register.xlsx')
+
+    # Find the row where the asset_code_value matches the value in the 5th column
+    matched_row = df[df.iloc[:, 4] == asset_code_value]
+
+    if not matched_row.empty:
+        # Extract all column values of the matched row
+        matched_values = matched_row.iloc[0].tolist()  # Assuming only one row is matched
+
+        # Pass each column value as separate variables
+        context = {}
+        for i, value in enumerate(matched_values):
+            context[f'value_{i+1}'] = value
+
+        # Search for the image file in the folder
+        image_filename = f"{asset_code_value}.jpg"  # Assuming image files have .jpg extension
+        image_path_asset = os.path.join(settings.MEDIA_ROOT, image_filename)
+
+        if os.path.exists(image_path_asset):
+            # Get the relative path of the image file
+            relative_image_path_asset = os.path.relpath(image_path_asset, settings.MEDIA_ROOT)
+            # Define the relative folder path
+            relative_folder_path = '../asset_image_upload_folder/'
+            # Combine the folder path and the relative image path
+            relative_image_with_folder = os.path.join(relative_folder_path, relative_image_path_asset)
+            context['image_path_asset'] = relative_image_with_folder
+        else:
+            context['image_path_asset'] = None
+
+            # Search for the image file in the folder
+        image_filename = f"{asset_code_value}.png"  # Assuming image files have .jpg extension
+        image_path_qr = os.path.join(settings.QR_MEDIA_ROOT, image_filename)
+
+        if os.path.exists(image_path_qr):
+            # Get the relative path of the image file
+            relative_image_path_qr = os.path.relpath(image_path_qr, settings.QR_MEDIA_ROOT)
+            # Define the relative folder path
+            relative_folder_path = '../qrcode_saved_folder/'
+            # Combine the folder path and the relative image path
+            relative_image_with_folder = os.path.join(relative_folder_path, relative_image_path_qr)
+            context['image_path_qr'] = relative_image_with_folder
+        else:
+            context['image_path_qr'] = None
+
+        return render(request, 'data_profile.html', context)
+    else:
+        # Handle case where no match is found
+        return render(request, 'data_profile.html', {'error_message': 'No matching row found for the provided asset code.'})
 

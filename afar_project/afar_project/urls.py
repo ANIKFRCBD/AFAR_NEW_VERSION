@@ -69,4 +69,5 @@ urlpatterns = [
     path('datadelete/', datadelete.datadeletepage,name='delete'),
     path('datainit',datadelete.datainit,name='datainit'),
     path('asset_image_upload/', asset_image_upload.asset_image_upload, name='asset_image_upload_app'),
+    path('detail/<str:asset_code_value>/', asset_register_main.data_profile, name='data_profile'),
     ]

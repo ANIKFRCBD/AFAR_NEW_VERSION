@@ -132,13 +132,32 @@
     <!-- Display count -->
     <p class="ml-5" style="color: beige;">Number of entries: <span id="rowCount"></span></p>
 
-    <!-- Display rows -->
     <div class="container1" id="rowsContainer">
-      {{ header_html|safe }}
-      {{ rows_html|safe }}
+      <table>
+        <thead>
+            <tr>
+                {% for col in column_headers %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+                <tr>
+                    {% for value in row %}
+                        {% if forloop.counter == 5 %}
+                            <!-- Add hyperlink for 4th column -->
+                            <td><a href="{% url 'data_profile' asset_code_value=value %} " target="_blank" style="text-decoration: none; color: white;">{{ value }}</a></td>
+                        {% else %}
+                            <td>{{ value }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
   </div>
   </div>
-
   <br>
   <div class="org_name mt-5 pt-4 pb-4" style="background-color: beige;">
     <h1 style="width: .5 cm; font-weight: 800 ; font-size: 20px;">Financial Reporting Council</h1>

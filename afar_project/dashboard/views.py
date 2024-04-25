@@ -20,7 +20,7 @@ def dashboard(request):
     excel_file_path_qr_generation = 'csv_path/excel_files/asset_register.xlsx'
 
     # Delete previously generated QR codes
-    qr_code_directory = os.path.join(settings.MEDIA_ROOT, 'qrcode_saved_folder')
+    qr_code_directory = os.path.join(settings.QR_MEDIA_ROOT, 'qrcode_saved_folder')
     if os.path.exists(qr_code_directory):
         for file in os.listdir(qr_code_directory):
             os.remove(os.path.join(qr_code_directory, file))

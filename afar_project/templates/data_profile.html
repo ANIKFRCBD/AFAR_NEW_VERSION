@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Profile</title>
+</head>
+<body>
+    <h1 style="text-align: center;">Data Profile</h1>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% else %}
+    <p><strong>Financial Year:</strong> {{ value_1 }}</p>
+    <p><strong>Purchase date:</strong> {{ value_2 }}</p>
+    <p><strong>Serial No:</strong> {{ value_3 }}</p>
+    <p><strong>Bill no:</strong> {{ value_4 }}</p>
+    <p><strong>Asset Code:</strong> {{ value_5 }}</p>
+    <p><strong>Economic Code:</strong> {{ value_6 }}</p>
+    <p><strong>Category:</strong> {{ value_7 }}</p>
+    <p><strong>Name of Item:</strong> {{ value_8 }}</p>
+    <p><strong>Brand Name:</strong> {{ value_9 }}</p>
+    <p><strong>Model/Type:</strong> {{ value_10 }}</p>
+    <p><strong>Units:</strong> {{ value_11 }}</p>
+    <p><strong>Modified Number:</strong> {{ value_12 }}</p>
+
+    <p><strong>Price:</strong> {{ value_13 }}</p>
+    <p><strong>Salvage Value:</strong> {{ value_14 }}</p>
+    <p><strong>Sold (unit):</strong> {{ value_15 }}</p>
+    <p><strong>Sales proceeds:</strong> {{ value_16 }}</p>
+    <p><strong>Years used(sold items):</strong> {{ value_17 }}</p>
+    <p><strong>FY of Items sold:</strong> {{ value_18 }}</p>
+    <p><strong>Cost of Assets Sold:</strong> {{ value_19 }}</p>
+    <p><strong>Current Balance:</strong> {{ value_20 }}</p>
+    <p><strong>Expected life:</strong> {{ value_21 }}</p>
+    <p><strong>Depreciation Method:</strong> {{ value_22 }}</p>
+    <p><strong>Location:</strong> {{ value_23 }}</p>
+    <p><strong>Entry By:</strong> {{ value_24 }}</p>
+    <p><strong>Asset Image:</strong></p>{% load static %} <img src="{% static 'asset_image_upload_folder/FRC-HQ-SLM-F-17-0014.jpg' %}"/>
+    <p><strong>QR Code:</strong></p>{% load static %} <img src="{% static 'qrcode_saved_folder/FRC-HQ-SLM-C-17-0010.png' %}"/>
+        <!-- Add more <p> tags for additional values -->
+    {% endif %}
+</body>
+</html>
