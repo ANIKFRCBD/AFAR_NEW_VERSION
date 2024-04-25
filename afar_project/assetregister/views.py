@@ -1,13 +1,7 @@
 from django.shortcuts import render
 import pandas as pd
 from datetime import datetime
-
-import os
-import qrcode
-from django.conf import settings
-from django.http import HttpResponse
 from django.shortcuts import render
-from openpyxl import load_workbook
 
 # Create your views here.
 def frc_asset_register(request):
@@ -19,14 +13,14 @@ def frc_asset_register(request):
        'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
        'Modified Number', 'Price','Salvage Value', 'Sold (unit)','Sales proceeds','Years used(sold items)','FY of Items sold',
        'Cost of Assets Sold', 'Current Balance', 'Expected life',
-       'Depreciation Method', 'Location']]
+       'Depreciation Method', 'Location','Entry By']]
     df["Asset Code"]=0
     #Rearrange the dataframe
     df=df[['Financial Year', 'Purchase date', 'Sl ', 'Bill no','Asset Code','Economic Code',
        'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
        'Modified Number', 'Price','Salvage Value', 'Sold (unit)','Sales proceeds','Years used(sold items)', 'FY of Items sold',
        'Cost of Assets Sold', 'Current Balance', 'Expected life',
-       'Depreciation Method', 'Location']]
+       'Depreciation Method', 'Location','Entry By']]
     # Get the current date
     current_date = datetime.now()
 
@@ -64,5 +58,5 @@ def frc_asset_register(request):
     df.to_excel(file_path,index=False)
 
 
-    return render(request, 'frc_asset_register.html', {'header_html': header_html, 'rows_html': rows_html, 'unique_values': unique_values})
+    return render(request, 'frc_asset_register.html', {'header_html': header_html, 'rows_html': rows_html, 'unique_values': unique_values,})
 

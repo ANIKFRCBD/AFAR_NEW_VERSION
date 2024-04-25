@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import request
 import pandas as pd
 from django.contrib.auth.models import User as users
@@ -46,6 +46,7 @@ def frc_data_entry(request):
         economic_code = matching_row['Economic Code']
         expected_life = matching_row['Expected Life(post)']
         depriciation_method = matching_row['Depriciation Method']
+        user_name = request.POST.get('user_name')
 
         new_row = {
             'Financial Year' : financial_year,
@@ -62,6 +63,7 @@ def frc_data_entry(request):
             'Economic Code':economic_code,
             'Expected life':expected_life,
             'Depreciation Method':depriciation_method,
+            'Entry By' : user_name,
 
             #'Current Condition': current_condition
         }
@@ -71,6 +73,7 @@ def frc_data_entry(request):
 
         # Save the DataFrame back to the Excel file
         df.to_excel(file_path, index=False)
-    
+        # return render (request,'asset_image_upload.html')
+        
 
     return render(request, 'frc_data_entry.html',{'dropdown_categories': dropdown_categories,'user':current_user})

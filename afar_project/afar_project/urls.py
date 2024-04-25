@@ -27,6 +27,7 @@ from salesentry import views as salesentry
 from frc_asset_schedule import views as frc_asset_schedule
 from dataentry import views as frc_data_entry
 from datadelete import views as datadelete
+from asset_image_upload import views as asset_image_upload
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',opening,name='opening'),
@@ -67,4 +68,5 @@ urlpatterns = [
     path('sales_entry/', salesentry.sales_entry_app, name='sales_entry'),
     path('datadelete/', datadelete.datadeletepage,name='delete'),
     path('datainit',datadelete.datainit,name='datainit'),
+    path('asset_image_upload/', asset_image_upload.asset_image_upload, name='asset_image_upload_app'),
     ]

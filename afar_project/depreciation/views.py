@@ -27,7 +27,7 @@ def dep_sheet_maker(request):
     df=df[['Financial Year','Asset Code','Purchase date','Sl ','Bill no','Economic Code',
            'Category','Name of Item','Brand Name','Model/Type','Units','Modified Number','Price','Salvage Value',
            'Expected life','Sold (unit)','Years used(sold items)','FY of Items sold',
-           'Cost of Assets Sold','Current Balance']]
+           'Cost of Assets Sold','Current Balance','Entry By']]
     df['Rate of Depreciation']=1/df['Expected life']
     df['Accumulated Depreciation']=0
     df['Accumulated Depreciation on Sold items']=0    
