@@ -39,6 +39,9 @@
       text-align: center;
       align-content: center;
     }
+    .highlight {
+  background-color: rgba(255, 255, 255, 0.3);
+}
   </style>
 </head>
 
@@ -256,6 +259,32 @@
   window.onresize = setMaxHeight;
 </script>
 
+<<<<<<< HEAD
+=======
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function () {
+    // Add click event listener to each table row
+    $("table tbody tr").click(function () {
+        // Remove any previously highlighted rows
+        console.log("clicked")
+        var rowData = $(this).find("td:eq(4)").map(function () {
+                return $(this).text();
+            }).get();
+        console.log(rowData)
+        var url = "/frc_asset_data?id=" + encodeURIComponent(rowData);
+        $("table tbody tr").removeClass("highlight");
+        
+        // Add highlight class to the clicked row
+        $(this).addClass("highlight");
+        //window.location.href = url
+    });
+});
+</script>
+
+
+>>>>>>> ad602fd3d8ffb783e01e41a0913ee7515490d597
 </body>
 
 </html>

@@ -44,8 +44,11 @@
           margin-right: 10px;
           margin-top: 10px;
         } */
+    .highlight {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
 
-        .header {
+    .header {
       text-align: center;
       font-size: medium;
       text-decoration: double;
@@ -110,7 +113,8 @@
   <br><br>
 
   <div class="d-md-flex p-5 p-md-0" style="justify-content: center; align-content: center; gap: 20px;">
-    <div class="entry_finder" style="background-color: rgba(255, 255, 255, 0.2); color: beige; border-radius: 10px; padding: 20px;">
+    <div class="entry_finder"
+      style="background-color: rgba(255, 255, 255, 0.2); color: beige; border-radius: 10px; padding: 20px;">
       <div class="header">
         <p class="my-2" style="font-size: .5cm; font-weight: 500; color: #fff;"><b class="p-2 shadow"
             style="border-radius: 5px; background-color: #55608f;">Entry Filter for Sales Entry</b></p>
@@ -128,7 +132,7 @@
 
     <br>
 
-    <div  style="background-color: rgba(255, 255, 255, 0.2); color: beige; border-radius: 10px; padding: 20px;">
+    <div style="background-color: rgba(255, 255, 255, 0.2); color: beige; border-radius: 10px; padding: 20px;">
       <h3 style="text-align: center;"> </h3>
       <div class="header">
         <p class="mb-5" style="font-size: .5cm; font-weight: 500; color: #fff;"><b class="p-2 shadow"
@@ -174,6 +178,21 @@
     <p>All rights reserved by Financial Reporting Council Bangladesh</p>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+      // Add click event listener to each table row
+      $("table tbody tr").click(function () {
+        // Remove any previously highlighted rows
+        console.log("clicked")
+        $("table tbody tr").removeClass("highlight");
+
+        // Add highlight class to the clicked row
+        $(this).addClass("highlight");
+      });
+    });
+  </script>
 </body>
 
 </html>

@@ -18,6 +18,9 @@
         border: 1px solid black;
         padding: 8px;
       }
+      .highlight {
+  background-color: rgba(255, 255, 255, 0.3);
+}
     </style>
     
     
@@ -68,6 +71,21 @@
             document.getElementById("download_csv_schedule").action = "{% url 'download_csv_schedule' %}";
             document.getElementById("download_csv_schedule").submit();
         }
+      </script>
+          <script src="https://code.jquery.com/jquery-3.3.1.js"
+          integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+      <script>
+          $(document).ready(function () {
+              // Add click event listener to each table row
+              $("table tbody tr").click(function () {
+                  // Remove any previously highlighted rows
+                  console.log("clicked")
+                  $("table tbody tr").removeClass("highlight");
+  
+                  // Add highlight class to the clicked row
+                  $(this).addClass("highlight");
+              });
+          });
       </script>
 </body>
 </html>
