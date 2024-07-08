@@ -1,30 +1,37 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" >
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
     <!-- <link rel="stylesheet" href="../static/css/index.css"> -->
     <!-- <link rel="stylesheet" href="{% static 'css/index.css' %}">> -->
-     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Dash Board</title>
 
     <style>
-    /* Container for tables */
-   .table-container {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px; 
-    flex-wrap: wrap;
-    }
-    /* Style for the table */
-    .summary-table {
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+      /* Container for tables */
+      .table-container {
+        height: 73.4%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        flex-wrap: wrap;
+      }
+      /* Style for the table */
+      .summary-table {
         width: 100%; /* Ensure table fills the container */
         background-color: #ffffff;
         border-collapse: collapse;
@@ -37,34 +44,28 @@
         table-layout: fixed; /* Ensure fixed table layout */
         scrollbar-width: thin;
         scrollbar-color: #fcfffb #838282;
-    }
+      }
 
-    /* Style for table headers */
-    .summary-table th {
+      /* Style for table headers */
+      .summary-table th {
         padding: 12px;
         text-align: left;
         background-color: #f0f0f0;
         border-bottom: 1px solid #dddddd;
-    }
+      }
 
-    /* Style for table cells */
-    .summary-table td {
+      /* Style for table cells */
+      .summary-table td {
         padding: 12px;
         border-bottom: 1px solid #dddddd;
         white-space: nowrap; /* Prevent wrapping of text */
         overflow: hidden;
         text-overflow: ellipsis; /* Display ellipsis (...) for overflow text */
-    }
-
-</style>
-
-
-  
-        
-       
-</head>
-<!-- style="background:linear-gradient(45deg, #ddfffe, #ffffff)" -->
-<body  >
+      }
+    </style>
+  </head>
+  <!-- style="background:linear-gradient(45deg, #ddfffe, #ffffff)" -->
+  <body class="h-full lg:overflow-hidden">
     {% include 'header.html' %}
     <!-- <div class='left'>
         <div>
@@ -107,60 +108,47 @@
     </div> -->
     <!-- #55608f -->
 
+    <div class="table-container grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+      <div class="overflow-y-auto">
+        <h2 class="text-2xl pb-4 font-semibold">Summary of Assets (latest)</h2>
+        {% if table %}
+        <div class="summary-table">{{ table|safe }}</div>
 
-    
-    <div class="table-container grid grid-cols-1 md:grid-cols-2 gap-4 p-4 mt-5">
+        {% else %}
+        <p>No data available.</p>
+        {% endif %}
+      </div>
 
-        <div class="overflow-y-auto ">
-            <h2 class="text-2xl pb-4 font-semibold" >Summary of Assets (latest)</h2>
-            {% if table %}
-            <div class="summary-table">
-                
-                {{ table|safe }}
-            </div>
-            
-            {% else %}
-            <p>No data available.</p>
-            {% endif %}
-        </div>   
-        
-        
-        <div class="overflow-y-auto ">
-            <h2 class="text-2xl pb-4 font-semibold">Yearly Summary</h2>
-            {% if table %}
-            <div class="summary-table">
-                
-                {{ yearly|safe }}
-            </div>
-            
-            {% else %}
-            <p>No data available.</p>
-            {% endif %}
-        </div>   
+      <div class="overflow-y-auto">
+        <h2 class="text-2xl pb-4 font-semibold">Yearly Summary</h2>
+        {% if table %}
+        <div class="summary-table">{{ yearly|safe }}</div>
+
+        {% else %}
+        <p>No data available.</p>
+        {% endif %}
+      </div>
     </div>
-    
-    </div>
-
 
     {% include 'footer.html' %}
 
-   
-    <script src="https://code.jquery.com/jquery-3.3.1.js"
-        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous"
+    ></script>
     <script>
-        $(document).ready(function () {
-            // Add click event listener to each table row
-            $("table tbody tr").click(function () {
-                // Remove any previously highlighted rows
-                console.log("clicked")
-                $("table tbody tr").removeClass("highlight");
+      $(document).ready(function () {
+        // Add click event listener to each table row
+        $("table tbody tr").click(function () {
+          // Remove any previously highlighted rows
+          console.log("clicked");
+          $("table tbody tr").removeClass("highlight");
 
-                // Add highlight class to the clicked row
-                $(this).addClass("highlight");
-            });
+          // Add highlight class to the clicked row
+          $(this).addClass("highlight");
         });
+      });
     </script>
-
-</body>
-
+  </body>
 </html>
