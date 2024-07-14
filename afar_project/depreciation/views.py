@@ -95,7 +95,7 @@ def dep_sheet_maker(request):
 def depreciation_calculation(request):
     data_sheet,columns_to_add,year_data=dep_sheet_maker(request)
     list_of_year=[]
-    itertation=data_sheet.columns[-(columns_to_add+1):] #+1 as the range didn't suffice
+    itertation=data_sheet.columns[-(columns_to_add):] #+1 as the range didn't suffice
 
     
     # for i in itertation:
@@ -113,7 +113,8 @@ def depreciation_calculation(request):
         years_used = row["Years used(sold items)"]
         for column in data_sheet.columns[total_columns-iteration_from_last:]:
             financial_year = float(row["Financial Year"][:4])
-            current_column_year = float(column[:4])
+            current_column_year = float(column)
+
             if financial_year <= current_column_year and year_elapsed <= row["Expected life"] and years_used > 0:
                 data_sheet.loc[index, column] = (row["Cost of Assets Sold"] + row["Current Balance"]) * row["Rate of Depreciation"]
                 years_used = years_used - 1
