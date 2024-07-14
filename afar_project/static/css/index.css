@@ -5,17 +5,16 @@
   font-family: Arial, sans-serif;
 }
 
-
 html,
 body {
   min-width: 100%;
   min-height: 100%;
   margin: 0;
   background: linear-gradient(45deg, #49a09d, #5f2c82);
+  /* background: linear-gradient(45deg, #ddfffe, #ffffff); */
   font-family: sans-serif;
   font-weight: 100;
 }
-
 
 .highlight {
   background-color: rgba(255, 255, 255, 0.3);
@@ -29,29 +28,31 @@ table {
   /* width: 800px; */
   /* border-collapse: collapse; */
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(14, 14, 14, 0.1);
   width: max-content;
 }
 
 th,
 td {
+  color: #fff;
   text-align: justify;
   padding: 8px;
   /* border: 1px solid #dddddd; */
   /* padding: 15px; */
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background-color: rgb(255, 255, 255, 0.2);
   /* width: auto; */
   /* position: sticky;
   top: 0; */
 }
 
+tr {
+  color: #000;
+}
 th {
   /* background-color: #f2f2f2;
     font-weight: bold; */
   /* z-index: 2; */
   text-align: justify;
-
 }
 
 thead {
@@ -86,7 +87,6 @@ tbody {
     }
   }
 }
-
 
 .container1 {
   /* max-height: 650px; */
@@ -127,8 +127,6 @@ tbody {
     width: 12px;
     height: 12px;
   }
-
-  
 }
 
 .container1::-webkit-scrollbar-track {
@@ -156,7 +154,7 @@ tbody {
 
 .ownershipclaim {
   text-align: center;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 12px;
   background-color: rgb(221, 245, 220);
   bottom: 0;
@@ -169,7 +167,7 @@ tbody {
     border: 1vh
 } */
 .nameboxtext {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-size: 20px;
   text-align: left;
   text-transform: capitalize;
@@ -191,7 +189,7 @@ tbody {
   margin-top: 10px;
 }
 
-.left>div {
+.left > div {
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -282,7 +280,7 @@ tbody {
   justify-content: center;
 }
 
-.search-container input[type=text] {
+.search-container input[type="text"] {
   padding: 10px;
   border: none;
   font-size: 17px;
@@ -297,7 +295,6 @@ tbody {
   cursor: pointer;
   padding: 10px 20px;
 }
-
 
 /*form design*/
 form {
@@ -349,7 +346,7 @@ form button[type="submit"]:hover {
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
-  transition: margin-left .5s;
+  transition: margin-left 0.5s;
   /* If you want a transition effect */
   padding: 20px;
 }

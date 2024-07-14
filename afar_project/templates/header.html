@@ -1,21 +1,76 @@
 <!--header name-->
-<div class="projectnamecontainer mb-3">
-  <div class="Projectname row fixed-top shadow">
-    <div class="col-6 pl-4 p-0">
-      <img src="../static/FRC_Logo.png" alt="Logo" width="60" height="35" class="">
-    </div>
-    <div class="col-6 p-0">
-      <div class="namebox">
-        <div class="nameboxtext" style="font-weight: 900;">
-          <p class="p-0 m-0">
-            <span style="color: #5f2c82">AFAR</span>
-          </p>
-        </div>
-      </div>
-    </div>
+<div
+  class="flex flex-auto font-semibold p-4 text-slate-700 text-lg bg-[#0eabb0]"
+>
+  <img
+    src="../static/FRC_Logo.png"
+    alt="Logo"
+    width="60"
+    height="35"
+    class="mx-2"
+  />
 
+  <div class="transform hover:scale-105 transition duration-50">
+    <a href="{% url 'dashboard' %}">
+      <button type="button" class="mx-2 hover:text-white">Dashboard</button>
+    </a>
+  </div>
+
+  <div class="transform hover:scale-105 transition duration-300">
+    <a href="{% url 'frc_asset_register' %}">
+      <button type="button" class="mx-2 hover:text-white">
+        Asset Register
+      </button>
+    </a>
+  </div>
+  <div class="transform hover:scale-105 transition duration-300">
+    <a href="{% url 'frc_asset_schedule' %}">
+      <button type="button" class="mx-2 hover:text-white">
+        Asset Schedule
+      </button>
+    </a>
+  </div>
+  <div class="transform hover:scale-105 transition duration-300">
+    <a href="{% url 'frc_dep' %}">
+      <button type="button" class="mx-2 hover:text-white">Depreciation</button>
+    </a>
+  </div>
+  <div class="transform hover:scale-105 transition duration-300">
+    <a href="{% url 'frc_data_entry' %}">
+      <button type="button" class="mx-2 hover:text-white">Data Entry</button>
+    </a>
+  </div>
+  <div class="transform hover:scale-105 transition duration-300">
+    <a href="{% url 'asset_info' %}">
+      <button type="button" class="mx-2 hover:text-white">
+        Input Asset Info
+      </button>
+    </a>
+  </div>
+  <div class="transform hover:scale-105 transition duration-300">
+    <a href="{% url 'current_asset_info' %}">
+      <button type="button" class="mx-2 hover:text-white">
+        Current Asset Info
+      </button>
+    </a>
+  </div>
+  <div class="transform hover:scale-105 transition duration-300">
+    <a href="{% url 'frc_system' %}">
+      <button type="button" class="mx-2 hover:text-white">File Upload</button>
+    </a>
+  </div>
+  <div class="transform hover:scale-105 transition duration-300">
+    <a href="{% url 'asset_image_upload_app' %}">
+      <button type="button" class="mx-2 hover:text-white">Image Upload</button>
+    </a>
+  </div>
+  <div class="transform hover:scale-105 transition duration-300">
+    <a href="{% url 'sales_entry' %}">
+      <button type="button" class="mx-2 hover:text-white">Sales Entry</button>
+    </a>
   </div>
 </div>
 
 <div class="main_body pt-5">
-  <div class="right">
+  <div class="right"></div>
+</div>
