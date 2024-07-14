@@ -1,180 +1,140 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+    <!--Css-->
+    <!-- <link rel="stylesheet" href="../static/css/index.css"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <!--Css-->
-  <link rel="stylesheet" href="../static/css/index.css">
-  <title>Input Asset Info </title>
-  <style>
-       .header {
-      text-align: center;
-      font-size: medium;
-      text-decoration: double;
-      margin-top: 20px;
-      margin-bottom: 50px;
-    }
-    .box {
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      margin-left: 60px;
-      margin-right: 60px;
-      padding-top: 20px;
-      padding-bottom: 20px;
-      padding-left: 40px;
-      padding-right: 40px;
-      color: beige;
-    }
+    <title>Input Asset Info</title>
+  </head>
 
-    label {
-      padding-top: 0px;
-      color: beige;
-    }
+  <body>
+    {% include 'header.html' %}
 
-    .org_name {
-      text-align: center;
-      align-content: center;
-    }
-  </style>
-</head>
-
-<body>
-  {% include 'header.html' %}
-  <div class='left'>
-    <div>
-      <a href="{% url 'dashboard' %}">
-        <button type="button" class="btn btn-secondary btn-block shadow">Dashboard</button>
-      </a>
+    <div class="flex justify-center item-center mx-2 mt-2">
+      <h1 class="text-gray-500 text-2xl">Entry Filter for Impairment Test</h1>
     </div>
     <div>
-      <a href="{% url 'frc_asset_register' %}">
-        <button type="submit" class="btn btn-secondary btn-block shadow">Asset Register</button>
-      </a>
-    </div>
-    <div>
-      <a href="{% url 'frc_asset_schedule' %}">
-        <button type="submit" class="btn btn-secondary btn-block shadow">Asset Schedule</button>
-      </a>
-    </div>
-    <div>
-      <a href="{% url 'frc_dep' %}">
-        <button type="submit" class="btn btn-secondary btn-block shadow">Depriciation</button>
-      </a>
-    </div>
-    <div>
-      <a href="{% url 'current_asset_info' %}">
-        <button type="submit" class="btn btn-secondary btn-block shadow">Current Asset Info</button>
-      </a>
-    </div>
-    <div>
-      <a href="{% url 'asset_info' %}">
-        <button type="submit" class="btn btn-secondary btn-block shadow">Input Asset Info</button>
-      </a>
-    </div>
-    <div>
-      <a href="{% url 'frc_data_entry' %}">
-        <button type="submit" class="btn btn-secondary btn-block shadow">Data Entry</button>
-      </a>
-    </div>
-    <div>
-      <a href="{% url 'frc_system' %}">
-        <button type="button" class="btn btn-secondary btn-block shadow">File Upload</button>
-      </a>
-    </div>
-  </div>
-  <br>
-
-  <div class="header">
-    <p class="my-2" style="font-size: .5cm; font-weight: 500; color: #fff;"><b class="p-2 shadow"
-        style="border-radius: 5px; background-color: #55608f;">Entry Filter for Impairment Test</b></p>
-  </div>
-
-  <div class="right box">
-    <div class="form">
-      <form method="post" action="">
-        {% csrf_token %}
-
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label for="category" class="form-label">Category:</label>
-            <input type="text" id="category" name="category" class="form-control" required>
+      <div class="bg-gray-200 p-6 rounded-lg shadow-md mx-40 my-4">
+        <form method="post" action="" class="space-y-4">
+          {% csrf_token %}
+          <div>
+            <div>
+              <label
+                for="category"
+                class="block text-sm font-medium text-gray-700"
+                >Category:</label
+              >
+              <input
+                type="text"
+                id="category"
+                name="category"
+                class="my-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+                required
+              />
+            </div>
+            <div>
+              <label for="code" class="block text-sm font-medium text-gray-700"
+                >Code:</label
+              >
+              <input
+                type="text"
+                id="code"
+                name="code"
+                class="my-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+                required
+              />
+            </div>
           </div>
-
-          <div class="col-md-6 mb-3">
-            <label for="code" class="form-label">Code:</label>
-            <input type="text" id="code" name="code" class="form-control" required>
+          <div>
+            <div>
+              <label
+                for="economicCode"
+                class="block text-sm font-medium text-gray-700"
+                >Economic Code:</label
+              >
+              <input
+                type="number"
+                id="economicCode"
+                name="economicCode"
+                class="my-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="expectedLifePre"
+                class="block text-sm font-medium text-gray-700"
+                >Expected Life(pre):</label
+              >
+              <input
+                type="number"
+                id="expectedLifePre"
+                name="expectedLifePre"
+                class="my-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+                required
+              />
+            </div>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label for="economicCode" class="form-label">Economic Code:</label>
-            <input type="number" id="economicCode" name="economicCode" class="form-control" required>
+          <div>
+            <div>
+              <label
+                for="expectedLifePost"
+                class="block text-sm font-medium text-gray-700"
+                >Expected Life(post):</label
+              >
+              <input
+                type="number"
+                id="expectedLifePost"
+                name="expectedLifePost"
+                class="my-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="depreciationMethod"
+                class="block text-sm font-medium text-gray-700"
+                >Depreciation Method:</label
+              >
+              <input
+                type="text"
+                id="depreciationMethod"
+                name="depreciationMethod"
+                class="my-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+                required
+              />
+            </div>
           </div>
-
-          <div class="col-md-6 mb-3">
-            <label for="expectedLifePre" class="form-label">Expected Life(pre):</label>
-            <input type="number" id="expectedLifePre" name="expectedLifePre" class="form-control" required>
+          <div class="flex justify-center">
+            <div class="mt-4">
+              <input
+                type="submit"
+                value="Submit"
+                class="bg-white text-gray-500 py-2 px-10 rounded border-2 border-gray-500 shadow hover:bg-gray-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 border-2"
+              />
+            </div>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label for="expectedLifePost" class="form-label">Expected Life(post):</label>
-            <input type="number" id="expectedLifePost" name="expectedLifePost" class="form-control" required>
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <label for="depreciationMethod" class="form-label">Depreciation Method:</label>
-            <input type="text" id="depreciationMethod" name="depreciationMethod" class="form-control" required>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 mb-3 text-center">
-            <input type="submit" value="Submit" class="btn btn-secondary px-5 shadow">
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
-  </div>
-  <!-- <ul>
-            {% for item in row_data %}
-            <li>{{ item }}</li>
-            {% endfor %}
-        </ul> -->
 
-  <br>
-  <div class="org_name mt-5 pt-4 pb-4" style="background-color: beige;">
-    <h1 style="width: .5 cm; font-weight: 800 ; font-size: 20px;">Financial Reporting Council</h1>
-    <p>
-    <p>Parjatan Bhaban (8th floor), Plot: E-5 C/1<br>
+    {% include 'footer.html' %}
 
-      West Agargaon, Sher-e-Bangla Nagar Administrative Area<br>
-
-      Dhaka-1207, Bangladesh<br>
-
-      Email: ed.ss@frc.gov.bd<br>
-
-      Office: +88 02 41024674<br>
-
-      Website: frc.gov.bd</p>
-    </p>
-
-    <p>All rights reserved by Financial Reporting Council Bangladesh</p>
-  </div>
-
-  <!---->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="../static/js/script.js"></script>
+    <!---->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="../static/js/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-    crossorigin="anonymous"></script>
-</body>
-
+    crossorigin="anonymous"></script> -->
+  </body>
 </html>

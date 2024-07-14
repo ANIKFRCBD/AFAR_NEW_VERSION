@@ -1,52 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-{% load static %}
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <!--Css-->
-  <link rel="stylesheet" href="../static/css/index.css">
-  <title>FRC Data Entry</title>
-  <style>
-    .header {
-      text-align: center;
-      font-size: medium;
-      text-decoration: double;
-      margin-top: 20px;
-      margin-bottom: 50px;
-    }
+  {% load static %}
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+    <!--Css-->
+    <!-- <link rel="stylesheet" href="../static/css/index.css"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    .box {
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      margin-left:60px;
-      margin-right: 60px;
-      padding-top: 20px;
-      padding-bottom: 20px;
-      padding-left: 40px;
-      padding-right: 40px;
-      color: beige;
-    }
+    <title>FRC Data Entry</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
 
-    label {
-      padding-top: 10px;
-      color: beige;
-    }
-
-    .org_name {
-      text-align: center;
-      align-content: center;
-    }
-  </style>
-</head>
-
-<body>
-  {% include 'header.html' %}
-  <div class='left'>
+  <body class="">
+    {% include 'header.html' %}
+    <!-- <div class='left'>
     <div>
       <a href="{% url 'dashboard' %}">
         <button type="button" class="btn btn-secondary btn-block shadow">Dashboard</button>
@@ -98,42 +79,79 @@
       </a>
     </div>
   </div>
-  <br>
+  <br> -->
 
-  <div class="header">
-    <p class="my-2" style="font-size: .5cm; font-weight: 500; color: #fff;"><b class="p-2 shadow"
-        style="border-radius: 5px; background-color: #55608f;">Entry Filter for Impairment Test</b></p>
-  </div>
-  <div class="user_info">
-     <p style="color: white; text-align: center; font-size: medium;"> Logged in : {{user}} </p>
-  </div>
-  <div class="">
-    <!-- Form to Add New Column -->
-    <div class="form box">
-      <form method="post" action="" id="myForm">
+    <div class="flex justify-start p-3 text-lg">
+      <p class="text-black text-center underline underline-offset-1">
+        Logged in: {{user}}
+      </p>
+    </div>
+
+    <div class="flex justify-center item-center mx-2">
+      <h1 class="text-gray-500 text-2xl">Entry Filter for Impairment Test</h1>
+    </div>
+    <div class="bg-gray-200 p-6 rounded-lg shadow-md m-4">
+      <!-- Form to Add New Column -->
+      <form method="post" action="" id="myForm" class="space-y-4">
         {% csrf_token %}
 
-        <div class="row">
-          <div class="col-md-6">
-            <label for="purchase_date">Purchase Date:</label>
-            <input type="date" id="purchase_date" name="purchase_date" class="form-control" required>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label
+              for="purchase_date"
+              class="block text-sm font-medium text-gray-700"
+              >Purchase Date:</label
+            >
+            <input
+              type="date"
+              id="purchase_date"
+              name="purchase_date"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+              required
+            />
           </div>
 
-          <div class="col-md-6">
-            <label for="serial_no">Serial No:</label>
-            <input type="number" id="serial_no" name="serial_no" class="form-control" required>
+          <div>
+            <label
+              for="serial_no"
+              class="block text-sm font-medium text-gray-700"
+              >Serial No:</label
+            >
+            <input
+              type="number"
+              id="serial_no"
+              name="serial_no"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+              required
+            />
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <label for="bill_no">Bill No:</label>
-            <input type="number" id="bill_no" name="bill_no" class="form-control" required>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="bill_no" class="block text-sm font-medium text-gray-700"
+              >Bill No:</label
+            >
+            <input
+              type="number"
+              id="bill_no"
+              name="bill_no"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+              required
+            />
           </div>
 
-          <div class="col-md-6">
-            <label for="category">Category:</label>
-            <select name="category" class="form-control" required>
+          <div>
+            <label
+              for="category"
+              class="block text-sm font-medium text-gray-700"
+              >Category:</label
+            >
+            <select
+              name="category"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+              required
+            >
               {% for value in dropdown_categories %}
               <option value="{{ value }}">{{ value }}</option>
               {% endfor %}
@@ -141,105 +159,153 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <label for="name_of_item">Name Of Item:</label>
-            <input type="text" id="name_of_item" name="name_of_item" class="form-control" required>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label
+              for="name_of_item"
+              class="block text-sm font-medium text-gray-700"
+              >Name Of Item:</label
+            >
+            <input
+              type="text"
+              id="name_of_item"
+              name="name_of_item"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+              required
+            />
           </div>
 
-          <div class="col-md-6">
-            <label for="quantity">Quantity:</label>
-            <input type="text" id="quantity" name="quantity" class="form-control" required>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6">
-            <label for="price">Price:</label>
-            <input type="number" id="price" name="price" step="0.00001" class="form-control" required>
-          </div>
-        </div>
-
-        <div class="row">
-          <!-- <div class="col-md-6">
-              <label for="depreciation_method">Depreciation Method:</label>
-              <select name="depreciation_method" class="form-control" required>
-                {% for value in unique_list %}
-                <option value="{{ value }}">{{ value }}</option>
-                {% endfor %}
-              </select>
-            </div> -->
-
-          <div class="col-md-6">
-            <label for="location">Location</label>
-            <input type="text" id="location" name="location" class="form-control" required>
+          <div>
+            <label
+              for="quantity"
+              class="block text-sm font-medium text-gray-700"
+              >Quantity:</label
+            >
+            <input
+              type="text"
+              id="quantity"
+              name="quantity"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+              required
+            />
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <label for="current_condition">Current Condition:</label>
-            <input type="text" id="current_condition" name="current_condition" class="form-control" required>
-          </div>
-    
-        <div class="row">
-            <div class="col-md-6">
-              <label for="warranty">Warranty(in months)</label>
-              <input type="text" id="warranty" name="warranty" class="form-control" required>
-            </div>
-        
-        <div class="col-md-6">
-            <label for="user_name">Entry by:</label>
-            <input type="text" id="user_name" name="user_name" class="form-control" required>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="price" class="block text-sm font-medium text-gray-700"
+              >Price:</label
+            >
+            <input
+              type="number"
+              id="price"
+              name="price"
+              step="0.00001"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+              required
+            />
           </div>
 
+          <div>
+            <label
+              for="user_name"
+              class="block text-sm font-medium text-gray-700"
+              >Entry by:</label
+            >
+            <input
+              type="text"
+              id="user_name"
+              name="user_name"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+              required
+            />
+          </div>
         </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label
+              for="location"
+              class="block text-sm font-medium text-gray-700"
+              >Location</label
+            >
+            <input
+              type="text"
+              id="location"
+              name="location"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label
+              for="current_condition"
+              class="block text-sm font-medium text-gray-700"
+              >Current Condition:</label
+            >
+            <input
+              type="text"
+              id="current_condition"
+              name="current_condition"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label
+              for="warranty"
+              class="block text-sm font-medium text-gray-700"
+              >Warranty (in months)</label
+            >
+            <input
+              type="text"
+              id="warranty"
+              name="warranty"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {% for column_name in column_names %}
-          <div class="col-md-6">
-            <label>{{ column_name }}</label>
-            <input type="text" name="{{ column_name }}" class="form-control">
+          <div>
+            <label class="block text-sm font-medium text-gray-700"
+              >{{ column_name }}</label
+            >
+            <input
+              type="text"
+              name="{{ column_name }}"
+              class="mt-1 block w-full border-2 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 h-10"
+            />
           </div>
           {% endfor %}
         </div>
-
-        <div class="row">
-          <div class="col-md-6">
-            <input type="submit" value="Submit" class="btn btn-secondary px-5 shadow mt-2">
+        <div class="flex justify-center">
+          <div class="mt-4">
+            <input
+              type="submit"
+              value="Submit"
+              class="bg-white text-gray-500 py-2 px-10 rounded border-2 border-gray-500 shadow hover:bg-gray-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 border-2"
+            />
           </div>
         </div>
-
-
       </form>
     </div>
 
-  </div>
+    {% include 'footer.html' %}
 
-  <br>
-  <div class="org_name mt-5 pt-4 pb-4" style="background-color: beige;">
-    <h1 style="width: .5 cm; font-weight: 800 ; font-size: 20px;">Financial Reporting Council</h1>
-    <p>
-    <p>Parjatan Bhaban (8th floor), Plot: E-5 C/1<br>
-
-      West Agargaon, Sher-e-Bangla Nagar Administrative Area<br>
-
-      Dhaka-1207, Bangladesh<br>
-
-      Email: ed.ss@frc.gov.bd<br>
-
-      Office: +88 02 41024674<br>
-
-      Website: frc.gov.bd</p>
-    </p>
-
-    <p>All rights reserved by Financial Reporting Council Bangladesh</p>
-  </div>
-
-  <!---->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="../static/js/script.js"></script>
+    <!---->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="../static/js/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-    crossorigin="anonymous"></script>
-</body>
-
+    crossorigin="anonymous"></script> -->
+  </body>
 </html>
