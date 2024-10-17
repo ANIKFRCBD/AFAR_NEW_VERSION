@@ -28,6 +28,7 @@ from frc_asset_schedule import views as frc_asset_schedule
 from dataentry import views as frc_data_entry
 from datadelete import views as datadelete
 from asset_image_upload import views as asset_image_upload
+from institutionname import views as logo
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',opening,name='opening'),
@@ -70,4 +71,5 @@ urlpatterns = [
     path('datainit',datadelete.datainit,name='datainit'),
     path('asset_image_upload/', asset_image_upload.asset_image_upload, name='asset_image_upload_app'),
     path('detail/<str:asset_code_value>/', asset_register_main.data_profile, name='data_profile'),
+    path("logo/",logo.institutionname,name="institution"),
     ]

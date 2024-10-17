@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'salesentry',
     'frc_asset_schedule',
     'dataentry',
-    'asset_image_upload'
+    'asset_image_upload',
+    "institutionname",
 ]
 
 MIDDLEWARE = [
