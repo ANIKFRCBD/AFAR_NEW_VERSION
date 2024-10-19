@@ -17,8 +17,6 @@ def dep(request):
     header_html = data_sheet_updated.columns.tolist()  # Extract headers part
     rows_html = data_sheet_updated.values.tolist()  # Extract rows part
     data_sheet_updated.to_excel(Dep_file_path,index=False)
-    print(header_html)
-
     return render(request, 'frc_dep.html', {'header_html': header_html,"rows_html":rows_html})
 # Create your views here.
 def dep_sheet_maker(request):
@@ -129,6 +127,7 @@ def depreciation_calculation(request):
     data_sheet["Accumulated Depreciation Net"]=data_sheet["Accumulated Depreciation"]-data_sheet["Accumulated Depreciation on Sold items"]
     data_sheet["Book Value"]=data_sheet["Current Balance"]-data_sheet["Accumulated Depreciation Net"]
     data_sheet.to_excel(Dep_file_path,index=False)
+    data_sheet=data_sheet.fillna(0)
     return data_sheet
 
 
