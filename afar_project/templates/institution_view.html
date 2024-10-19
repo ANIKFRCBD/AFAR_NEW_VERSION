@@ -116,7 +116,10 @@
                     <div class="logo-container">
                         <img id="institution-logo" src="" alt="Institution Logo" />
                     </div>
-                    <h1 class="text-2xl font-bold text-gray-800" id="institution-name"></h1>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800" id="institution-name"></h1>
+                        <p id="ministry" class="text-sm text-gray-600 mt-1"></p> <!-- Ministry name -->
+                    </div>
                 </div>
                 <div class="info-container">
                     <h2 class="text-lg font-semibold">Institution Details</h2>
@@ -140,7 +143,7 @@
         <p class="text-center">
             All rights reserved by Financial Reporting Council Bangladesh
         </p>
-      </footer>
+    </footer>
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -156,6 +159,7 @@
                 document.getElementById('address').innerHTML = data.address.replace(/,/g, '<br />');
                 document.getElementById('email').textContent = data.email;
                 document.getElementById('phone').textContent = data.phone;
+                document.getElementById('ministry').textContent = data.ministry;
                 document.getElementById('website').textContent = data.website;
 
                 // Set the institution's website URL in the iframe
