@@ -7,142 +7,140 @@
     <title>Institution Profile</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.7.1/dist/cdn.min.js" defer></script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: Arial, sans-serif; /* Default font */
+            font-family: Arial, sans-serif;
+            background-color: #f9fafb;
         }
         .form-container {
             background-image: linear-gradient(135deg, #e0f2fe, #bae6fd);
             padding: 2rem;
             border-radius: 1rem;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            max-width: 1200px; /* Max width for better layout */
+            margin: auto; /* Center the container */
         }
         .profile-header {
             display: flex;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
         .logo-container {
-            height: 80px; /* Set height */
-            width: 120px; /* Set width */
-            border: 2px solid #ccc; /* Optional: Border color */
+            height: 80px; 
+            width: 120px; 
+            border: 2px solid #ccc; 
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden; /* Ensures no overflow */
-            margin-right: 1.5rem; /* Space between logo and name */
-            border-radius: 0.375rem; /* Rounded corners */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            overflow: hidden; 
+            margin-right: 1.5rem; 
+            border-radius: 0.375rem; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
         }
         .logo-container img {
-            height: 100%; /* Full height */
-            width: 100%; /* Full width */
-            object-fit: contain; /* Ensure the full image is visible */
-            max-width: 100%; /* Prevents scaling beyond container */
-            max-height: 100%; /* Prevents scaling beyond container */
+            height: 100%; 
+            width: 100%; 
+            object-fit: contain; 
         }
         .info-container {
             background-color: white;
             padding: 1.5rem;
             border-radius: 0.5rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-top: 1rem; /* Space above info container */
+            margin-top: 1rem; 
+            flex: 1; /* Allow info container to grow */
         }
         .info-container h2 {
-            border-bottom: 2px solid #3b82f6; /* Blue underline for heading */
-            padding-bottom: 0.5rem; /* Space under heading */
-            color: #3b82f6; /* Blue heading */
-            font-size: 1.5rem; /* Larger heading size */
+            border-bottom: 2px solid #3b82f6; 
+            padding-bottom: 0.5rem; 
+            color: #3b82f6; 
+            font-size: 1.5rem; 
         }
         .info-container p {
-            margin: 0.5rem 0; /* Add margin for spacing */
-            color: #333; /* Darker text color */
+            margin: 0.5rem 0; 
+            color: #333; 
         }
         .info-container p:nth-child(2) { 
-            background-color: #e0f2fe; /* Light blue background for street address */
-            padding: 0.5rem; /* Padding for readability */
-            border-radius: 0.375rem; /* Rounded corners */
+            background-color: #e0f2fe; 
+            padding: 0.5rem; 
+            border-radius: 0.375rem; 
         }
-        /* Styling for contact details */
         .contact-details {
-            margin-top: 1rem; /* Space above contact details */
-            padding: 1rem; /* Padding for readability */
-            background-color: #f8fafc; /* Light gray background */
-            border-radius: 0.375rem; /* Rounded corners */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            margin-top: 1rem; 
+            padding: 1rem; 
+            background-color: #f8fafc; 
+            border-radius: 0.375rem; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
         }
         .contact-details p {
-            font-weight: bold; /* Bold for better emphasis */
+            font-weight: bold; 
         }
-        /* Button styles */
         .submit-button {
-            background-color: #3b82f6; /* blue */
-            color: white; /* white text */
-            padding: 0.5rem 1rem; /* Padding for button */
-            border-radius: 0.375rem; /* Rounded corners */
+            background-color: #3b82f6; 
+            color: white; 
+            padding: 0.5rem 1rem; 
+            border-radius: 0.375rem; 
             transition: background-color 0.3s ease-in-out;
-            cursor: pointer; /* Pointer cursor */
-            margin-top: 1rem; /* Space above button */
+            cursor: pointer; 
+            margin-top: 1rem; 
         }
         .submit-button:hover {
-            background-color: #2563eb; /* darker blue */
-        }
-        /* Styles for the iframe */
-        .iframe-container {
-            margin-left: 2rem; /* Space between profile and iframe */
-            flex: 1; /* Allow iframe to fill remaining space */
-            border-radius: 0.5rem; /* Rounded corners */
-            overflow: hidden; /* Ensure no overflow */
-        }
-        iframe {
-            width: 100%; /* Full width */
-            height: 600px; /* Fixed height */
-            border: none; /* No border */
-            border-radius: 0.5rem; /* Rounded corners */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            background-color: #2563eb; 
         }
         .flex-container {
-            display: flex; /* Flexbox for layout */
-            justify-content: space-between; /* Space between elements */
+            display: flex; 
+            justify-content: space-between; /* Space between details and iframe */
+            margin-top: 1.5rem; /* Space above iframe */
+        }
+        .iframe-container {
+            margin-left: 1.5rem; /* Space between info and iframe */
+            border-radius: 0.5rem; 
+            overflow: hidden; 
+            flex: 1; /* Allow iframe to grow */
+        }
+        iframe {
+            width: 100%; 
+            height: 600px; 
+            border: none; 
+            border-radius: 0.5rem; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body>
     {% include 'header.html' %}
     <div class="flex justify-center mt-10">
-        <div class="form-container w-full max-w-3xl flex-container">
-            <div>
-                <div class="profile-header">
-                    <div class="logo-container">
-                        <img id="institution-logo" src="" alt="Institution Logo" />
-                    </div>
-                    <div>
-                        <h1 class="text-2xl font-bold text-gray-800" id="institution-name"></h1>
-                        <p id="ministry" class="text-sm text-gray-600 mt-1"></p> <!-- Ministry name -->
-                    </div>
+        <div class="form-container">
+            <h1 class="text-2xl font-bold text-gray-800 text-center mb-4">Reporting Entity</h1>
+            <div class="profile-header">
+                <div class="logo-container">
+                    <img id="institution-logo" src="" alt="Institution Logo" />
                 </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800" id="institution-name"></h1>
+                    <p id="ministry" class="text-sm text-gray-600 mt-1"></p>
+                </div>
+            </div>
+            <div class="flex-container">
                 <div class="info-container">
                     <h2 class="text-lg font-semibold">Institution Details</h2>
                     <p>Street Address:</p>
                     <p id="address"></p>
-                    <br/>
                     <div class="contact-details">
                         <p>Contact Details</p>
                         <p>Email: <span id="email"></span></p>
                         <p>Office: <span id="phone"></span></p>
                         <p>Website: <span id="website"></span></p>
                     </div>
+                    <div class="text-center">
+                        <form action="/logo/">
+                            <button type="submit" class="submit-button">Change Information</button>
+                        </form>
+                    </div>
                 </div>
-                <!-- Change Information Button -->
-                <div class="text-center">
-                    <form action="/logo/">
-                        <button type="submit" class="submit-button">Change Information</button>
-                    </form>
+                <div class="iframe-container">
+                    <iframe id="institution-website" src="" title="Institution Website" sandbox="allow-same-origin allow-scripts"></iframe>
                 </div>
-            </div>
-            <div class="iframe-container">
-                <iframe id="institution-website" src="" title="Institution Website" sandbox="allow-same-origin allow-scripts"></iframe>
             </div>
         </div>
     </div>
@@ -158,47 +156,41 @@
             .then(response => response.json())
             .then(data => {
                 const instituteName = data.Institute_name;
-                const formattedName = instituteName.replace(/\s+/g, ' ').trim(); // Keep single spaces
-                const logoPath = `{% static '' %}${formattedName}.png`; // Construct logo path
+                const formattedName = instituteName.replace(/\s+/g, ' ').trim();
+                const logoPath = `{% static '' %}${formattedName}.png`; 
 
-                document.getElementById('institution-logo').src = logoPath; // Set logo source
-                document.getElementById('institution-name').textContent = instituteName; // Set institution name
+                document.getElementById('institution-logo').src = logoPath; 
+                document.getElementById('institution-name').textContent = instituteName; 
                 document.getElementById('address').innerHTML = data.address.replace(/,/g, '<br />');
                 document.getElementById('email').textContent = data.email;
                 document.getElementById('phone').textContent = data.phone;
                 document.getElementById('ministry').textContent = data.ministry;
                 document.getElementById('website').textContent = data.website;
 
-                // Set the institution's website URL in the iframe
-                const websiteURL = data.website.startsWith('http') ? data.website : 'http://' + data.website; // Ensure it starts with http:// or https://
-                document.getElementById('institution-website').src = websiteURL; // Load the website into the iframe
+                const websiteURL = data.website.startsWith('http') ? data.website : 'http://' + data.website; 
+                document.getElementById('institution-website').src = websiteURL; 
 
-                // Check if the website loads successfully
                 fetch(websiteURL, { method: 'HEAD' })
                     .then(response => {
                         if (!response.ok) {
-                            // If not ok, show a fallback link
-                            const fallbackLink = document.createElement('a');
-                            fallbackLink.href = websiteURL;
-                            fallbackLink.target = '_blank';
-                            fallbackLink.textContent = "Visit FRC Website";
-                            fallbackLink.className = "text-blue-500 hover:underline"; // Tailwind CSS styles
-                            document.querySelector('.info-container').appendChild(fallbackLink);
+                            showFallbackLink(websiteURL);
                         }
                     })
                     .catch(error => {
                         console.error('Error checking website:', error);
-                        // Show a fallback link if there's an error
-                        const fallbackLink = document.createElement('a');
-                        fallbackLink.href = websiteURL;
-                        fallbackLink.target = '_blank';
-                        fallbackLink.textContent = "Visit FRC Website";
-                        fallbackLink.className = "text-blue-500 hover:underline"; // Tailwind CSS styles
-                        document.querySelector('.info-container').appendChild(fallbackLink);
+                        showFallbackLink(websiteURL);
                     });
             })
             .catch(error => console.error('Error fetching institution data:', error));
+
+        function showFallbackLink(websiteURL) {
+            const fallbackLink = document.createElement('a');
+            fallbackLink.href = websiteURL;
+            fallbackLink.target = '_blank';
+            fallbackLink.textContent = "Visit FRC Website";
+            fallbackLink.className = "text-blue-500 hover:underline"; 
+            document.querySelector('.info-container').appendChild(fallbackLink);
+        }
     });
 </script>
-
 </html>
