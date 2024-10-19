@@ -40,4 +40,7 @@ def institutionname(request):
 
 def sign_in_again(request):
     return redirect("signin")
+def view_institution(request):
+    return render(request,"institution_view.html")
+
 

@@ -72,5 +72,6 @@ urlpatterns = [
     path('asset_image_upload/', asset_image_upload.asset_image_upload, name='asset_image_upload_app'),
     path('detail/<str:asset_code_value>/', asset_register_main.data_profile, name='data_profile'),
     path("logo/",logo.institutionname,name="institution"),
-    path("logo/signin",logo.sign_in_again,name="signinagain")
+    path("logo/signin",logo.sign_in_again,name="signinagain"),
+    path("institution_view/",logo.view_institution,name="view_institution")
     ]

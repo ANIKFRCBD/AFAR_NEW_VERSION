@@ -92,43 +92,65 @@ def dep_sheet_maker(request):
 
 #Calculation of Depreciation
 def depreciation_calculation(request):
-    data_sheet,columns_to_add,year_data=dep_sheet_maker(request)
-    list_of_year=[]
-    itertation=data_sheet.columns[-(columns_to_add):] #+1 as the range didn't suffice
-
+    # Generate the depreciation sheet and necessary columns
+    data_sheet, columns_to_add, year_data = dep_sheet_maker(request)
+    data_sheet = data_sheet.fillna(0)  # Fill NaN values early to prevent issues
     
-    # for i in itertation:
-    #     data_sheet[i]=data_sheet["Price"]*data_sheet["Rate of Depreciation"]
-
-    columns_to_iter=data_sheet.columns[-len(itertation):]
-    print(columns_to_iter)
+    # Identify the columns to iterate over (year-based columns)
+    columns_to_iter = data_sheet.columns[-columns_to_add:]
+    total_columns = len(data_sheet.columns)
+    iteration_from_last = len(columns_to_iter)
+    
+    # Calculate accumulated depreciation initially
     data_sheet['Accumulated Depreciation'] = data_sheet[columns_to_iter].sum(axis=1)
-    total_columns=len(list(data_sheet.columns))
-    iteration_from_last=len(itertation)
-    #calculation of Depreciation
-    #this needs changes
+    
+    # Loop through each row and calculate the depreciation per year
     for index, row in data_sheet.iterrows():
         year_elapsed = 1
-        years_used = row["Years used(sold items)"]
-        for column in data_sheet.columns[total_columns-iteration_from_last:]:
+        years_used = float(row["Years used(sold items)"])  # Ensure float compatibility
+        current_balance = float(row["Current Balance"])
+        rate_of_depreciation = float(row["Rate of Depreciation"])
+        
+        for column in data_sheet.columns[total_columns - iteration_from_last:]:
             financial_year = float(row["Financial Year"][:4])
             current_column_year = float(column)
 
-            if financial_year <= current_column_year and year_elapsed <= row["Expected life"] and years_used > 0:
-                data_sheet.loc[index, column] = (row["Cost of Assets Sold"] + row["Current Balance"]) * row["Rate of Depreciation"]
-                years_used = years_used - 1
-            elif financial_year <= current_column_year and year_elapsed <= row["Expected life"]:
-                data_sheet.loc[index, column] = row["Current Balance"] * row["Rate of Depreciation"]
+            # Calculate depreciation for current year
+            if financial_year <= current_column_year and year_elapsed <= row["Expected life"]:
+                if years_used > 0:
+                    value = (row["Cost of Assets Sold"] + current_balance) * rate_of_depreciation
+                    years_used -= 1
+                else:
+                    value = current_balance * rate_of_depreciation
+                
+                # Assign value after rounding to maintain precision
+                data_sheet.loc[index, column] = round(value, 2)
+            
+            # Increment year_elapsed after the current year is considered
             if current_column_year >= financial_year:
-                 year_elapsed = year_elapsed + 1
-    #calculation of accumulated depreciation on sold items
-    data_sheet["Accumulated Depreciation on Sold items"]=data_sheet["Cost of Assets Sold"]*data_sheet["Rate of Depreciation"]*data_sheet["Years used(sold items)"]
-    data_sheet["Accumulated Depreciation"]=data_sheet.iloc[:, (-iteration_from_last):].sum(axis=1)
-    data_sheet["Accumulated Depreciation Net"]=data_sheet["Accumulated Depreciation"]-data_sheet["Accumulated Depreciation on Sold items"]
-    data_sheet["Book Value"]=data_sheet["Current Balance"]-data_sheet["Accumulated Depreciation Net"]
-    data_sheet.to_excel(Dep_file_path,index=False)
-    data_sheet=data_sheet.fillna(0)
+                year_elapsed += 1
+
+    # Calculate the accumulated depreciation on sold items
+    data_sheet["Accumulated Depreciation on Sold items"] = (
+        data_sheet["Cost of Assets Sold"] * data_sheet["Rate of Depreciation"] * data_sheet["Years used(sold items)"]
+    ).round(2)
+
+    # Recalculate accumulated depreciation for each row
+    data_sheet["Accumulated Depreciation"] = data_sheet[columns_to_iter].sum(axis=1)
+    
+    # Calculate net accumulated depreciation and book value
+    data_sheet["Accumulated Depreciation Net"] = (
+        data_sheet["Accumulated Depreciation"] - data_sheet["Accumulated Depreciation on Sold items"]
+    ).round(2)
+    data_sheet["Book Value"] = (
+        data_sheet["Current Balance"] - data_sheet["Accumulated Depreciation Net"]
+    ).round(2)
+    
+    # Save the updated data to the Excel file
+    data_sheet.to_excel(Dep_file_path, index=False)
+    
     return data_sheet
+
 
 
     
