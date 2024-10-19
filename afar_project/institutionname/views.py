@@ -17,15 +17,17 @@ def institutionname(request):
             district = data.cleaned_data['District']
             street_address = data.cleaned_data['street_address']
             ministry = data.cleaned_data['authority']
+            phone=data.cleaned_data["phone"]
+            email=data.cleaned_data["email"]
             logo_file = data.cleaned_data['logo']
             
             fs = FileSystemStorage(location='institutionmedia')
             file_name = fs.save(f"{institution_name}.png", logo_file)
             
-            list_of_elements = [institution_name, website, district, street_address, ministry, file_name]
+            list_of_elements = [institution_name, website, district, street_address, ministry,phone,email,file_name]
             #save file in JSON
-            information={"Institute_name":institution_name,"website":website,"district":district,"address":street_address,"ministry":ministry,"file_location":os.path.join(settings.BASE_DIR,"institutionmedia",f"{institution_name}.png")}
-            file_path = os.path.join(settings.BASE_DIR, 'institutionname', f"{institution_name}.json")
+            information={"Institute_name":institution_name,"website":website,"district":district,"address":street_address,"ministry":ministry,"phone":phone,"email":email,"file_location":os.path.join(settings.BASE_DIR,"institutionmedia",f"{institution_name}.png")}
+            file_path = os.path.join(settings.BASE_DIR, 'institutionname', "institution.json")
             with open(file_path,"w") as file:
                 j.dump(information,file,indent=4)
             context.update({'form_data': list_of_elements, 'info': list_of_elements,"file+location":information["file_location"]})

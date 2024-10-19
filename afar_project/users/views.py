@@ -3,8 +3,15 @@ from django.shortcuts import render
 from .models import SignUpModel,UserModel,LoginModel
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-
+import json as j
+import os
+from django.conf import settings
 # Create your views here.
+# institution file path
+file_path=os.path.join(settings.BASE_DIR,"institutionname","institution.json")
+#open the json file and read as a dictonary "the institution information"
+with open(file_path,"r") as file:
+    institution_info=j.load(file)
 
 def opening(request):
     return render(request, 'opening.html')   
@@ -24,7 +31,10 @@ def signin(request):
         if user and user.check_password(password):
             # If so, log in the user
             request.session['user_id'] = user.id  # You can use Django's session framework to keep the user logged in
-            return redirect('dashboard')  # Replace with your actual dashboard URL name
+            if len(str(institution_info["Institute_name"]))>2:
+                return redirect('dashboard')  # Replace with your actual dashboard URL name
+            else:
+                return redirect("institution")
         else:
             # Handle invalid login here (e.g., display an error message)
             error_message_usernname_or_password_mismatch = "Username or password is wrong. Please try again."
