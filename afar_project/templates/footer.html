@@ -3,7 +3,7 @@
 <footer class="border-t-2 bg-[#0eabb0] text-gray-100 px-4 py-2 w-full">
   <h1 class="text-lg text-center p-2" id="institute_name"></h1>
   <div class="flex justify-between mx-[20%]">
-      <p class="mr-20" id="address"></p>
+      <p class="mr-20"> Street Adress:<br/><span id="address"></span></Address></p>
       <p class="ml-20">
           Email: <span id="email"></span><br />
           Office: <span id="phone"></span><br />
@@ -16,15 +16,18 @@
 </footer>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-      fetch("{% static '/institution.json' %}")
-          .then(response => response.json())
-          .then(data => {
-              document.getElementById('institute_name').textContent = data.Institute_name;
-              document.getElementById('address').innerHTML = data.address.replace(/,/g, '<br />');
-              document.getElementById('email').textContent = data.email;
-              document.getElementById('phone').textContent = data.phone;
-              document.getElementById('website').textContent = data.website;
-          });
-  });
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fetch the updated institution data
+        fetch("{% static 'institution.json' %}")
+            .then(response => response.json())
+            .then(data => {
+                // Update the footer elements with the fetched data
+                document.getElementById('institute_name').textContent = data.Institute_name;
+                document.getElementById('address').innerHTML = data.address.replace(/,/g, '<br />');
+                document.getElementById('email').textContent = data.email;
+                document.getElementById('phone').textContent = data.phone;
+                document.getElementById('website').textContent = data.website;
+            })
+            .catch(error => console.error('Error fetching institution data:', error));
+    });
 </script>

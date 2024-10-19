@@ -129,9 +129,7 @@
         {% endif %}
       </div>
     </div>
-
     {% include 'footer.html' %}
-
     <script
       src="https://code.jquery.com/jquery-3.3.1.js"
       integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -149,6 +147,21 @@
           $(this).addClass("highlight");
         });
       });
+    </script>
+     <script>
+      function setMaxHeight() {
+        var screenWidth = window.innerWidth;
+        var maxHeight;
+        if (screenWidth <= 1200) {
+          maxHeight = screenWidth * 0.9;
+        } else {
+          maxHeight = screenWidth * 0.35;
+        }
+        document.getElementById("rowsContainer").style.maxHeight =
+          maxHeight + "px";
+      }
+      window.onload = setMaxHeight;
+      window.onresize = setMaxHeight;
     </script>
   </body>
 </html>
