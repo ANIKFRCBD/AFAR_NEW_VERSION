@@ -13,12 +13,13 @@ def dep(request):
     data_sheet_updated=depreciation_calculation(request)
     #peocess the html
     dep_data=dep_sheet #for Depreciation calculation
-    html=data_sheet_updated.to_html(index=False) # for html template
-    header_html = html.split('<tbody>')[0]  # Extract headers part
-    rows_html = '<tbody>' + html.split('<tbody>')[1]  # Extract rows part
+    # html=data_sheet_updated.to_html(index=False) # for html template
+    header_html = data_sheet_updated.columns.tolist()  # Extract headers part
+    rows_html = data_sheet_updated.values.tolist()  # Extract rows part
     data_sheet_updated.to_excel(Dep_file_path,index=False)
+    print(header_html)
 
-    return render(request, 'frc_dep.html', {'header_html': header_html, 'rows_html': rows_html})
+    return render(request, 'frc_dep.html', {'header_html': header_html,"rows_html":rows_html})
 # Create your views here.
 def dep_sheet_maker(request):
     df = pd.read_excel(file_path)

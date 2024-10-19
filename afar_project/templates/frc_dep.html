@@ -2,13 +2,24 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <title>FRC Asset Schedule</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    /> -->
+    <!--Css-->
+    <!-- <link rel="stylesheet" href="../static/css/index.css"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  <title>Register for Depreciation</title>
+
   <style>
     body,
     html {
@@ -62,64 +73,95 @@
 
 <body>
   {% include 'header.html' %}
-  
-  <div class="container">
-    <div class="mb-3">
-      <form method="post" action="" id="download_csv_frc_asset_schedule">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-success btn-block shadow" onclick="download_csv_frc_asset_schedule()" value="Download as Excel" />
-      </form>
-    </div>
 
-    <div class="col-md-9">
-      <!-- Filter Dropdown -->
-      <div class="d-flex align-items-center mt-3 mb-3">
-        <label for="filterDropdown" class="mr-3 text-dark">Select Financial Year:</label>
-        <select class="form-control w-25" id="filterDropdown">
-          <option value="">Select Financial Year</option>
-          {% for value in unique_values %}
-          <option value="{{ value }}">{{ value }}</option>
+  <div class="container1 table-container overflow-auto mb-10" id="rowsContainer">
+    <div class="overflow-auto h-full">
+    <table class="summary-table">
+      <thead class="sticky top-0">
+        <tr>
+          {% for col in header_html %}
+            <th>{{ col }}</th>
           {% endfor %}
-        </select>
-      </div>
-
-      <!-- Row Count -->
-      <p class="text-muted">Number of entries: <span id="rowCount"></span></p>
-
-      <!-- Table Rows Container -->
-      <div class="container1 table-container" id="rowsContainer">
-        <table class="summary-table">
-          <thead class="sticky top-0">
-            <tr>
-              {% for col in column_headers %}
-              <th>{{ col }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
-          <tbody>
-            {% for row in rows %}
-            <tr>
-              {% for value in row %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows_html %}
+          <tr>
+            {% for value in row %}
               <td>{{ value }}</td>
-              {% endfor %}
-            </tr>
             {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
   </div>
 
-  <!-- Footer -->
   {% include 'footer.html' %}
 
   <script>
     function download_csv_frc_asset_schedule() {
-      document.getElementById("download_csv_frc_asset_schedule").action =
-        "{% url 'download_csv_frc_asset_schedule' %}";
+      document.getElementById("download_csv_frc_asset_schedule").action = "{% url 'download_csv_frc_asset_schedule' %}";
       document.getElementById("download_csv_frc_asset_schedule").submit();
     }
+
+    function download_csv_frc_asset() {
+      document.getElementById("download_csv_frc_asset").action = "{% url 'download_csv_frc_asset' %}";
+      document.getElementById("download_csv_frc_asset").submit();
+    }
+
+    function delete_rows_asset_register() {
+      if (confirm("Are you sure you want to delete the excel file?")) {
+        document.getElementById("delete_rows_asset_register").action = "{% url 'delete_rows_asset_register' %}";
+        document.getElementById("delete_rows_asset_register").submit();
+      }
+    }
+
+    $(document).ready(function () {
+      function updateRowCount() {
+        var selectedValue = $("#filterDropdown").val();
+        var rowCount = $("#rowsContainer table tbody tr").filter(function () {
+          var rowValue = $(this).find("td:first").text();
+          return rowValue === selectedValue || selectedValue === "";
+        }).length;
+        $("#rowCount").text(rowCount);
+      }
+
+      $("#filterDropdown").on("change", function () {
+        $("#rowsContainer table tbody tr").hide();
+        var selectedValue = $(this).val();
+
+        $("#rowsContainer table tbody tr")
+          .filter(function () {
+            var rowValue = $(this).find("td:first").text();
+            return rowValue === selectedValue || selectedValue === "";
+          })
+          .show();
+
+        updateRowCount();
+      });
+
+      updateRowCount();
+      
+      $("table tbody tr").click(function () {
+        var rowData = $(this).find("td:eq(4)").text();
+        var url = "/frc_asset_data?id=" + encodeURIComponent(rowData);
+        $("table tbody tr").removeClass("highlight");
+        $(this).addClass("highlight");
+        // Uncomment the line below to enable navigation
+        // window.location.href = url;
+      });
+    });
+
+    function setMaxHeight() {
+      var screenWidth = window.innerWidth;
+      var maxHeight = screenWidth <= 1200 ? screenWidth * 0.9 : screenWidth * 0.35;
+      document.getElementById("rowsContainer").style.maxHeight = maxHeight + "px";
+    }
+    window.onload = setMaxHeight;
+    window.onresize = setMaxHeight;
   </script>
 
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 </body>
 </html>
