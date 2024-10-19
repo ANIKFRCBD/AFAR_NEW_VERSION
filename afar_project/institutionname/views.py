@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render,redirect
+from django.http import HttpResponse ,request
 from django.core.files.storage import FileSystemStorage
 from .forms import institutionname_form
 import json as j
@@ -21,13 +21,13 @@ def institutionname(request):
             email=data.cleaned_data["email"]
             logo_file = data.cleaned_data['logo']
             
-            fs = FileSystemStorage(location='institutionmedia')
+            fs = FileSystemStorage(location='static')
             file_name = fs.save(f"{institution_name}.png", logo_file)
             
             list_of_elements = [institution_name, website, district, street_address, ministry,phone,email,file_name]
             #save file in JSON
             information={"Institute_name":institution_name,"website":website,"district":district,"address":street_address,"ministry":ministry,"phone":phone,"email":email,"file_location":os.path.join(settings.BASE_DIR,"institutionmedia",f"{institution_name}.png")}
-            file_path = os.path.join(settings.BASE_DIR, 'institutionname', "institution.json")
+            file_path = os.path.join(settings.BASE_DIR, 'static', "institution.json")
             with open(file_path,"w") as file:
                 j.dump(information,file,indent=4)
             context.update({'form_data': list_of_elements, 'info': list_of_elements,"file+location":information["file_location"]})
@@ -37,3 +37,7 @@ def institutionname(request):
         context.update({'info': None})
     
     return render(request, "institution_registration.html", context)
+
+def sign_in_again(request):
+    return redirect("signin")
+

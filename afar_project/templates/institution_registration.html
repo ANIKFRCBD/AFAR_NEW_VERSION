@@ -1,7 +1,9 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Institution Registration</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.7.1/dist/cdn.min.js" defer></script>
@@ -12,33 +14,51 @@
             padding: 0.5rem; /* padding */
             border-radius: 0.375rem; /* rounded corners */
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* slight shadow */
+            transition: all 0.3s ease-in-out; /* smooth transition */
         }
         .custom-input:focus {
             background-color: #ffffff; /* white background on focus */
             outline: none; /* remove default outline */
-            ring: 2px solid #3b82f6; /* blue ring on focus */
+            border-color: #2563eb; /* darker blue on focus */
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25); /* blue focus ring */
+        }
+        .form-container {
+            background-image: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .submit-button {
+            background-color: #3b82f6; /* blue */
+            transition: background-color 0.3s ease-in-out;
+        }
+        .submit-button:hover {
+            background-color: #2563eb; /* darker blue */
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-50">
     <div class="container mx-auto p-8">
-        <h1 class="text-3xl font-extrabold mb-8 text-gray-800">Institution Registration</h1>
-        <form method="post" enctype="multipart/form-data" class="bg-white shadow-lg rounded-lg px-10 pt-10 pb-8 mb-8">
+        <h1 class="text-4xl font-extrabold text-blue-600 mb-8 text-center">Institution Registration</h1>
+        <form method="post" enctype="multipart/form-data" class="form-container">
             {% csrf_token %}
             <ul class="space-y-6">
                 {% for field in form %}
                 <li>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ field.label }}</label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">{{ field.label }}</label>
                     <div class="mt-1">
                         {{ field }}
                     </div>
                 </li>
                 {% endfor %}
             </ul>
-            <button type="submit" class="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out">Submit</button>
+            <button type="submit" class="submit-button mt-8 w-full text-white font-semibold py-3 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Submit
+            </button>
         </form>
+
         {% if info %}
-            <div class="mt-10 p-6 bg-gray-100 shadow-md rounded-lg">
+            <div class="mt-10 p-6 bg-white shadow-md rounded-lg border border-gray-200">
                 <h2 class="text-2xl font-semibold text-gray-700 mb-4">Submitted Information:</h2>
                 <ul class="space-y-2">
                     <li><span class="font-bold">Institution Name:</span> {{ info.0 }}</li>
@@ -47,10 +67,19 @@
                     <li><span class="font-bold">Address:</span> {{ info.3 }}</li>
                     <li><span class="font-bold">Ministry:</span> {{ info.4 }}</li>
                     <li><span class="font-bold">Logo File:</span> <a href="{{ file_location }}" class="text-blue-500 hover:underline">Download</a></li>
-                    <li><img src="{{ file_location }}" alt="Uploaded Logo" class="mt-4 max-w-xs"></li>
+                    <li>
+                        <img src="{{ file_location }}" alt="Uploaded Logo" class="mt-4 max-w-xs rounded-md shadow-lg">
+                    </li>
                 </ul>
             </div>
         {% endif %}
+    </div>
+    <div class="text-center mt-8">
+        <form action="/signin">
+            <button class="bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2 px-6 rounded-lg transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                Sign in Now
+            </button>
+        </form>
     </div>
     {% include 'footer.html' %}
 </body>

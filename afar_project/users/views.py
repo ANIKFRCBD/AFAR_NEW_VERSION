@@ -8,10 +8,27 @@ import os
 from django.conf import settings
 # Create your views here.
 # institution file path
-file_path=os.path.join(settings.BASE_DIR,"institutionname","institution.json")
+file_path=os.path.join(settings.BASE_DIR,"static","institution.json")
 #open the json file and read as a dictonary "the institution information"
-with open(file_path,"r") as file:
-    institution_info=j.load(file)
+default_data = {
+    "Institute_name": "a",
+    "website": "a",
+    "district": "a",
+    "address": "a",
+    "ministry": "a",
+    "phone": "a",
+    "email": "a",
+    "file_location": "a"
+}
+
+try:
+    with open(file_path, "r") as file:
+        institution_info = j.load(file)
+except FileNotFoundError:
+    # Create the JSON file with default data
+    with open(file_path, "w") as file:
+        j.dump(default_data, file, indent=4)
+    institution_info =default_data 
 
 def opening(request):
     return render(request, 'opening.html')   
@@ -31,7 +48,8 @@ def signin(request):
         if user and user.check_password(password):
             # If so, log in the user
             request.session['user_id'] = user.id  # You can use Django's session framework to keep the user logged in
-            if len(str(institution_info["Institute_name"]))>2:
+            if len(str(institution_info["Institute_name"]))>4:
+                context={"institution_info":institution_info}
                 return redirect('dashboard')  # Replace with your actual dashboard URL name
             else:
                 return redirect("institution")
