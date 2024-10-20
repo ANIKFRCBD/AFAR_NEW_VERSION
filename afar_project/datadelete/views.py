@@ -34,7 +34,7 @@ def datainit(request):
     if asset_code in checker_for_depreciation.values:
         print (checker_for_depreciation.values)
         file_read_depreciation=file_read_depreciation[file_read_depreciation["Asset Code"]!=asset_code]
-        file_read_depreciation.to_excel(file_path,index=False)
+        file_read_depreciation.to_excel(Dep_file_path,index=False)
     else:
         print("no match")
     return redirect('delete')
