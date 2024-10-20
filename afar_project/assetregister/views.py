@@ -5,6 +5,7 @@ from django.shortcuts import render
 from bs4 import BeautifulSoup
 import os
 from django.conf import settings
+import qrcode as qr 
 
 
 
@@ -55,6 +56,7 @@ def frc_asset_register(request):
          # Change this to your desired file path
 
         # Convert DataFrame to HTML
+        df=df.fillna(0)
         excel_html = df.to_html(index=False)
 
         # Split the HTML table into headers and rows
@@ -95,30 +97,29 @@ def data_profile(request, asset_code_value):
 
         # Search for the image file in the folder
         image_filename = f"{asset_code_value}.jpg"  # Assuming image files have .jpg extension
-        image_path_asset = os.path.join(settings.MEDIA_ROOT, image_filename)
+        image_path_asset = os.path.join(settings.BASE_DIR,'static',"asset_images", image_filename)
 
         if os.path.exists(image_path_asset):
-            # Get the relative path of the image file
-            relative_image_path_asset = os.path.relpath(image_path_asset, settings.MEDIA_ROOT)
-            # Define the relative folder path
-            relative_folder_path = '../static/asset_image_upload_folder'
             # Combine the folder path and the relative image path
-            relative_image_with_folder = os.path.join(relative_folder_path, relative_image_path_asset)
+            relative_image_with_folder = image_path_asset
             context['image_path_asset'] = relative_image_with_folder
         else:
             context['image_path_asset'] = None
 
             # Search for the image file in the folder
         image_filename = f"{asset_code_value}.png"  # Assuming image files have .jpg extension
-        image_path_qr = os.path.join(settings.QR_MEDIA_ROOT, image_filename)
+        image_path_qr = os.path.join(settings.BASE_DIR,"static","QR", image_filename)
+        
+        #generate#QR
+        data_dr=asset_code_value
+        #generation of QR
+        qr_file=qr.make(data_dr)
+        #save it to the destination
+        qr_file.save(image_path_qr)
+        print(image_path_qr)
 
         if os.path.exists(image_path_qr):
-            # Get the relative path of the image file
-            relative_image_path_qr = os.path.relpath(image_path_qr, settings.QR_MEDIA_ROOT)
-            # Define the relative folder path
-            relative_folder_path = '../static/qrcode_saved_folder'
-            # Combine the folder path and the relative image path
-            relative_image_with_folder = os.path.join(relative_folder_path, relative_image_path_qr)
+            relative_image_with_folder = image_path_qr
             context['image_path_qr'] = relative_image_with_folder
         else:
             context['image_path_qr'] = None
