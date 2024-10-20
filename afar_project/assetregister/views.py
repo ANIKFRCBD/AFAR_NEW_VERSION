@@ -14,6 +14,7 @@ def frc_asset_register(request):
     file_path = 'csv_path/excel_files/asset_register.xlsx'  # Replace with the actual file path
     df_sheet = pd.read_excel(file_path)
     df=df_sheet
+    df=df.fillna(0)
     # Generate Asset code by rearranging the dataframe
     df=df[['Financial Year', 'Purchase date', 'Sl ', 'Bill no','Economic Code',
        'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
@@ -56,7 +57,7 @@ def frc_asset_register(request):
          # Change this to your desired file path
 
         # Convert DataFrame to HTML
-        df=df.fillna(0)
+        
         excel_html = df.to_html(index=False)
 
         # Split the HTML table into headers and rows
