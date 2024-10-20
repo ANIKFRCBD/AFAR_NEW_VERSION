@@ -115,7 +115,7 @@
             <h1 class="text-2xl font-bold text-gray-800 text-center mb-4">Reporting Entity</h1>
             <div class="profile-header">
                 <div class="logo-container">
-                    <img id="institution-logo" src="" alt="Institution Logo" />
+                    <img id="logo" src="" alt="Institution Logo" />
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-gray-800" id="institution-name"></h1>
@@ -160,7 +160,7 @@
                 const formattedName = instituteName.replace(/\s+/g, ' ').trim();
                 const logoPath = `{% static '' %}${formattedName}.png`; 
 
-                document.getElementById('institution-logo').src = logoPath; 
+                document.getElementById('logo').src = logoPath; 
                 document.getElementById('institution-name').textContent = instituteName; 
                 document.getElementById('address').innerHTML = data.address.replace(/,/g, '<br />');
                 document.getElementById('email').textContent = data.email;
