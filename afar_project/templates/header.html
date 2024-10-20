@@ -1,84 +1,70 @@
-<!--header name-->
-<div
-  class="flex flex-auto font-semibold p-4 text-slate-700 text-lg bg-[#0eabb0]"
->
-  <img
-    src="../static/FRC_Logo.png"
-    alt="Logo"
-    width="60"
-    height="35"
-    class="mx-2"
-  />
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .nav-button {
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+      .nav-button:hover {
+        background-color: #05595b; /* Slightly darker shade for hover */
+        transform: translateY(-2px); /* Small upward movement on hover */
+        color: #ffffff; /* Ensure text is white when hovered */
+      }
+      #institution-logo {
+        background-color: white; /* White background for the logo */
+        padding: 4px; /* Padding around the logo */
+        border-radius: 4px; /* Optional: rounded corners for the logo */
+      }
+    </style>
+    <script>
+      // Function to load JSON and set the institution name dynamically
+      document.addEventListener('DOMContentLoaded', function() {
+        fetch("{% static 'institution.json' %}")
+          .then(response => response.json())
+          .then(data => {
+            const institutionName = data.Institute_name; // Get the institution name
+            const logoElement = document.getElementById('institution-logo');
+            const institutionElement = document.getElementById('institution-name');
 
-  <div class="transform hover:scale-105 transition duration-50">
-    <a href="{% url 'dashboard' %}">
-      <button type="button" class="mx-2 hover:text-white">Dashboard</button>
-    </a>
-  </div>
+            // Set the logo source and institution name
+            logoElement.src = `{% static '' %}` + institutionName + '.png'; // Append .png extension
+            institutionElement.textContent = institutionName; // Set the institution name in the DOM
+          })
+          .catch(error => {
+            console.error('Error loading institution data:', error);
+          });
+      });
+    </script>
+  </head>
 
-  <div class="transform hover:scale-105 transition duration-300">
-    <a href="{% url 'frc_asset_register' %}">
-      <button type="button" class="mx-2 hover:text-white">
-        Asset Register
-      </button>
-    </a>
-  </div>
-  <div class="transform hover:scale-105 transition duration-300">
-    <a href="{% url 'frc_asset_schedule' %}">
-      <button type="button" class="mx-2 hover:text-white">
-        Asset Schedule
-      </button>
-    </a>
-  </div>
-  <div class="transform hover:scale-105 transition duration-300">
-    <a href="{% url 'frc_dep' %}">
-      <button type="button" class="mx-2 hover:text-white">Depreciation</button>
-    </a>
-  </div>
-  <div class="transform hover:scale-105 transition duration-300">
-    <a href="{% url 'frc_data_entry' %}">
-      <button type="button" class="mx-2 hover:text-white">Data Entry</button>
-    </a>
-  </div>
-  <div class="transform hover:scale-105 transition duration-300">
-    <a href="{% url 'asset_info' %}">
-      <button type="button" class="mx-2 hover:text-white">
-        Input Asset Info
-      </button>
-    </a>
-  </div>
-  <div class="transform hover:scale-105 transition duration-300">
-    <a href="{% url 'current_asset_info' %}">
-      <button type="button" class="mx-2 hover:text-white">
-        Current Asset Info
-      </button>
-    </a>
-  </div>
-  <div class="transform hover:scale-105 transition duration-300">
-    <a href="{% url 'frc_system' %}">
-      <button type="button" class="mx-2 hover:text-white">File Upload</button>
-    </a>
-  </div>
-  <div class="transform hover:scale-105 transition duration-300">
-    <a href="{% url 'asset_image_upload_app' %}">
-      <button type="button" class="mx-2 hover:text-white">Image Upload</button>
-    </a>
-  </div>
-  <div class="transform hover:scale-105 transition duration-300">
-    <a href="{% url 'sales_entry' %}">
-      <button type="button" class="mx-2 hover:text-white">Sales Entry</button>
-    </a>
-  </div>
-  <div class="transform hover:scale-105 transition duration-300">
-    <a href="{% url 'view_institution' %}">
-      <button type="button" class="mx-2 hover:text-white">Entity info</button>
-    </a>
-  </div>
-  </div>
-</div>
+  <body>
+    <div class="flex items-center p-4 text-lg bg-[#0eabb0] shadow-md">
+      <img
+        id="institution-logo"
+        alt="Logo"
+        class="w-16 h-auto mr-4"
+      />
+      <div class="flex-1 flex justify-start space-x-2"> <!-- Added space-x-2 for minimal space between buttons -->
+        <a href="{% url 'dashboard' %}" class="nav-button px-3 py-2 bg-white text-slate-700 rounded-md shadow hover:bg-gray-200">Dashboard</a>
+        <a href="{% url 'frc_asset_register' %}" class="nav-button px-3 py-2 bg-white text-slate-700 rounded-md shadow hover:bg-gray-200">Asset Register</a>
+        <a href="{% url 'frc_asset_schedule' %}" class="nav-button px-3 py-2 bg-white text-slate-700 rounded-md shadow hover:bg-gray-200">Asset Schedule</a>
+        <a href="{% url 'frc_dep' %}" class="nav-button px-3 py-2 bg-white text-slate-700 rounded-md shadow hover:bg-gray-200">Depreciation</a>
+        <a href="{% url 'frc_data_entry' %}" class="nav-button px-3 py-2 bg-white text-slate-700 rounded-md shadow hover:bg-gray-200">Data Entry</a>
+        <a href="{% url 'asset_info' %}" class="nav-button px-3 py-2 bg-white text-slate-700 rounded-md shadow hover:bg-gray-200">Input Asset Info</a>
+        <a href="{% url 'current_asset_info' %}" class="nav-button px-3 py-2 bg-white text-slate-700 rounded-md shadow hover:bg-gray-200">Current Asset Info</a>
+        <a href="{% url 'frc_system' %}" class="nav-button px-3 py-2 bg-white text-slate-700 rounded-md shadow hover:bg-gray-200">File Upload</a>
+        <a href="{% url 'asset_image_upload_app' %}" class="nav-button px-3 py-2 bg-white text-slate-700 rounded-md shadow hover:bg-gray-200">Image Upload</a>
+        <a href="{% url 'sales_entry' %}" class="nav-button px-3 py-2 bg-white text-slate-700 rounded-md shadow hover:bg-gray-200">Sales Entry</a>
+        <a href="{% url 'view_institution' %}" class="nav-button px-3 py-2 bg-white text-slate-700 rounded-md shadow hover:bg-gray-200">Entity Info</a>
+      </div>
+    </div>
 
-
-
-<div class="main_body pt-5">
-  <div class="right"></div>
-</div>
+    <div class="main_body pt-5">
+      <div class="right"></div>
+    </div>
+  </body>
+</html>

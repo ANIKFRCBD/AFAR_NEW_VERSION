@@ -25,6 +25,17 @@
     html {
       margin: 0;
       padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    /* Centered title styling */
+    .title-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
     }
     /* Container for tables */
     .table-container {
@@ -45,7 +56,7 @@
       border-bottom: 1px double rgb(146, 146, 146);
       border-top: 2px double rgb(146, 146, 146);
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
-      overflow: auto; /* Enable scrolling if content exceeds height */ /* Set maximum height to 40 viewport height units */
+      overflow: auto; /* Enable scrolling if content exceeds height */
       table-layout: auto;
       scrollbar-width: thin;
       scrollbar-color: #fcfffb #838282;
@@ -75,6 +86,10 @@
   {% include 'header.html' %}
 
   <div class="container1 table-container overflow-auto mb-10" id="rowsContainer">
+    <div class="title-container">
+      <h1 class="title">Depreciation Schedule</h1>
+    </div>
+
     <div class="overflow-auto h-full">
     <table class="summary-table">
       <thead class="sticky top-0">
