@@ -53,7 +53,6 @@ def frc_data_entry(request):
         # Extract values from the matching row
         economic_code = matching_row['Economic Code']
         expected_life = matching_row['Expected Life(post)']
-        depreciation_method = matching_row['Depreciation Method']
 
         # Create the new row dictionary
         new_row = {
@@ -73,7 +72,6 @@ def frc_data_entry(request):
             'Location': location,
             'Economic Code': economic_code,
             'Expected life': expected_life,
-            'Depreciation Method': depreciation_method,
             'Entry By': user_name,
             'Current Condition': current_condition
         }

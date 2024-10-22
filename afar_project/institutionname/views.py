@@ -20,13 +20,13 @@ def institutionname(request):
             phone=data.cleaned_data["phone"]
             email=data.cleaned_data["email"]
             logo_file = data.cleaned_data['logo']
-            
+            acronym=data.cleaned_data["Abbreviation"]
             fs = FileSystemStorage(location='static')
             file_name = fs.save(f"{institution_name}.png", logo_file)
             
-            list_of_elements = [institution_name, website, district, street_address, ministry,phone,email,file_name]
+            list_of_elements = [institution_name, website, district, street_address, ministry,phone,email,file_name,acronym]
             #save file in JSON
-            information={"Institute_name":institution_name,"website":website,"district":district,"address":street_address,"ministry":ministry,"phone":phone,"email":email,"file_location":os.path.join(settings.BASE_DIR,"institutionmedia",f"{institution_name}.png")}
+            information={"Institute_name":institution_name,"website":website,"district":district,"address":street_address,"ministry":ministry,"phone":phone,"email":email,"file_location":os.path.join(settings.BASE_DIR,"institutionmedia",f"{institution_name}.png"),"acronym":acronym}
             file_path = os.path.join(settings.BASE_DIR, 'static', "institution.json")
             with open(file_path,"w") as file:
                 j.dump(information,file,indent=4)
