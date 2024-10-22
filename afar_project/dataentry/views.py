@@ -18,56 +18,63 @@ def frc_data_entry(request):
     if request.method == 'POST':
         file_path = 'csv_path/excel_files/asset_register.xlsx'
         df = pd.read_excel(file_path)
-
+        # Extracting form data from the POST request
         purchase_date = request.POST.get('purchase_date')
         purchase_date = datetime.strptime(purchase_date, '%Y-%m-%d')
         purchase_year = purchase_date.year
         purchase_month = purchase_date.month
         purchase_date = purchase_date.strftime('%m/%d/%Y')
 
+        # Determine the financial year
         if purchase_month <= 6:
             purchase_year -= 1
 
         financial_year = f"{purchase_year}-{purchase_year + 1}"
 
+        # Extract remaining form data
         serial_no = request.POST.get('serial_no')
         bill_no = request.POST.get('bill_no')
         category = request.POST.get('category')
         name_of_item = request.POST.get('name_of_item')
         quantity = float(request.POST.get('quantity') or 0)
-        price = float(request.POST.get('price'))
+        price = float(request.POST.get('price') or 0)
         warranty = request.POST.get('warranty')
-        sold_units=0
+        vendor = request.POST.get('vendor')
+        vendor_address = request.POST.get('vendor_address')
+        vendor_contact = request.POST.get('vendor_contact')
+        sold_units = 0  # Assuming no initial sold units
         location = request.POST.get('location')
         current_condition = request.POST.get('current_condition')
-
-        matching_row = df_csv[df_csv['Category'] == category].iloc[0]
-
-        economic_code = matching_row['Economic Code']
-        expected_life = matching_row['Expected Life(post)']
-        depriciation_method = matching_row['Depriciation Method']
         user_name = request.POST.get('user_name')
 
+        # Get the matching row from the DataFrame based on the category
+        matching_row = df_csv[df_csv['Category'] == category].iloc[0]
+
+        # Extract values from the matching row
+        economic_code = matching_row['Economic Code']
+        expected_life = matching_row['Expected Life(post)']
+
+        # Create the new row dictionary
         new_row = {
-            'Financial Year' : financial_year,
+            'Financial Year': financial_year,
             'Purchase date': purchase_date,
-            'Sl ': serial_no,
+            'Sl': serial_no,
             'Bill no': bill_no,
             'Category': category,
             'Name of Item': name_of_item,
             'Units': quantity,
             'Price': price,
-            'warranty':warranty,
+            'Warranty (months)': warranty,
+            'Vendor': vendor,
+            'Vendor Address': vendor_address,
+            'Vendor Contact': vendor_contact,
             'Sold (unit)': sold_units,
             'Location': location,
-            'Economic Code':economic_code,
-            'Expected life':expected_life,
-            'Depreciation Method':depriciation_method,
-            'Entry By' : user_name,
-
-            #'Current Condition': current_condition
+            'Economic Code': economic_code,
+            'Expected life': expected_life,
+            'Entry By': user_name,
+            'Current Condition': current_condition
         }
-
         # Append the new row to the DataFrame using loc
         df.loc[len(df)] = new_row
 
