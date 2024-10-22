@@ -15,6 +15,7 @@ def frc_asset_register(request):
     df_sheet = pd.read_excel(file_path)
     df=df_sheet
     df=df.fillna(0)
+    print(df.columns)
     # Generate Asset code by rearranging the dataframe
     df=df[['Financial Year', 'Purchase date', 'Sl ', 'Bill no','Economic Code',
        'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
@@ -74,7 +75,7 @@ def frc_asset_register(request):
         rows = []
         for tr in table.find_all('tr')[1:]:
             rows.append([td.get_text() for td in tr.find_all('td')])
-    df.to_excel(file_path,index=False)
+
 
 
     # return render(request, 'frc_asset_register.html', {'excel_html':excel_html,'header_html': header_html, 'rows_html': rows_html, 'unique_values': unique_values,})

@@ -46,6 +46,7 @@ def frc_data_entry(request):
         location = request.POST.get('location')
         current_condition = request.POST.get('current_condition')
         user_name = request.POST.get('user_name')
+        depreciation_method=request.POST.get("depreciation")
 
         # Get the matching row from the DataFrame based on the category
         matching_row = df_csv[df_csv['Category'] == category].iloc[0]
@@ -73,11 +74,32 @@ def frc_data_entry(request):
             'Economic Code': economic_code,
             'Expected life': expected_life,
             'Entry By': user_name,
-            'Current Condition': current_condition
+            'Current Condition': current_condition,
+            "Decpreciation Method": depreciation_method
         }
-        # Append the new row to the DataFrame using loc
-        df.loc[len(df)] = new_row
+        #creating the new  dataframe
+        New_dataframe_column_names=['Financial Year', 'Purchase date', 'Sl ', 'Bill no','Economic Code',
+       'Category', 'Name of Item', 'Brand Name', 'Model/Type', 'Units',
+       'Modified Number', 'Price','Salvage Value', 'Sold (unit)',"Vendor","Vendor Address","Vendor Contact",'Sales proceeds','Years used(sold items)','FY of Items sold',
+       'Cost of Assets Sold', 'Current Balance', 'Expected life',
+       'Depreciation Method', 'Location','Status']
+        #check whether number of columns are same which would mean that 
+        if len(New_dataframe_column_names)> len(df.columns):
+            columns_to_be_added=[]
+            New_register=pd.DataFrame(columns=New_dataframe_column_names)
+            for i in New_dataframe_column_names:
+                if i not in df.columns.tolist():
+                    columns_to_be_added.append(i)
+            for i in columns_to_be_added:
+                df[i]=0
+            print("Columns added")
+        else:
+            df=df
+        
 
+       
+        print("Old format")
+        print(df.columns)
         # Save the DataFrame back to the Excel file
         df.to_excel(file_path, index=False)
         # return render (request,'asset_image_upload.html')
