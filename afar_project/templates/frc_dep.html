@@ -21,65 +21,66 @@
   <title>Register for Depreciation</title>
 
   <style>
-    body,
-    html {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-    /* Centered title styling */
-    .title-container {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .title {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #333;
-    }
-    /* Container for tables */
-    .table-container {
-      height: 65vh;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      flex-wrap: wrap;
-    }
-    /* Style for the table */
-    .summary-table {
-      width: 100%; /* Ensure table fills the container */
-      background-color: #ffffff;
-      border-collapse: collapse;
-      border-left: 1px double rgb(146, 146, 146);
-      border-bottom: 1px double rgb(146, 146, 146);
-      border-top: 2px double rgb(146, 146, 146);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
-      overflow: auto; /* Enable scrolling if content exceeds height */
-      table-layout: auto;
-      scrollbar-width: thin;
-      scrollbar-color: #fcfffb #838282;
-    }
+   <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+      /* Centered title styling */
+      .title-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+      .title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+      }
+      /* Container for tables */
+      .table-container {
+        height: 65vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        flex-wrap: wrap;
+      }
+      /* Style for the table */
+      .summary-table {
+        width: 100%; /* Ensure table fills the container */
+        background-color: #ffffff;
+        border-collapse: collapse;
+        border-left: 1px double rgb(146, 146, 146);
+        border-bottom: 1px double rgb(146, 146, 146);
+        border-top: 2px double rgb(146, 146, 146);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
+        overflow: auto; /* Enable scrolling if content exceeds height */
+        table-layout: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #fcfffb #838282;
+      }
 
-    /* Style for table headers */
-    .summary-table th {
-      padding: 12px;
-      text-align: left;
-      background-color: #f0f0f0;
-      border-bottom: 1px solid #dddddd;
-      min-width: 150px;
-    }
+      /* Style for table headers */
+      .summary-table th {
+        padding: 12px;
+        text-align: left;
+        background-color: #f0f0f0;
+        border-bottom: 1px solid #dddddd;
+        min-width: 150px;
+      }
 
-    /* Style for table cells */
-    .summary-table td {
-      padding: 12px;
-      border-bottom: 1px solid #dddddd;
-      white-space: nowrap;
-      overflow: hidden;
-      min-width: 150px;
-    }
-  </style>
+      /* Style for table cells */
+      .summary-table td {
+        padding: 12px;
+        border-bottom: 1px solid #dddddd;
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 150px;
+      }
+    </style>
 </head>
 
 <body>
@@ -115,23 +116,29 @@
   {% include 'footer.html' %}
 
   <script>
-    function download_csv_frc_asset_schedule() {
-      document.getElementById("download_csv_frc_asset_schedule").action = "{% url 'download_csv_frc_asset_schedule' %}";
-      document.getElementById("download_csv_frc_asset_schedule").submit();
-    }
-
     function download_csv_frc_asset() {
-      document.getElementById("download_csv_frc_asset").action = "{% url 'download_csv_frc_asset' %}";
+      document.getElementById("download_csv_frc_asset").action =
+        "{% url 'download_csv_frc_asset' %}";
       document.getElementById("download_csv_frc_asset").submit();
     }
+  </script>
 
+  <script>
     function delete_rows_asset_register() {
-      if (confirm("Are you sure you want to delete the excel file?")) {
-        document.getElementById("delete_rows_asset_register").action = "{% url 'delete_rows_asset_register' %}";
-        document.getElementById("delete_rows_asset_register").submit();
+      var confirmDelete = confirm(
+        "Are you sure you want to delete the excel file?"
+      );
+      if (!confirmDelete) {
+        return;
       }
-    }
 
+      document.getElementById("delete_rows_asset_register").action =
+        "{% url 'delete_rows_asset_register' %}";
+      document.getElementById("delete_rows_asset_register").submit();
+    }
+  </script>
+
+  <script>
     $(document).ready(function () {
       function updateRowCount() {
         var selectedValue = $("#filterDropdown").val();
@@ -157,24 +164,44 @@
       });
 
       updateRowCount();
-      
-      $("table tbody tr").click(function () {
-        var rowData = $(this).find("td:eq(4)").text();
-        var url = "/frc_asset_data?id=" + encodeURIComponent(rowData);
-        $("table tbody tr").removeClass("highlight");
-        $(this).addClass("highlight");
-        // Uncomment the line below to enable navigation
-        // window.location.href = url;
-      });
     });
+  </script>
 
+  <script>
     function setMaxHeight() {
       var screenWidth = window.innerWidth;
-      var maxHeight = screenWidth <= 1200 ? screenWidth * 0.9 : screenWidth * 0.35;
-      document.getElementById("rowsContainer").style.maxHeight = maxHeight + "px";
+      var maxHeight;
+      if (screenWidth <= 1200) {
+        maxHeight = screenWidth * 0.9;
+      } else {
+        maxHeight = screenWidth * 0.35;
+      }
+      document.getElementById("rowsContainer").style.maxHeight =
+        maxHeight + "px";
     }
     window.onload = setMaxHeight;
     window.onresize = setMaxHeight;
+  </script>
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    $(document).ready(function () {
+      $("table tbody tr").click(function () {
+        var rowData = $(this)
+          .find("td:eq(4)")
+          .map(function () {
+            return $(this).text();
+          })
+          .get();
+        var url = "/frc_asset_data?id=" + encodeURIComponent(rowData);
+        $("table tbody tr").removeClass("highlight");
+        $(this).addClass("highlight");
+      });
+    });
   </script>
 
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
